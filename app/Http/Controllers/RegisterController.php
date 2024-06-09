@@ -53,13 +53,13 @@ class RegisterController extends Controller
         $validatedData['status'] = $category->is_paper ? Registration::REVIEW : Registration::ACC;
         Registration::create($validatedData);
 
-        // try {
+        try {
             Mail::send('emails.verification', ['token' => $token], function($message) use($request){
                 $message->to($request->email);
                 $message->subject('Registration Verification Email');
             });
-        // } catch (\Exception $e) {
-        // }
+        } catch (\Exception $e) {
+        }
 
         return redirect()->route('login.index')->with('success', 'Registration is successful, we have sent a verification email to <b>'. $validatedData['email']).'</b>';
     }
