@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('password');
             $table->tinyInteger('type');
             $table->rememberToken();
-            $table->boolean('is_email_verified');
+            $table->boolean('is_email_verified')->nullable();
             $table->timestamps();
         });
     }
