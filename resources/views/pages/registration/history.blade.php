@@ -37,7 +37,11 @@
                         @foreach ($registrations as $registration)
                             <tr>
                                 <td>{{ $no++ }}</td>
-                                <td>{{ $registration->user->name }}</td>
+                                <td>{{ $registration->user->name }}
+                                    @if ($registration->category->is_paper)
+                                        <span class="badge badge-secondary">+ PAPER</span>
+                                    @endif
+                                </td>
                                 <td>{{ $registration->user->email }}</td>
                                 <td>{{ $registration->category->name }}
                                     @if ($registration->is_paper)
@@ -47,7 +51,8 @@
                                 <td>{{ \App\Helpers\AppHelper::currency($registration->category->amount) }}</td>
                                 <td>{{ \App\Helpers\AppHelper::parse_date($registration->created_at) }}</td>
                                 <td class="d-flex">
-                                   <a href="{{ route('registration.detail', $registration->id) }}" class="btn btn-primary btn-sm"><i class="fas fa-info-circle"></i></a>
+                                    <a href="{{ route('registration.detail', $registration->id) }}"
+                                        class="btn btn-primary btn-sm"><i class="fas fa-info-circle"></i></a>
                                 </td>
                             </tr>
                         @endforeach

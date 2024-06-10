@@ -305,7 +305,7 @@ class RegisterController extends Controller
         $data = [
             'title' => 'Riwayat Pendaftaran Peserta',
             'subtitle' => 'Tabel Pendaftaran Peserta',
-            'active' => 'history',
+            'active' => 'registration',
             'registrations'=> $registrations,
         ];
         return view('pages.registration.history', $data);
