@@ -25,14 +25,15 @@ class LoginController extends Controller
             'password' => ['required'],
         ]);
         if (Auth::attempt($validatedData)) {
-            if (Auth::user()->type == User::TYPE_PESERTA) {
+            if (Auth::user()->type != User::TYPE_PESERTA) {
+                return redirect()->intended('dashboard');
+            }else{
                 if (Auth::user()->is_email_verified) {
                     return redirect()->intended('dashboard');
                 }else{
                     return redirect()->route('login.index')->with('error', 'Please verify your email first!');
                 }
             }
-            return redirect()->intended('dashboard');
         }
         Toastr::error('Oppes! You have entered invalid credentials', 'Error', ["positionClass" => "toast-top-right"]);
         return redirect()->route('login.index');
