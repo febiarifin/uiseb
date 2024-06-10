@@ -9,10 +9,7 @@
 <body>
     <img src="{{ \App\Helpers\AppHelper::convert_base64('public/manup-master/img/logo_UISEB.png') }}" height="100">
     {{-- <img src="{{ asset('manup-master/img/logo_UISEB.png') }}" height="100"> --}}
-    <h1>Verification Email</h1>
-    <p>Congratulations, your registration is successful!</p>
-    Please verify your email with bellow link:
-    <a href="{{ route('user.verify', $token) }}">Verify Email</a>
-
+    <p>{!! nl2br($details['message']) !!}</p>
+    <p>Messages are sent automatically, no need to reply</p>
 </body>
 </html>

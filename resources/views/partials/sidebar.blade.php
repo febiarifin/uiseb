@@ -13,29 +13,66 @@
 
     <!-- Nav Item - Dashboard -->
     <li class="nav-item {{ $active == 'dashboard' ? 'active' : null }}">
-        <a class="nav-link" href="#">
+        <a class="nav-link" href="{{ route('dashboard') }}">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Dashboard</span></a>
     </li>
 
-    <li class="nav-item {{ $active == 'category' ? 'active' : null }}">
-        <a class="nav-link" href="{{ route('categories.index') }}">
-            <i class="fas fa-fw fa-list"></i>
-            <span>Manajemen Kategori</span></a>
-    </li>
+    @if (Auth::user()->type == \App\Models\User::TYPE_PESERTA)
+        <li class="nav-item {{ $active == 'registration' ? 'active' : null }}">
+            <a class="nav-link" href="{{ route('registration.user') }}">
+                <i class="fas fa-fw fa-tachometer-alt"></i>
+                <span>Registration</span></a>
+        </li>
+    @endif
 
-    <li class="nav-item {{ $active == 'category' ? 'active' : null }}">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
-            aria-expanded="true" aria-controls="collapseTwo">
-            <i class="fas fa-fw fa-file"></i>
-            <span>Pendaftaran</span>
-        </a>
-        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item" href="#">Validasi Pendaftaran</a>
-                <a class="collapse-item" href="#">Review Pendaftaran</a>
-            </div>
-        </div>
-    </li>
+    @if (Auth::user()->type == \App\Models\User::TYPE_ADMIN)
+        <li class="nav-item {{ $active == 'page' ? 'active' : null }}">
+            <a class="nav-link" href="#">
+                <i class="fas fa-fw fa-paste"></i>
+                <span>Manajemen Halaman</span></a>
+        </li>
+        <li class="nav-item {{ $active == 'category' ? 'active' : null }}">
+            <a class="nav-link" href="{{ route('categories.index') }}">
+                <i class="fas fa-fw fa-list"></i>
+                <span>Manajemen Kategori</span></a>
+        </li>
+        <li class="nav-item {{ $active == 'user' ? 'active' : null }}">
+            <a class="nav-link" href="{{ route('users.index') }}">
+                <i class="fas fa-fw fa-users"></i>
+                <span>Manajemen User</span></a>
+        </li>
+        <li class="nav-item {{ $active == 'validation' ? 'active' : null }}">
+            <a class="nav-link" href="{{ route('registration.validation') }}">
+                <i class="fas fa-fw fa-check-circle"></i>
+                <span>Validasi Pendaftaran</span></a>
+        </li>
+        <li class="nav-item {{ $active == 'review' ? 'active' : null }}">
+            <a class="nav-link" href="{{ route('registration.reviews') }}">
+                <i class="fas fa-fw fa-star"></i>
+                <span>Review Paper</span></a>
+        </li>
+        <li class="nav-item {{ $active == 'history' ? 'active' : null }}">
+            <a class="nav-link" href="{{ route('registration.history') }}">
+                <i class="fas fa-fw fa-clock"></i>
+                <span>Riwayat Pendaftaran</span></a>
+        </li>
+    @endif
+
+    @if (Auth::user()->type == \App\Models\User::TYPE_REVIEWER)
+        <li class="nav-item {{ $active == 'validation' ? 'active' : null }}">
+            <a class="nav-link" href="{{ route('registration.validation') }}">
+                <i class="fas fa-fw fa-check-circle"></i>
+                <span>Validasi Pendaftaran</span></a>
+        </li>
+    @endif
+
+    @if (Auth::user()->type == \App\Models\User::TYPE_EDITOR || Auth::user()->type == \App\Models\User::TYPE_REVIEWER)
+        <li class="nav-item {{ $active == 'review' ? 'active' : null }}">
+            <a class="nav-link" href="{{ route('registration.reviews') }}">
+                <i class="fas fa-fw fa-star"></i>
+                <span>Review Paper</span></a>
+        </li>
+    @endif
 
 </ul>

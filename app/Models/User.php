@@ -17,6 +17,8 @@ class User extends Authenticatable
     public const TYPE_REVIEWER = 3;
     public const TYPE_PESERTA = 4;
 
+    public const IS_EMAIL_VERIFIED = 1;
+
     /**
      * The attributes that are mass assignable.
      *
@@ -28,6 +30,10 @@ class User extends Authenticatable
         'password',
         'type',
         'is_email_verified',
+        'phone_number',
+        'institution',
+        'position',
+        'subject_background',
     ];
 
     /**

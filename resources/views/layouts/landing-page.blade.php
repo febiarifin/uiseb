@@ -26,6 +26,9 @@
     <link rel="stylesheet" href="{{ asset('manup-master') }}/css/magnific-popup.css" type="text/css" />
     <link rel="stylesheet" href="{{ asset('manup-master') }}/css/slicknav.min.css" type="text/css" />
     <link rel="stylesheet" href="{{ asset('manup-master') }}/css/style.css" type="text/css" />
+    <link rel="stylesheet" href="http://cdn.bootcss.com/toastr.js/latest/css/toastr.min.css">
+    <link rel="shortcut icon" href="{{ asset('manup-master/img/logo_UISEB.png') }}" type="image/x-icon">
+
   </head>
 
   <body>
@@ -83,5 +86,7 @@
     <script src="{{ asset('manup-master') }}/js/jquery.slicknav.js"></script>
     <script src="{{ asset('manup-master') }}/js/owl.carousel.min.js"></script>
     <script src="{{ asset('manup-master') }}/js/main.js"></script>
+    <script src="http://cdn.bootcss.com/toastr.js/latest/js/toastr.min.js"></script>
+    {!! Toastr::message() !!}
   </body>
 </html>

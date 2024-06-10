@@ -35,6 +35,10 @@
       <div class="alert alert-success">
         {!! nl2br(session('success')) !!}
       </div>
+      @elseif (session('error'))
+      <div class="alert alert-danger">
+        {!! nl2br(session('error')) !!}
+      </div>
       @endif
       <form
         action="{{ route('login.store') }}"
@@ -49,6 +53,9 @@
               name="email"
               required
             />
+            @error('email')
+            <small style="position: relative; top:-20px;"><span class="text-danger">{{ $message }}</span></small>
+            @enderror
           </div>
           <div class="col-md-12">
             <label>Password</label>
