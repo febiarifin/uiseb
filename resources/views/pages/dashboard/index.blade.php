@@ -62,7 +62,11 @@
                                 <span>
                                     {{ \App\Helpers\AppHelper::parse_date_short($registration->created_at) }}
                                     &nbsp;
+                                    <b>{{ $registration->user->name . ' / ' . $registration->user->email }}</b> MELAKUKAN
                                     PENDAFTARAN <b>{{ $registration->category->name }}</b>
+                                    @if ($registration->category->is_paper)
+                                        <span class="badge badge-secondary">+ PAPER</span>
+                                    @endif
                                 </span>
                             </div>
                         @endforeach

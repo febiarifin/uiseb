@@ -13,17 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('timelines', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
-            $table->tinyInteger('type');
-            $table->rememberToken();
-            $table->boolean('is_email_verified')->default(0);
-            $table->string('scopus')->nullable();
+            $table->text('description');
+            $table->date('date');
             $table->timestamps();
+            $table->foreignId('page_id')->constrained();
         });
     }
 
@@ -34,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('timelines');
     }
 };

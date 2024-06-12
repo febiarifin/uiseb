@@ -40,7 +40,10 @@
                         @foreach ($users as $user)
                             <tr>
                                 <td>{{ $no++ }}</td>
-                                <td>{{ $user->name }}</td>
+                                <td>
+                                    <a href="{{ $user->scopus ? $user->scopus : '#' }}"
+                                        @if ($user->scopus) target="_blank" @endif>{{ $user->name }}</a>
+                                </td>
                                 <td>{{ $user->email }}
                                     @if ($user->type == \App\Models\User::TYPE_PESERTA)
                                         @if ($user->is_email_verified)
@@ -58,6 +61,8 @@
                                             REVIEWER
                                         @elseif ($user->type == \App\Models\User::TYPE_PESERTA)
                                             PESERTA
+                                        @elseif ($user->type == \App\Models\User::TYPE_COMMITTEE)
+                                            COMMITTEE
                                         @endif
                                     </span>
                                 </td>
@@ -101,8 +106,12 @@
                     @csrf
                     <div class="modal-body">
                         <div class="mb-3">
-                            <label>Nama</label>
+                            <label>Nama (Tulis dengan gelar)</label>
                             <input type="text" class="form-control" name="name" required>
+                        </div>
+                        <div class="mb-3">
+                            <label>Institusi</label>
+                            <input type="text" class="form-control" name="institution" required>
                         </div>
                         <div class="mb-3">
                             <label>Email</label>
@@ -112,10 +121,15 @@
                             <label>Role</label>
                             <select name="type" class="form-control">
                                 <option value="">--pilih--</option>
+                                <option value="{{ \App\Models\User::TYPE_COMMITTEE }}">COMMITTEE</option>
                                 <option value="{{ \App\Models\User::TYPE_EDITOR }}">EDITOR</option>
                                 <option value="{{ \App\Models\User::TYPE_REVIEWER }}">REVIEWER</option>
                                 <option value="{{ \App\Models\User::TYPE_PESERTA }}">PESERTA</option>
                             </select>
+                        </div>
+                        <div class="mb-3">
+                            <label>Scopus Link</label>
+                            <input type="url" class="form-control" name="scopus" required>
                         </div>
                         <div class="mb-3">
                             <label>Password Default</label>

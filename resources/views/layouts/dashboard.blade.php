@@ -11,6 +11,9 @@
 
     <title>{{ $title }}</title>
 
+    {{-- Icon --}}
+    <link rel="shortcut icon" href="{{ asset('manup-master/img/logo_UISEB.png') }}" type="image/x-icon">
+
     <!-- Custom fonts for this template -->
     <link href="{{ asset('sb-admin') }}/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link
@@ -23,9 +26,14 @@
     <!-- Custom styles for this page -->
     <link href="{{ asset('sb-admin') }}/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 
+    {{-- Toastr --}}
     <link rel="stylesheet" href="http://cdn.bootcss.com/toastr.js/latest/css/toastr.min.css">
-    <link rel="shortcut icon" href="{{ asset('manup-master/img/logo_UISEB.png') }}" type="image/x-icon">
 
+    {{-- Trix editor --}}
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/trix@2.0.8/dist/trix.css">
+    <script type="text/javascript" src="https://unpkg.com/trix@2.0.8/dist/trix.umd.min.js"></script>
+
+    <link rel="stylesheet" href="{{ asset('assets/css/timeline.css') }}">
 </head>
 
 <body id="page-top">

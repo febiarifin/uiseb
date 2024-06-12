@@ -21,7 +21,7 @@ class UserController extends Controller
             'title' => 'Manajemen User',
             'subtitle' => 'Tabel Data User',
             'active' => 'user',
-            'users' => User::with(['registrations'])->orderBy('created_at','desc')->whereIn('type', [User::TYPE_EDITOR, User::TYPE_REVIEWER, User::TYPE_PESERTA])->get(),
+            'users' => User::with(['registrations'])->orderBy('created_at','desc')->whereIn('type', [User::TYPE_EDITOR, User::TYPE_REVIEWER, User::TYPE_PESERTA, User::TYPE_COMMITTEE])->get(),
         ];
         return view('pages.user.index', $data);
     }
@@ -48,6 +48,8 @@ class UserController extends Controller
             'name' => ['required'],
             'email' => ['required','email:dns'],
             'type' => ['required'],
+            'scopus' => ['required'],
+            'institution' => ['required'],
         ]);
         $validatedData['password'] = Hash::make('UISEB123');
         if ($validatedData['type'] == User::TYPE_PESERTA) {
@@ -99,6 +101,8 @@ class UserController extends Controller
             'name' => ['required'],
             'email' => ['required','email:dns'],
             'type' => ['required'],
+            'scopus' => ['required'],
+            'institution' => ['required'],
         ]);
         $user->update($validatedData);
         Toastr::success('User berhasil diupdate', 'Success', ["positionClass" => "toast-top-right"]);
@@ -137,6 +141,7 @@ class UserController extends Controller
             'institution' => ['required'],
             'position' => ['required'],
             'subject_background' => ['required'],
+            'scopus' => ['required'],
         ]);
         Auth::user()->update($validatedData);
         Toastr::success('Profil berhasil disimpan', 'Success', ["positionClass" => "toast-top-right"]);

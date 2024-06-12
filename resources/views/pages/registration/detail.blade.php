@@ -56,7 +56,7 @@
                 </div>
                 <div class="mb-3 col-md-10">
                     <label>Category</label>
-                    <input type="text" class="form-control" value="{{ $registration->category->name }}" disabled>
+                    <input type="text" class="form-control" value="{{ $registration->category->is_paper ? $registration->category->name.' + PAPER' : $registration->category->name }}" disabled>
                 </div>
                 <div class="mb-3 col-md-2">
                     <label>Fee</label>

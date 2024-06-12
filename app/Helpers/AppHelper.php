@@ -35,6 +35,13 @@ class AppHelper{
         return $new_date;
     }
 
+    public static function parse_date_timeline($date)
+    {
+        $parse_date = Carbon::parse($date);
+        $new_date = $parse_date->isoFormat('D MMMM, YYYY');
+        return $new_date;
+    }
+
     public static function upload_file($file, $path)
     {
         if ($file){

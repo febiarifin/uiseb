@@ -28,27 +28,25 @@
     <!-- Header End -->
 
     <!-- About Section-->
-    <section class="hero-section set-bg mt-5" data-setbg="{{ asset('manup-master') }}/img/hero.jpg">
+    <section class="hero-section set-bg mt-5"
+        data-setbg="{{ asset($page->image_1 ? $page->image_1 : 'manup-master/img/hero.jpg') }}">
         <div class="container">
             <div class="row">
                 <div class="col-lg-7">
                     <div class="hero-text">
-                        <span>UPCOMING NEW EVENT 2024</span>
-                        <h2>THE UISEB 2024</h2>
+                        <span>UPCOMING NEW EVENT {{ $page->name }}</span>
+                        <h2>{{ $page->theme }}</h2>
                         <h4 class="text-white">
-                            UNSIQ International Symposium on Economics and Busines with a
-                            theme of "SMEs Competitiveness in Digital Era" will be held at
-                            Wonosobo, Central Java, Indonesia on December 20, 2024
-                            (08.00-15.00 Jakarta Time) at Faculty of Economic and Busines
-                            Universitas Sains Al-Qur'an, Wonosobo.
+                            {!! nl2br($page->about_1) !!}
                         </h4>
                         <div class="mainmenu">
-                            <a href="#about-section" class="primary-btn mt-3">MORE INFORMATION</a>
+                            <a href="#about-section" class="primary-btn mt-4">MORE INFORMATION</a>
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-5">
-                    <img src="{{ asset('manup-master') }}/img/hero-right.png" alt="" />
+                    <img src="{{ asset($page->image_2 ? $page->image_2 : 'manup-master/img/hero-right.png') }}"
+                        alt="" />
                 </div>
             </div>
         </div>
@@ -68,19 +66,19 @@
                 <div class="col-lg-8">
                     <div class="cd-timer" id="countdown">
                         <div class="cd-item">
-                            <span>40</span>
+                            <span>00</span>
                             <p>Days</p>
                         </div>
                         <div class="cd-item">
-                            <span>18</span>
+                            <span>00</span>
                             <p>Hours</p>
                         </div>
                         <div class="cd-item">
-                            <span>46</span>
+                            <span>00</span>
                             <p>Minutes</p>
                         </div>
                         <div class="cd-item">
-                            <span>32</span>
+                            <span>00</span>
                             <p>Seconds</p>
                         </div>
                     </div>
@@ -96,24 +94,15 @@
             <div class="row">
                 <div class="col-lg-6">
                     <div class="ha-pic">
-                        <img src="{{ asset('manup-master') }}/img/blog/blog-details/blog-more-2.jpg" alt="" />
+                        <img src="{{ asset($page->image_3 ? $page->image_3 : 'manup-master/img/blog/blog-details/blog-more-2.jpg') }}"
+                            alt="" />
                     </div>
                 </div>
                 <div class="col-lg-6">
                     <div class="ha-text">
-                        <h2>WELCOME THE UISEB 2024</h2>
+                        <h2>WELCOME {{ $page->theme }}</h2>
                         <p class="text-justify">
-                            <span class="text-primary">UNSIQ International Symposium on Economics and Busines</span>
-                            will be held at Wonosobo, Central Java, Indonesia on
-                            <span class="text-primary">December 20, 2024 (08.00-15.00 Jakarta Time)</span>
-                            at Faculty of Economic and Busines Universitas Sains Al-Qur'an,
-                            Wonosobo. The UISEB 2024 had been well received by the research
-                            and academic community both in national and international scale.
-                            The conference will be held in
-                            <span class="text-primary">HYBRID MODE</span>. The presentation
-                            of speakers is carried out directly on site and via Zoom. The
-                            theme of UISEB 2024 is
-                            <span class="text-primary">SMEs Competitiveness in Digital Era.</span>
+                            {!! nl2br($page->about_2) !!}
                         </p>
                     </div>
                 </div>
@@ -122,49 +111,24 @@
                 <div class="col-lg-6">
                     <div class="ha-text">
                         <h2>CONFERENCE SCOPE</h2>
-                        <ul>
-                            <li>
-                                <span class="icon_check"></span> Material Sciences for
-                                Environment and Energy
-                            </li>
-                            <li><span class="icon_check"></span> Sensor and Biosensor</li>
-                            <li>
-                                <span class="icon_check"></span> Green Synthesis Organic
-                                Compounds
-                            </li>
-                            <li>
-                                <span class="icon_check"></span> Solar and Renewable Energy
-                            </li>
-                            <li>
-                                <span class="icon_check"></span> Nanostructured Materials
-                            </li>
-                            <li><span class="icon_check"></span> Biotechnology</li>
-                            <li>
-                                <span class="icon_check"></span> Functional Material in
-                                Pharmaceutical Sciences
-                            </li>
-                            <li><span class="icon_check"></span> Nanopharmacy</li>
-                            <li><span class="icon_check"></span> Data Science</li>
-                            <li><span class="icon_check"></span> Applied Statistics</li>
-                            <li>
-                                <span class="icon_check"></span> Other topics related to
-                                Science, Technology and Data Science
-                            </li>
-                        </ul>
+                        <div class="container">
+                            {!! nl2br($page->scope) !!}
+                        </div>
                     </div>
                 </div>
-                <div class="col-lg-6">
+                <div class="col-md-6">
                     <div class="ha-text">
                         <h2>IMPORTANT DATES</h2>
-                        <h3 class="text-info">
-                            <span class="icon_pencil"></span> Full Paper Deadline November 20
-                        </h3>
-                        <h3 class="text-warning">
-                            <span class="icon_documents"></span> Registration Deadline June 30
-                        </h3>
-                        <h3 class="text-primary">
-                            <span class="icon_check"></span> Payment Deadline July 30
-                        </h3>
+                        <ul class="timeline">
+                            @foreach ($page->timelines as $timeline)
+                                <li>
+                                    <span class="text-primary">{{ $timeline->name }}</span>
+                                    <span
+                                        class="float-right text-primary">{{ \App\Helpers\AppHelper::parse_date_timeline($timeline->date) }}</span>
+                                    <p class="text-justify">{{ $timeline->description }}</p>
+                                </li>
+                            @endforeach
+                        </ul>
                     </div>
                 </div>
             </div>
@@ -190,43 +154,25 @@
             <div class="col-md-6 text-center p-3">
                 <h3 class="mt-5">KEYNOTE SPEAKER</h3>
                 <div class="row mt-5 mb-5">
-                    <div class="col-md-4 text-center">
-                        <img src="{{ asset('manup-master') }}/img/speakers/speaker-2.jpg" class="rounded"
-                            alt="Rounded Image" height="150" />
-                        <p>
-                            <b>Emma Stone Phd</b> <br />
-                            Skolkovo Institute of Science and Technology Russia
-                        </p>
-                    </div>
-                    <div class="col-md-4 text-center">
-                        <img src="{{ asset('manup-master') }}/img/speakers/speaker-2.jpg" class="rounded"
-                            alt="Rounded Image" height="150" />
-                        <p>
-                            <b>Emma Stone Phd</b> <br />
-                            Skolkovo Institute of Science and Technology Russia
-                        </p>
-                    </div>
-                    <div class="col-md-4 text-center">
-                        <img src="{{ asset('manup-master') }}/img/speakers/speaker-2.jpg" class="rounded"
-                            alt="Rounded Image" height="150" />
-                        <p>
-                            <b>Emma Stone Phd</b> <br />
-                            Skolkovo Institute of Science and Technology Russia
-                        </p>
-                    </div>
+                    @foreach ($page->speakers()->where('is_keynote', \App\Models\Speaker::IS_KEYNOTE)->get() as $keynote)
+                        <div class="col-md-4 text-center">
+                            <img src="{{ asset($keynote->image) }}" class="rounded" alt="Rounded Image" height="150" />
+                            <p>
+                                <b>{{ $keynote->name }}</b> <br />
+                                {{ $keynote->institution }}
+                            </p>
+                        </div>
+                    @endforeach
                 </div>
             </div>
             <div class="col-md-6 p-3">
                 <h3 class="mt-5 text-center">INVITED SPEAKER</h3>
                 <ol class="p-5">
-                    <li>
-                        Hatta Prabowo, M.Si., Ph. D (Department of Pharmacy Universitas
-                        Sains Al-Qur'an, Indonesia)
-                    </li>
-                    <li>
-                        Hatta Prabowo, M.Si., Ph. D (Department of Pharmacy Universitas
-                        Sains Al-Qur'an, Indonesia)
-                    </li>
+                    @foreach ($page->speakers()->where('is_keynote', \App\Models\Speaker::IS_INVITED)->get() as $invited)
+                        <li>
+                            {{ $invited->name }} ({{ $invited->institution }})
+                        </li>
+                    @endforeach
                 </ol>
             </div>
         </div>
@@ -245,70 +191,19 @@
                 </div>
             </div>
             <div class="row justify-content-center">
-                <div class="col-lg-3 col-md-6">
-                    <div class="price-item">
-                        <h4>SEMINAR 1</h4>
-                        <div class="pi-price">
-                            <h2><span>$</span>20</h2>
+                @foreach ($categories as $category)
+                    <div class="col-lg-3 col-md-6">
+                        <div class="price-item">
+                            <h4>{{ $category->name }}</h4>
+                            <div class="pi-price">
+                                <h5 class="text-white">{{ \App\Helpers\AppHelper::currency($category->amount) }}</h5>
+                            </div>
+                            <p class="p-2">{{ $category->description }}</p>
+                            <a href="{{ route('register.index') }}" class="price-btn">REGISTER <span
+                                    class="arrow_right"></span></a>
                         </div>
-                        <ul>
-                            <li>One Day Conference Ticket</li>
-                            <li>Coffee-break</li>
-                            <li>Lunch and Networking</li>
-                            <li>Keynote talk</li>
-                            <li>Talk to the Editors Session</li>
-                        </ul>
-                        <a href="#" class="price-btn">REGISTER <span class="arrow_right"></span></a>
                     </div>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                    <div class="price-item">
-                        <h4>SEMINAR 1</h4>
-                        <div class="pi-price">
-                            <h2><span>$</span>20</h2>
-                        </div>
-                        <ul>
-                            <li>One Day Conference Ticket</li>
-                            <li>Coffee-break</li>
-                            <li>Lunch and Networking</li>
-                            <li>Keynote talk</li>
-                            <li>Talk to the Editors Session</li>
-                        </ul>
-                        <a href="#" class="price-btn">REGISTER <span class="arrow_right"></span></a>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                    <div class="price-item">
-                        <h4>SEMINAR 1</h4>
-                        <div class="pi-price">
-                            <h2><span>$</span>20</h2>
-                        </div>
-                        <ul>
-                            <li>One Day Conference Ticket</li>
-                            <li>Coffee-break</li>
-                            <li>Lunch and Networking</li>
-                            <li>Keynote talk</li>
-                            <li>Talk to the Editors Session</li>
-                        </ul>
-                        <a href="#" class="price-btn">REGISTER <span class="arrow_right"></span></a>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                    <div class="price-item">
-                        <h4>SEMINAR 1</h4>
-                        <div class="pi-price">
-                            <h2><span>$</span>20</h2>
-                        </div>
-                        <ul>
-                            <li>One Day Conference Ticket</li>
-                            <li>Coffee-break</li>
-                            <li>Lunch and Networking</li>
-                            <li>Keynote talk</li>
-                            <li>Talk to the Editors Session</li>
-                        </ul>
-                        <a href="#" class="price-btn">REGISTER <span class="arrow_right"></span></a>
-                    </div>
-                </div>
+                @endforeach
             </div>
         </div>
     </section>
@@ -346,18 +241,10 @@
                             <div class="tab-pane active" id="tabs-1" role="tabpanel">
                                 <div class="st-content">
                                     <div class="container">
-                                        <p><b>Chairperson:</b></p>
-                                        <p>
-                                            Prof. Riyanto, Ph.D (Universitas Islam Indonesia,
-                                            Indonesia)
-                                        </p>
-                                        <br />
-                                        <p><b>Scientific Committee:</b></p>
-                                        <p>
-                                            apt. Saepudin, Ph.D. <br />
-                                            apt. Saepudin, Ph.D. <br />
-                                            apt. Saepudin, Ph.D.
-                                        </p>
+                                        <p><b>Technical Committee:</b></p>
+                                        @foreach ($committees as $committee)
+                                            <p>{{ $committee->name }}</p>
+                                        @endforeach
                                     </div>
                                 </div>
                             </div>
@@ -373,21 +260,19 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr>
-                                                    <th scope="row">1</th>
-                                                    <td>Mark</td>
-                                                    <td>Otto</td>
-                                                </tr>
-                                                <tr>
-                                                    <th scope="row">2</th>
-                                                    <td>Jacob</td>
-                                                    <td>Thornton</td>
-                                                </tr>
-                                                <tr>
-                                                    <th scope="row">3</th>
-                                                    <td>Larry</td>
-                                                    <td>the Bird</td>
-                                                </tr>
+                                                @php
+                                                    $no = 1;
+                                                @endphp
+                                                @foreach ($editors as $editor)
+                                                    <tr>
+                                                        <th scope="row">{{ $no++ }}</th>
+                                                        <td>
+                                                            <a href="{{ $editor->scopus }}" class="text-primary"
+                                                                target="_blank">{{ $editor->name }}</a>
+                                                        </td>
+                                                        <td>{{ $editor->institution }}</td>
+                                                    </tr>
+                                                @endforeach
                                             </tbody>
                                         </table>
                                     </div>
@@ -414,24 +299,7 @@
             <div class="p-3">
                 <h4>Author Guidelines</h4>
                 <ol class="m-4">
-                    <li>
-                        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Saepe
-                        eum quibusdam architecto commodi perferendis aspernatur
-                        consequuntur eos esse debitis ex, praesentium consequatur expedita
-                        atque molestias ratione quod explicabo aperiam asperiores.
-                    </li>
-                    <li>
-                        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Saepe
-                        eum quibusdam architecto commodi perferendis aspernatur
-                        consequuntur eos esse debitis ex, praesentium consequatur expedita
-                        atque molestias ratione quod explicabo aperiam asperiores.
-                    </li>
-                    <li>
-                        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Saepe
-                        eum quibusdam architecto commodi perferendis aspernatur
-                        consequuntur eos esse debitis ex, praesentium consequatur expedita
-                        atque molestias ratione quod explicabo aperiam asperiores.
-                    </li>
+                    {!! nl2br($page->submission) !!}
                 </ol>
                 <div class="mt-5 mb-5 text-center">
                     <a href="{{ route('register.index') }}" class="primary-btn">REGISTRATION</a>
@@ -452,12 +320,11 @@
                 <div class="col-12 text-center mb-4">
                     <h4>Check our previous Conference Proceedings</h4>
                 </div>
-                <a href="#" class="primary-btn col-4">UISEB 2020</a>
-                <a href="#" class="primary-btn col-4">UISEB 2021</a>
-                <a href="#" class="primary-btn col-4">UISEB 2022</a>
-                <div class="col-12 text-center mt-4 mb-5">
-                    <h4>Or</h4>
-                    <a href="#" class="primary-btn col-4 mt-4">UISEB 2023</a>
+                <div class="col-12 text-center">
+                    @foreach ($page->articles as $article)
+                        <a href="{{ $article->link }}" class="primary-btn col-4"
+                            target="_blank">{{ $article->name }}</a>
+                    @endforeach
                 </div>
             </div>
         </div>
@@ -496,11 +363,11 @@
                         <h2>CONTACT PERSON</h2>
                     </div>
                     <div class="cs-text">
-                        <a href="https://api.whatsapp.com/send?phone=62274895920" class="text-primary"> 62274895920
-                            (Liberty)</a>
-                        <br>
-                        <a href="https://api.whatsapp.com/send?phone=62274895920" class="text-primary">62274895920
-                            (Ozon)</a>
+                        @foreach ($page->contacts as $contact)
+                            <a href="https://api.whatsapp.com/send?phone={{ $contact->phone_number }}"
+                                class="text-primary" target="_blank"> {{ $contact->phone_number }} ({{ $contact->name }})</a>
+                            <br>
+                        @endforeach
                     </div>
                 </div>
             </div>

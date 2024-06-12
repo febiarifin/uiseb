@@ -46,6 +46,10 @@
                             <option value="Engineering, etc." {{ $user->subject_background == 'Engineering, etc.' ? 'selected' : null }}>Engineering, etc.</option>
                         </select>
                     </div>
+                    <div class="mb-3">
+                        <label>Scopus Link</label>
+                        <input type="url" class="form-control" value="{{ $user->scopus }}" name="scopus" required>
+                    </div>
                 @endif
                 <button type="submit" class="btn btn-primary mt-3"><i class="fas fa-check"></i> SIMPAN</button>
             </form>

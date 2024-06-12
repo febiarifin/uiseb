@@ -31,7 +31,8 @@ class LoginController extends Controller
                 if (Auth::user()->is_email_verified) {
                     return redirect()->intended('dashboard');
                 }else{
-                    return redirect()->route('logout');
+                    auth()->logout();
+                    return redirect()->route('login.index')->with('error', 'If you have registered, please verify your email first!');
                 }
             }
         }

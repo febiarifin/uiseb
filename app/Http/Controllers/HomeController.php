@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Page;
 use App\Models\Registration;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
@@ -13,8 +15,20 @@ class HomeController extends Controller
 {
     public function index()
     {
+        $page = Page::with(['timelines','contacts','speakers','articles'])->where('status', Page::ENABLE)->whereYear('created_at', now())->first();
+        if (!$page) {
+            $page = Page::with(['timelines','contacts','speakers','articles'])->first();
+        }
+        $date = Carbon::parse($page->date);
         $data = [
             'title' => config('app.name'),
+            'page' => $page,
+            'categories' => Category::all(),
+            'editors' => User::where('type', User::TYPE_EDITOR)->get(),
+            'committees' => User::where('type', User::TYPE_COMMITTEE)->get(),
+            'month' => $date->month,
+            'day' => $date->day,
+            'year' => $date->year,
         ];
         return view('pages.public.index', $data);
     }

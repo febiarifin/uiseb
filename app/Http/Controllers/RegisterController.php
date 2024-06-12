@@ -103,6 +103,9 @@ class RegisterController extends Controller
     public function uploadPaymentStore(Request $request, $id)
     {
         $registration = Registration::findOrFail($id);
+        if (Auth::user()->id != $registration->user_id) {
+            return back();
+        }
         $validatedData = $request->validate([
             'payment_image' => ['required','mimes:png,jpg,jpeg','max:500'],
         ]);
@@ -131,10 +134,12 @@ class RegisterController extends Controller
     public function uploadPaperStore(Request $request, $id)
     {
         $registration = Registration::findOrFail($id);
+        if (Auth::user()->id != $registration->user_id) {
+            return back();
+        }
         $validatedData = $request->validate([
             'paper' => ['required','mimes:pdf','max:500'],
         ]);
-        // AppHelper::delete_file($registration->paper);
         $validatedData['paper'] = AppHelper::upload_file($request->paper,'papers');
         $validatedData['status'] = Registration::REVIEW;
         $registration->update($validatedData);

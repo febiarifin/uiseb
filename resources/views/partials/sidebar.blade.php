@@ -28,7 +28,7 @@
 
     @if (Auth::user()->type == \App\Models\User::TYPE_ADMIN)
         <li class="nav-item {{ $active == 'page' ? 'active' : null }}">
-            <a class="nav-link" href="#">
+            <a class="nav-link" href="{{ route('pages.index') }}">
                 <i class="fas fa-fw fa-paste"></i>
                 <span>Manajemen Halaman</span></a>
         </li>
@@ -75,4 +75,11 @@
         </li>
     @endif
 
+    <!-- Divider -->
+    <hr class="sidebar-divider d-none d-md-block">
+
+    <!-- Sidebar Toggler (Sidebar) -->
+    <div class="text-center d-none d-md-inline">
+        <button class="rounded-circle border-0" id="sidebarToggle"></button>
+    </div>
 </ul>

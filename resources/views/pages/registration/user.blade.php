@@ -46,7 +46,7 @@
                             <tr>
                                 <td>{{ $no++ }}</td>
                                 <td>{{ $registration->category->name }}
-                                    @if ($registration->is_paper)
+                                    @if ($registration->category->is_paper)
                                         <span class="badge badge-secondary">+ PAPER</span>
                                     @endif
                                 </td>

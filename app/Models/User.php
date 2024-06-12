@@ -16,6 +16,7 @@ class User extends Authenticatable
     public const TYPE_EDITOR = 2;
     public const TYPE_REVIEWER = 3;
     public const TYPE_PESERTA = 4;
+    public const TYPE_COMMITTEE = 5;
 
     public const IS_EMAIL_VERIFIED = 1;
 
@@ -34,6 +35,7 @@ class User extends Authenticatable
         'institution',
         'position',
         'subject_background',
+        'scopus',
     ];
 
     /**

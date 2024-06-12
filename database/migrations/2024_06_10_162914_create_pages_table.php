@@ -16,11 +16,16 @@ return new class extends Migration
         Schema::create('pages', function (Blueprint $table) {
             $table->id();
             $table->string('name')->unique();
-            $table->dateTime('date');
-            $table->string('theme');
-            $table->date('deadline_registration');
-            $table->date('deadline_paper');
-            $table->date('deadline_payment');
+            $table->string('theme')->nullable();
+            $table->dateTime('date')->nullable();
+            $table->text('about_1')->nullable();
+            $table->text('about_2')->nullable();
+            $table->string('image_1')->nullable();
+            $table->string('image_2')->nullable();
+            $table->string('image_3')->nullable();
+            $table->text('scope')->nullable();
+            $table->text('submission')->nullable();
+            $table->boolean('status')->default(0);
             $table->timestamps();
         });
     }
