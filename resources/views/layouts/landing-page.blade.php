@@ -80,20 +80,6 @@
     <!-- Footer Section End -->
 
     <!-- Js Plugins -->
-    <script src="{{ asset('manup-master') }}/js/jquery-3.3.1.min.js"></script>
-    <script src="{{ asset('manup-master') }}/js/bootstrap.min.js"></script>
-    <script src="{{ asset('manup-master') }}/js/jquery.magnific-popup.min.js"></script>
-    <script src="{{ asset('manup-master') }}/js/jquery.countdown.min.js"></script>
-    <script src="{{ asset('manup-master') }}/js/jquery.slicknav.js"></script>
-    <script src="{{ asset('manup-master') }}/js/owl.carousel.min.js"></script>
-    <script src="{{ asset('manup-master') }}/js/main.js"></script>
-    <script src="http://cdn.bootcss.com/toastr.js/latest/js/toastr.min.js"></script>
-    {!! Toastr::message() !!}
-    <script>
-        var timerdate = {{ $month }} + '/' + {{ $day }} + '/' + {{ $year }};
-        $("#countdown").countdown(timerdate, function(event) {
-            $(this).html(event.strftime("<div class='cd-item'><span>%D</span> <p>Days</p> </div>" + "<div class='cd-item'><span>%H</span> <p>Hrs</p> </div>" + "<div class='cd-item'><span>%M</span> <p>Mins</p> </div>" + "<div class='cd-item'><span>%S</span> <p>Secs</p> </div>"));
-        });
-    </script>
+    @include('partials.js-landing-page')
   </body>
 </html>
