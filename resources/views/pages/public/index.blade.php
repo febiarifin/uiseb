@@ -194,7 +194,11 @@
                 @foreach ($categories as $category)
                     <div class="col-lg-3 col-md-6">
                         <div class="price-item">
-                            <h4>{{ $category->name }}</h4>
+                            <h4>{{ $category->name }}
+                                @if ($category->is_paper)
+                                    + PAPER
+                                @endif
+                            </h4>
                             <div class="pi-price">
                                 <h5 class="text-white">{{ \App\Helpers\AppHelper::currency($category->amount) }}</h5>
                             </div>
