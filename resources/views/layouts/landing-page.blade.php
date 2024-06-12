@@ -48,13 +48,13 @@
             <div class="footer-text">
               <div class="ft-logo">
                 <a href="#" class="footer-logo"
-                  ><img src="{{ asset('manup-master') }}/img/logo_UISEB.png" alt="" height="80"
+                  ><img src="{{ asset('manup-master/img/logo_UISEB.png') }}" alt="" height="80"
                 /></a>
               </div>
               <ul>
-                <li><a href="#">UNSIQ</a></li>
-                <li><a href="#">FEB</a></li>
-                <li><a href="#">PMB</a></li>
+                <li><a href="https://unsiq.ac.id/" target="_blank">UNSIQ</a></li>
+                <li><a href="https://feb-unsiq.ac.id/" target="_blank">FEB</a></li>
+                <li><a href="https://pmb.unsiq.ac.id/" target="_blank">PMB</a></li>
               </ul>
               <div class="copyright-text">
                 <p>
