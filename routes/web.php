@@ -1,11 +1,13 @@
 <?php
 
+use App\Http\Controllers\AbstrakController;
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PageController;
+use App\Http\Controllers\PaperController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\SpeakerController;
 use App\Http\Controllers\TimelineController;
@@ -52,13 +54,18 @@ Route::group(['middleware' => 'auth'], function () {
         Route::resource('speakers', SpeakerController::class);
         Route::resource('articles', ArticleController::class);
         Route::get('registration/history', [RegisterController::class, 'registrationHistory'])->name('registration.history');
+        Route::get('registration/validation', [RegisterController::class, 'registrationValidation'])->name('registration.validation');
+        Route::get('registration/validate/{id}', [RegisterController::class, 'registrationValidate'])->name('registration.validate');
     });
 
     Route::group(['middleware' => 'isAdminReviewer'], function () {
-        Route::get('registration/validation', [RegisterController::class, 'registrationValidation'])->name('registration.validation');
-        Route::get('registration/validate/{id}', [RegisterController::class, 'registrationValidate'])->name('registration.validate');
         Route::get('registration/acc/{id}', [RegisterController::class, 'registrationAcc'])->name('registration.acc');
         Route::put('registration/revisi/{id}', [RegisterController::class, 'registrationrevisi'])->name('registration.revisi');
+    });
+
+    Route::group(['middleware' => 'isAdminEditor'], function () {
+        Route::put('abstraks/reviewer/store/{id}', [AbstrakController::class, 'reviewerStore'])->name('abstraks.reviewer.store');
+        Route::get('abstraks/reviewer/delete/{id}', [AbstrakController::class, 'reviewerDelete'])->name('abstraks.reviewer.delete');
     });
 
     Route::group(['middleware' => 'isAdminReviewerEditor'], function () {
@@ -66,6 +73,8 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('registration/review/{id}', [RegisterController::class, 'registrationreview'])->name('registration.review');
         Route::get('registration/paper-acc/{id}', [RegisterController::class, 'registrationPaperAcc'])->name('registration.paper.acc');
         Route::put('registration/paper-revisi/{id}', [RegisterController::class, 'registrationPaperRevisi'])->name('registration.paper.revisi');
+        Route::get('abstraks/review/{abstrak}', [AbstrakController::class, 'review'])->name('abstraks.review');
+        Route::put('abstraks/review/store/{id}', [AbstrakController::class, 'reviewStore'])->name('abstraks.review.store');
     });
 
     Route::group(['middleware' => 'isPeserta'], function () {
@@ -77,6 +86,8 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('registrations/list', [RegisterController::class, 'registrationList'])->name('registration.list');
         Route::get('registrations/create/{id}', [RegisterController::class, 'registrationCreate'])->name('registration.create');
         Route::post('registrations/store', [RegisterController::class, 'registrationstore'])->name('registration.store');
+        Route::resource('abstraks', AbstrakController::class);
+        Route::resource('papers', PaperController::class);
     });
 });
 

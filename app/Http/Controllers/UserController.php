@@ -7,6 +7,7 @@ use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Http;
 
 class UserController extends Controller
 {
@@ -124,11 +125,13 @@ class UserController extends Controller
 
     public function profile()
     {
+        $country_codes = Http::get('https://gist.githubusercontent.com/anubhavshrimal/75f6183458db8c453306f93521e93d37/raw/f77e7598a8503f1f70528ae1cbf9f66755698a16/CountryCodes.json')->json();
         $data = [
             'title' => 'Profile User',
             'subtitle' => null,
             'active' => 'dashboard',
             'user' => Auth::user(),
+            'country_codes' => $country_codes,
         ];
         return view('pages.user.profile', $data);
     }

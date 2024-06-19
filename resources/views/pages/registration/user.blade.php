@@ -77,19 +77,30 @@
                                     @endif
                                 </td>
                                 <td class="d-flex">
-                                    @if ($registration->category->is_paper)
+                                    @if (!$registration->payment_image)
+                                    <a href="{{ route('upload.payment', $registration->id) }}"
+                                        class="btn btn-primary btn-sm mt-2"><i class="fas fa-upload"></i> Upload
+                                        Pembayaran</a>
+                                    @else
+                                        @if ($registration->category->is_paper && $registration->is_valid == \App\Models\Registration::IS_VALID)
+                                            @if (!$registration->paper || $registration->status == \App\Models\Registration::REVISI)
+                                            <a href="{{ route('upload.paper', $registration->id) }}"
+                                                class="btn btn-primary btn-sm mt-2"><i class="fas fa-upload"></i> Upload
+                                                Paper</a>
+                                            @endif
+                                        @endif
+                                    @endif
+                                    {{-- @if ($registration->category->is_paper)
                                         @if ($registration->status == \App\Models\Registration::ACC)
                                             @if (!$registration->payment_image)
                                                 <a href="{{ route('upload.payment', $registration->id) }}"
-                                                    class="btn btn-primary btn-sm mt-2"><i
-                                                        class="fas fa-upload"></i> Upload
+                                                    class="btn btn-primary btn-sm mt-2"><i class="fas fa-upload"></i> Upload
                                                     Pembayaran</a>
                                             @endif
                                         @else
                                             @if (!$registration->paper || $registration->status == \App\Models\Registration::REVISI)
                                                 <a href="{{ route('upload.paper', $registration->id) }}"
-                                                    class="btn btn-primary btn-sm mt-2"><i
-                                                        class="fas fa-upload"></i> Upload
+                                                    class="btn btn-primary btn-sm mt-2"><i class="fas fa-upload"></i> Upload
                                                     Paper</a>
                                             @endif
                                         @endif
@@ -99,7 +110,7 @@
                                                 class="btn btn-primary btn-sm mt-2"><i class="fas fa-upload"></i>
                                                 Upload Pembayaran</a>
                                         @endif
-                                    @endif
+                                    @endif --}}
                                     &nbsp;
                                     <a href="{{ route('registration.detail', $registration->id) }}"
                                         class="btn btn-info btn-sm mt-2"><i class="fas fa-info-circle"></i></a>

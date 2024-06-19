@@ -109,20 +109,20 @@ class PageController extends Controller
             'date' => ['required'],
             'about_1' => ['required'],
             'about_2' => ['required'],
-            'image_1' => [Rule::requiredIf(function () {
-                if (empty($this->request->image_1)) {
+            'image_1' => [Rule::requiredIf(function () use($request) {
+                if (empty($request->image_1)) {
                     return false;
                 }
                 return true;
             }), 'mimes:jpg,png,jpeg', 'max:1000'],
-            'image_2' => [Rule::requiredIf(function () {
-                if (empty($this->request->image_1)) {
+            'image_2' => [Rule::requiredIf(function () use($request) {
+                if (empty($request->image_1)) {
                     return false;
                 }
                 return true;
             }), 'mimes:jpg,png,jpeg', 'max:1000'],
-            'image_3' => [Rule::requiredIf(function () {
-                if (empty($this->request->image_1)) {
+            'image_3' => [Rule::requiredIf(function () use($request) {
+                if (empty($request->image_1)) {
                     return false;
                 }
                 return true;

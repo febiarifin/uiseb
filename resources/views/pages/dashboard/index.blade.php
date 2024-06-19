@@ -3,7 +3,7 @@
 @section('content')
     <div class="row">
         @if (Auth::user()->type == \App\Models\User::TYPE_ADMIN)
-            <div class="col-xl-3 col-md-6 mb-4">
+            <div class="col-xl-4 col-md-6 mb-4">
                 <div class="card border-left-primary shadow h-100 py-2">
                     <div class="card-body">
                         <div class="row no-gutters align-items-center">
@@ -18,7 +18,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-xl-3 col-md-6 mb-4">
+            <div class="col-xl-4 col-md-6 mb-4">
                 <div class="card border-left-primary shadow h-100 py-2">
                     <div class="card-body">
                         <div class="row no-gutters align-items-center">
@@ -33,7 +33,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-xl-3 col-md-6 mb-4">
+            <div class="col-xl-4 col-md-6 mb-4">
                 <div class="card border-left-primary shadow h-100 py-2">
                     <div class="card-body">
                         <div class="row no-gutters align-items-center">
@@ -51,7 +51,7 @@
             </div>
         @endif
         @if (Auth::user()->type == \App\Models\User::TYPE_ADMIN || Auth::user()->type == \App\Models\User::TYPE_REVIEWER)
-            <div class="col-md-6">
+            <div class="col-md-12">
                 <div class="card shadow">
                     <div class="card-header">
                         <h6 class="m-0 font-weight-bold text-primary">Validasi Pendaftaran Terbaru</h6>
@@ -80,7 +80,7 @@
                 </div>
             </div>
         @endif
-        @if (Auth::user()->type == \App\Models\User::TYPE_ADMIN ||
+        {{-- @if (Auth::user()->type == \App\Models\User::TYPE_ADMIN ||
                 Auth::user()->type == \App\Models\User::TYPE_EDITOR ||
                 Auth::user()->type == \App\Models\User::TYPE_REVIEWER)
             <div class="col-md-6">
@@ -107,6 +107,6 @@
                     </div>
                 </div>
             </div>
-        @endif
+        @endif --}}
     </div>
 @endsection

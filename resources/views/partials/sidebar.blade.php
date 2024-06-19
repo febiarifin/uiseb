@@ -19,11 +19,11 @@
     </li>
 
     @if (Auth::user()->type == \App\Models\User::TYPE_PESERTA)
-        <li class="nav-item {{ $active == 'registration' ? 'active' : null }}">
+        {{-- <li class="nav-item {{ $active == 'registration' ? 'active' : null }}">
             <a class="nav-link" href="{{ route('registration.user') }}">
                 <i class="fas fa-fw fa-tachometer-alt"></i>
                 <span>Registration</span></a>
-        </li>
+        </li> --}}
     @endif
 
     @if (Auth::user()->type == \App\Models\User::TYPE_ADMIN)
@@ -47,11 +47,11 @@
                 <i class="fas fa-fw fa-check-circle"></i>
                 <span>Validasi Pendaftaran</span></a>
         </li>
-        <li class="nav-item {{ $active == 'review' ? 'active' : null }}">
+        {{-- <li class="nav-item {{ $active == 'review' ? 'active' : null }}">
             <a class="nav-link" href="{{ route('registration.reviews') }}">
                 <i class="fas fa-fw fa-star"></i>
                 <span>Review Paper</span></a>
-        </li>
+        </li> --}}
         <li class="nav-item {{ $active == 'registration' ? 'active' : null }}">
             <a class="nav-link" href="{{ route('registration.history') }}">
                 <i class="fas fa-fw fa-clock"></i>
@@ -60,19 +60,19 @@
     @endif
 
     @if (Auth::user()->type == \App\Models\User::TYPE_REVIEWER)
-        <li class="nav-item {{ $active == 'validation' ? 'active' : null }}">
+        {{-- <li class="nav-item {{ $active == 'validation' ? 'active' : null }}">
             <a class="nav-link" href="{{ route('registration.validation') }}">
                 <i class="fas fa-fw fa-check-circle"></i>
                 <span>Validasi Pendaftaran</span></a>
-        </li>
+        </li> --}}
     @endif
 
     @if (Auth::user()->type == \App\Models\User::TYPE_EDITOR || Auth::user()->type == \App\Models\User::TYPE_REVIEWER)
-        <li class="nav-item {{ $active == 'review' ? 'active' : null }}">
+        {{-- <li class="nav-item {{ $active == 'review' ? 'active' : null }}">
             <a class="nav-link" href="{{ route('registration.reviews') }}">
                 <i class="fas fa-fw fa-star"></i>
                 <span>Review Paper</span></a>
-        </li>
+        </li> --}}
     @endif
 
     <!-- Divider -->

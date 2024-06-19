@@ -107,37 +107,12 @@
                     </div>
                 </div>
             </div>
-            <div class="row mt-5">
-                <div class="col-lg-6">
-                    <div class="ha-text">
-                        <h2>CONFERENCE SCOPE</h2>
-                        <div class="container">
-                            {!! nl2br($page->scope) !!}
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="ha-text">
-                        <h2>IMPORTANT DATES</h2>
-                        <ul class="timeline">
-                            @foreach ($page->timelines as $timeline)
-                                <li>
-                                    <span class="text-primary">{{ $timeline->name }}</span>
-                                    <span
-                                        class="float-right text-primary">{{ \App\Helpers\AppHelper::parse_date_timeline($timeline->date) }}</span>
-                                    <p class="text-justify">{{ $timeline->description }}</p>
-                                </li>
-                            @endforeach
-                        </ul>
-                    </div>
-                </div>
-            </div>
         </div>
     </section>
     <!-- Home About Section End -->
 
     <!-- Speaker Section Begin -->
-    <section class="team-member-section" id="conference-section">
+    <section class="team-member-section mt-5" id="conference-section">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
@@ -178,6 +153,38 @@
         </div>
     </section>
     <!--Speaker Section End -->
+
+    <!--Scope and Timeline -->
+    <section class="scope-timeline-section spad">
+        <div class="container">
+            <div class="row mb-5">
+                <div class="col-lg-6">
+                    <div class="ha-text">
+                        <h2>CONFERENCE SCOPE</h2>
+                        <div class="container">
+                            {!! nl2br($page->scope) !!}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="ha-text">
+                        <h2>IMPORTANT DATES</h2>
+                        <ul class="timeline">
+                            @foreach ($page->timelines as $timeline)
+                                <li>
+                                    <span class="text-primary">{{ $timeline->name }}</span>
+                                    <span
+                                        class="float-right text-primary">{{ \App\Helpers\AppHelper::parse_date_timeline($timeline->date) }}</span>
+                                    <p class="text-justify">{{ $timeline->description }}</p>
+                                </li>
+                            @endforeach
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--Scope and Timeline End -->
 
     <!-- Pricing Section Begin -->
     <section class="pricing-section set-bg spad" data-setbg="{{ asset('manup-master') }}/img/pricing-bg.jpg"
@@ -369,7 +376,8 @@
                     <div class="cs-text">
                         @foreach ($page->contacts as $contact)
                             <a href="https://api.whatsapp.com/send?phone={{ $contact->phone_number }}"
-                                class="text-primary" target="_blank"> {{ $contact->phone_number }} ({{ $contact->name }})</a>
+                                class="text-primary" target="_blank"> {{ $contact->phone_number }}
+                                ({{ $contact->name }})</a>
                             <br>
                         @endforeach
                     </div>
@@ -380,10 +388,13 @@
     <!-- Contact Section End -->
 @endsection
 @section('script')
-<script>
-    var timerdate = {{ $month }} + '/' + {{ $day }} + '/' + {{ $year }};
-    $("#countdown").countdown(timerdate, function(event) {
-        $(this).html(event.strftime("<div class='cd-item'><span>%D</span> <p>Days</p> </div>" + "<div class='cd-item'><span>%H</span> <p>Hrs</p> </div>" + "<div class='cd-item'><span>%M</span> <p>Mins</p> </div>" + "<div class='cd-item'><span>%S</span> <p>Secs</p> </div>"));
-    });
-</script>
+    <script>
+        var timerdate = {{ $month }} + '/' + {{ $day }} + '/' + {{ $year }};
+        $("#countdown").countdown(timerdate, function(event) {
+            $(this).html(event.strftime("<div class='cd-item'><span>%D</span> <p>Days</p> </div>" +
+                "<div class='cd-item'><span>%H</span> <p>Hrs</p> </div>" +
+                "<div class='cd-item'><span>%M</span> <p>Mins</p> </div>" +
+                "<div class='cd-item'><span>%S</span> <p>Secs</p> </div>"));
+        });
+    </script>
 @endsection

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Abstrak;
 use App\Models\Category;
 use App\Models\Page;
 use App\Models\Registration;
@@ -40,15 +41,33 @@ class HomeController extends Controller
             'active' => 'dashboard',
         ];
         if (Auth::user()->type == User::TYPE_PESERTA) {
-            $view = 'pages.dashboard.index-user';
-            $data['registrations'] = Auth::user()->registrations()->with(['category'])->orderBy('created_at','desc')->take(5)->get();
+            // $view = 'pages.dashboard.index-user';
+            $view = 'pages.dashboard.index-ojs';
+            $data['registrations'] = Auth::user()->registrations()->with(['category','abstraks'])->orderBy('created_at', 'desc')->get();
         }else{
-            $view = 'pages.dashboard.index';
+            if (Auth::user()->type == User::TYPE_ADMIN) {
+                $view = 'pages.dashboard.index';
+                $data['registrations'] = Registration::all();
+            }else{
+                $view = 'pages.dashboard.index-ojs';
+                if (Auth::user()->type == User::TYPE_REVIEWER) {
+                    $data['abstraks'] = Auth::user()->abstraks()->orderBy('created_at','desc')->where('status', Abstrak::REVIEW)->get();
+                }else{
+                    $data['abstraks'] = Abstrak::orderBy('created_at','desc')->get();
+                }
+            }
             $data['users'] = User::whereNotIn('type', [User::TYPE_ADMIN])->get();
-            $data['registrations'] = Registration::all();
             $data['categories'] = Category::all();
-            $data['registrations_validation'] = Registration::with(['category', 'user'])->orderBy('created_at','desc')->where('status', Registration::ACC)->where('is_valid', null)->where('payment_image', '!=', null)->take(5)->get();
-            $data['registrations_reviews'] = Registration::with(['category', 'user'])->orderBy('created_at','desc')->where('status', Registration::REVIEW)->take(5)->get();
+            $data['registrations_validation'] = Registration::with(['category', 'user'])->orderBy('created_at','desc')
+            ->where('is_valid', null)
+            ->where('payment_image', '!=', null)
+            ->take(5)
+            ->get();
+            // $data['registrations_reviews'] = Registration::with(['category', 'user'])
+            // ->orderBy('created_at','desc')
+            // ->where('status', Registration::REVIEW)
+            // ->take(5)
+            // ->get();
         }
         return view($view, $data);
     }

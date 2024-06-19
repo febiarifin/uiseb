@@ -42,4 +42,9 @@ class Registration extends Model
     {
         return $this->hasMany(Revision::class);
     }
+
+    public function abstraks()
+    {
+        return $this->hasMany(Abstrak::class);
+    }
 }

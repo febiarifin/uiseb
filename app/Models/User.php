@@ -61,4 +61,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Registration::class);
     }
+
+    public function abstraks()
+    {
+        return $this->belongsToMany(Abstrak::class, 'abstrak_users', 'user_id', 'abstrak_id')->withPivot(['id']);
+    }
 }

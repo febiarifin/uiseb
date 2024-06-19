@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
+use App\Models\Page;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
@@ -22,6 +23,10 @@ class DatabaseSeeder extends Seeder
             'email' => 'admin@uiseb.feb-unsiq.ac.id',
             'password' => Hash::make(123456),
             'type' => User::TYPE_ADMIN,
+        ]);
+
+        Page::create([
+            'name' => '2024'
         ]);
     }
 }

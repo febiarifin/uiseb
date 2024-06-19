@@ -2,7 +2,10 @@
 
 namespace App\Helpers;
 
+use App\Models\Abstrak;
+use App\Models\Paper;
 use Carbon\Carbon;
+use Illuminate\Support\Str;
 
 class AppHelper{
 
@@ -50,6 +53,15 @@ class AppHelper{
         }
     }
 
+    public static function create_abstrak($registration)
+    {
+        if ($registration->category->is_paper) {
+            Abstrak::create([
+                'registration_id' => $registration->id,
+            ]);
+        }
+    }
+
     public static function delete_file($file)
     {
         if ($file){
@@ -57,6 +69,11 @@ class AppHelper{
                 unlink(public_path($file));
             }
         }
+    }
+
+    public static function file_short_name($file)
+    {
+        return Str::substr($file, 40);
     }
 
 }

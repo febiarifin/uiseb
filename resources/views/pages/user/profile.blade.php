@@ -15,11 +15,25 @@
                     <label>Nama Lengkap</label>
                     <input type="text" class="form-control" value="{{ $user->name }}" name="name" required>
                 </div>
-                @if (Auth::user()->type == \App\Models\User::TYPE_PESERTA || Auth::user()->type == \App\Models\User::TYPE_REVIEWER || Auth::user()->type == \App\Models\User::TYPE_EDITOR)
+                @if (Auth::user()->type == \App\Models\User::TYPE_PESERTA ||
+                        Auth::user()->type == \App\Models\User::TYPE_REVIEWER ||
+                        Auth::user()->type == \App\Models\User::TYPE_EDITOR)
                     <div class="mb-3">
                         <label>Phone Number</label>
-                        <input type="text" class="form-control" value="{{ $user->phone_number }}" name="phone_number"
-                            required>
+                        <div class="row">
+                            <div class="col-md-4">
+                                {{-- <select class="js-example-basic-multiple col-12" name="country_code" required>
+                                    <option value="">--country code---</option>
+                                    @foreach ($country_codes as $country_code)
+                                    <option value="{{ $country_code['dial_code'].','.$country_code['name'] }}">{{ $country_code['dial_code'].' '.$country_code['name'] }}</option>
+                                    @endforeach
+                                </select> --}}
+                            </div>
+                            <div class="col-md-12">
+                                <input type="text" class="form-control col-12" value="{{ $user->phone_number }}"
+                                    name="phone_number" required>
+                            </div>
+                        </div>
                     </div>
                     <div class="mb-3">
                         <label>Institution</label>
@@ -30,20 +44,28 @@
                         <label>Position</label>
                         <select name="position" class="form-control" required>
                             <option value="">--pilih--</option>
-                            <option value="Lecturer" {{ $user->position == 'Lecturer' ? 'selected' : null }}>Lecturer</option>
-                            <option value="Researcher" {{ $user->position == 'Researcher' ? 'selected' : null }}>Researcher</option>
+                            <option value="Lecturer" {{ $user->position == 'Lecturer' ? 'selected' : null }}>Lecturer
+                            </option>
+                            <option value="Researcher" {{ $user->position == 'Researcher' ? 'selected' : null }}>Researcher
+                            </option>
                             <option value="Teacher" {{ $user->position == 'Teacher' ? 'selected' : null }}>Teacher</option>
                             <option value="Student" {{ $user->position == 'Student' ? 'selected' : null }}>Student</option>
+                            <option value="Lainnya" {{ $user->position == 'Lainnya' ? 'selected' : null }}>Lainnya</option>
                         </select>
                     </div>
                     <div class="mb-3">
                         <label>Subject Backgorund</label>
                         <select name="subject_background" class="form-control" required>
                             <option value="">--pilih--</option>
-                            <option value="Pharmacy" {{ $user->subject_background == 'Pharmacy' ? 'selected' : null }}>Pharmacy</option>
-                            <option value="Chemistry" {{ $user->subject_background == 'Chemistry' ? 'selected' : null }}>Chemistry</option>
-                            <option value="Statistics" {{ $user->subject_background == 'Statistics' ? 'selected' : null }}>Statistics</option>
-                            <option value="Engineering, etc." {{ $user->subject_background == 'Engineering, etc.' ? 'selected' : null }}>Engineering, etc.</option>
+                            <option value="Pharmacy" {{ $user->subject_background == 'Pharmacy' ? 'selected' : null }}>
+                                Pharmacy</option>
+                            <option value="Chemistry" {{ $user->subject_background == 'Chemistry' ? 'selected' : null }}>
+                                Chemistry</option>
+                            <option value="Statistics" {{ $user->subject_background == 'Statistics' ? 'selected' : null }}>
+                                Statistics</option>
+                            <option value="Engineering, etc."
+                                {{ $user->subject_background == 'Engineering, etc.' ? 'selected' : null }}>Engineering,
+                                etc.</option>
                         </select>
                     </div>
                     <div class="mb-3">
@@ -92,6 +114,7 @@
     </div>
 @endsection
 @section('script')
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script>
         const passwordInput = document.querySelector('input[name="password"]');
         const confirmPasswordInput = document.getElementById('confirmPassword');
@@ -117,6 +140,10 @@
         submitButton.addEventListener('click', () => {
             confirmPasswordInput.classList.remove('is-invalid');
             confirmPasswordFeedback.style.display = 'none';
+        });
+
+        $(document).ready(function() {
+            $('.js-example-basic-multiple').select2();
         });
     </script>
 @endsection
