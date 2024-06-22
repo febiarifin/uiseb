@@ -13,11 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('paper_users', function (Blueprint $table) {
+        Schema::create('revisi_papers', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id');
-            $table->foreignId('paper_id');
+            $table->text('note');
+            $table->string('file')->nullable();
+            $table->string('file_paper')->nullable();
             $table->timestamps();
+            $table->foreignId('paper_id')->constrained();
+            $table->foreignId('user_id')->constrained();
         });
     }
 
@@ -28,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('paper_users');
+        Schema::dropIfExists('revisi_papers');
     }
 };

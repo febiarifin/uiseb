@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Abstrak;
 use App\Models\Category;
 use App\Models\Page;
+use App\Models\Paper;
 use App\Models\Registration;
 use App\Models\User;
 use Carbon\Carbon;
@@ -52,8 +53,10 @@ class HomeController extends Controller
                 $view = 'pages.dashboard.index-ojs';
                 if (Auth::user()->type == User::TYPE_REVIEWER) {
                     $data['abstraks'] = Auth::user()->abstraks()->orderBy('created_at','desc')->where('status', Abstrak::REVIEW)->get();
+                    $data['papers'] = Auth::user()->papers()->orderBy('created_at','desc')->where('status', Paper::REVIEW)->get();
                 }else{
                     $data['abstraks'] = Abstrak::orderBy('created_at','desc')->get();
+                    $data['papers'] = Paper::orderBy('created_at','desc')->get();
                 }
             }
             $data['users'] = User::whereNotIn('type', [User::TYPE_ADMIN])->get();

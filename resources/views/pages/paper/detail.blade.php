@@ -74,13 +74,13 @@
                     <span class="badge badge-info mr-1">{{ $keyword }}</span>
                 @endforeach
             </div>
-            {{-- <div class="mb-3">
+            <div class="mb-3">
                 <label>Reviewer</label>
                 <br>
                 @foreach ($paper->users as $user)
                     <span class="p-1 border rounded mr-2">@ {{ $user->name }}
                         @if (Auth::user()->type == \App\Models\User::TYPE_EDITOR)
-                            <a href="{{ route('abstraks.reviewer.delete', $user->pivot->id) }}" class="btn btn-light btn-sm"
+                            <a href="{{ route('papers.reviewer.delete', $user->pivot->id) }}" class="btn btn-light btn-sm"
                                 onclick="return confirm('Yakin ingin hapus reviewer?')"><i class="fas fa-trash"></i></a>
                         @endif
                     </span>
@@ -100,7 +100,7 @@
                                         <span aria-hidden="true">×</span>
                                     </button>
                                 </div>
-                                <form action="{{ route('abstraks.reviewer.store', $paper->id) }}" method="post">
+                                <form action="{{ route('papers.reviewer.store', $paper->id) }}" method="post">
                                     @method('put')
                                     @csrf
                                     <div class="modal-body">
@@ -122,7 +122,7 @@
                         </div>
                     </div>
                 @endif
-            </div> --}}
+            </div>
             @if ($paper->acc_at)
                 <div class="mb-3">
                     <label><i class="fas fa-calendar"></i> Accepted At</label>
@@ -143,12 +143,12 @@
                     @if (Auth::user()->type == \App\Models\User::TYPE_REVIEWER)
                         @if ($paper->status == \App\Models\Paper::REVIEW)
                             <a class="btn btn-primary btn-sm" href="#" data-toggle="modal" data-target="#reviewModal">
-                                <i class="fas fa-check-circle"></i> Review Paper
+                                <i class="fas fa-edit"></i> Review Paper
                             </a>
                         @endif
                     @else
                         <a class="btn btn-primary btn-sm" href="#" data-toggle="modal" data-target="#reviewModal">
-                            <i class="fas fa-check-circle"></i> Hasil Turnitin
+                            <i class="fas fa-edit"></i> Hasil Turnitin
                         </a>
                     @endif
                     <!-- Revisi Paper Modal-->
@@ -162,7 +162,7 @@
                                         <span aria-hidden="true">×</span>
                                     </button>
                                 </div>
-                                <form action="{{ route('abstraks.review.store', $paper->id) }}" method="post"
+                                <form action="{{ route('papers.review.store', $paper->id) }}" method="post"
                                     enctype="multipart/form-data">
                                     @method('put')
                                     @csrf
@@ -211,7 +211,7 @@
             @endif
         </div>
     </div>
-    {{-- <div class="card shadow mb-4">
+    <div class="card shadow mb-4">
         <div class="card-header">
             Revisi <span class="badge badge-danger">{{ count($revisis) }}</span>
         </div>
@@ -233,16 +233,16 @@
                                 {{ \App\Helpers\AppHelper::file_short_name($revisi->file) }}</a></b></small>
                     @endif
                     <br>
-                    <small>File Abstrak: <a href="{{ asset($revisi->file_abstrak) }}" target="_blank"> <i
+                    <small>File Paper: <a href="{{ asset($revisi->file_paper) }}" target="_blank"> <i
                                 class="fas fa-download"></i>
-                            {{ \App\Helpers\AppHelper::file_short_name($revisi->file_abstrak) }}</a></b></small>
+                            {{ \App\Helpers\AppHelper::file_short_name($revisi->file_paper) }}</a></b></small>
                 </div>
             @endforeach
             <div class="mt-4">
                 {{ $revisis->links() }}
             </div>
         </div>
-    </div> --}}
+    </div>
 @endsection
 @section('script')
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>

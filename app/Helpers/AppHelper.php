@@ -4,6 +4,7 @@ namespace App\Helpers;
 
 use App\Models\Abstrak;
 use App\Models\Paper;
+use App\Models\Video;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
 
@@ -60,6 +61,20 @@ class AppHelper{
                 'registration_id' => $registration->id,
             ]);
         }
+    }
+
+    public static function create_paper($abstrak)
+    {
+        Paper::create([
+            'abstrak_id' => $abstrak->id,
+        ]);
+    }
+
+    public static function create_video($paper)
+    {
+        Video::create([
+            'paper_id' => $paper->id,
+        ]);
     }
 
     public static function delete_file($file)

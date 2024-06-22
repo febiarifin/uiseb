@@ -13,11 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('paper_users', function (Blueprint $table) {
+        Schema::create('videos', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id');
-            $table->foreignId('paper_id');
+            $table->string('link')->nullable();
+            $table->tinyInteger('status')->nullable();
+            $table->timestamp('acc_at')->nullable();
             $table->timestamps();
+            $table->foreignId('paper_id')->constrained();
         });
     }
 
@@ -28,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('paper_users');
+        Schema::dropIfExists('videos');
     }
 };

@@ -66,4 +66,9 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Abstrak::class, 'abstrak_users', 'user_id', 'abstrak_id')->withPivot(['id']);
     }
+
+    public function papers()
+    {
+        return $this->belongsToMany(Paper::class, 'paper_users', 'user_id', 'paper_id')->withPivot(['id']);
+    }
 }

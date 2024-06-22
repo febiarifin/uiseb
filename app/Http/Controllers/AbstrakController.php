@@ -157,8 +157,8 @@ class AbstrakController extends Controller
 
     public function reviewerDelete($id)
     {
-        $reviewer_abstrak = DB::table('abstrak_users')->where('id', $id)->delete();
-        Toastr::success('Reviewer berhasil ditugaskan', 'Success', ["positionClass" => "toast-top-right"]);
+        DB::table('abstrak_users')->where('id', $id)->delete();
+        Toastr::success('Reviewer berhasil dihapus', 'Success', ["positionClass" => "toast-top-right"]);
         return back();
     }
 
@@ -186,16 +186,13 @@ class AbstrakController extends Controller
         if ($request->status) {
             if ($validatedData['status'] == Abstrak::REJECTED) {
                 AppHelper::create_abstrak($abstrak->registration);
+            }else if ($validatedData['status'] == Abstrak::ACCEPTED) {
+                AppHelper::create_paper($abstrak);
             }
             $abstrak->update([
                 'status' => $validatedData['status'],
                 'acc_at' => $validatedData['status'] == Abstrak::ACCEPTED ? now() : null,
             ]);
-            if ($validatedData['status'] == Abstrak::ACCEPTED) {
-                Paper::create([
-                    'abstrak_id' => $abstrak->id,
-                ]);
-            }
         }
         Toastr::success('Review abstrak berhasil disimpan', 'Success', ["positionClass" => "toast-top-right"]);
         return back();

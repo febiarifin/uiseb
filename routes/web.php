@@ -12,6 +12,7 @@ use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\SpeakerController;
 use App\Http\Controllers\TimelineController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\VideoController;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 
@@ -66,6 +67,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::group(['middleware' => 'isAdminEditor'], function () {
         Route::put('abstraks/reviewer/store/{id}', [AbstrakController::class, 'reviewerStore'])->name('abstraks.reviewer.store');
         Route::get('abstraks/reviewer/delete/{id}', [AbstrakController::class, 'reviewerDelete'])->name('abstraks.reviewer.delete');
+        Route::put('papers/reviewer/store/{id}', [PaperController::class, 'reviewerStore'])->name('papers.reviewer.store');
+        Route::get('papers/reviewer/delete/{id}', [PaperController::class, 'reviewerDelete'])->name('papers.reviewer.delete');
     });
 
     Route::group(['middleware' => 'isAdminReviewerEditor'], function () {
@@ -75,6 +78,8 @@ Route::group(['middleware' => 'auth'], function () {
         Route::put('registration/paper-revisi/{id}', [RegisterController::class, 'registrationPaperRevisi'])->name('registration.paper.revisi');
         Route::get('abstraks/review/{abstrak}', [AbstrakController::class, 'review'])->name('abstraks.review');
         Route::put('abstraks/review/store/{id}', [AbstrakController::class, 'reviewStore'])->name('abstraks.review.store');
+        Route::get('papers/review/{paper}', [PaperController::class, 'review'])->name('papers.review');
+        Route::put('papers/review/store/{id}', [PaperController::class, 'reviewStore'])->name('papers.review.store');
     });
 
     Route::group(['middleware' => 'isPeserta'], function () {
@@ -88,6 +93,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('registrations/store', [RegisterController::class, 'registrationstore'])->name('registration.store');
         Route::resource('abstraks', AbstrakController::class);
         Route::resource('papers', PaperController::class);
+        Route::resource('videos', VideoController::class);
     });
 });
 

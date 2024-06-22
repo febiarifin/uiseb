@@ -29,4 +29,19 @@ class Paper extends Model
     {
         return $this->belongsTo(Abstrak::class);
     }
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class, 'paper_users', 'paper_id', 'user_id')->withPivot(['id']);
+    }
+
+    public function revisis()
+    {
+        return $this->hasMany(RevisiPaper::class);
+    }
+
+    public function video()
+    {
+        return $this->hasOne(Video::class);
+    }
 }

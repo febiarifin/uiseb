@@ -121,12 +121,12 @@
                     @if (Auth::user()->type == \App\Models\User::TYPE_REVIEWER)
                         @if ($abstrak->status == \App\Models\Abstrak::REVIEW)
                             <a class="btn btn-primary btn-sm" href="#" data-toggle="modal" data-target="#reviewModal">
-                                <i class="fas fa-check-circle"></i> Review Abstrak
+                                <i class="fas fa-edit"></i> Review Abstrak
                             </a>
                         @endif
                     @else
                         <a class="btn btn-primary btn-sm" href="#" data-toggle="modal" data-target="#reviewModal">
-                            <i class="fas fa-check-circle"></i> Hasil Turnitin
+                            <i class="fas fa-edit"></i> Hasil Turnitin
                         </a>
                     @endif
                     <!-- Revisi Abstrak Modal-->
