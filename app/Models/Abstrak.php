@@ -33,9 +33,9 @@ class Abstrak extends Model
         return $this->hasMany(Penulis::class);
     }
 
-    public function paper()
+    public function papers()
     {
-        return $this->hasOne(Paper::class);
+        return $this->hasMany(Paper::class);
     }
 
     public function users()

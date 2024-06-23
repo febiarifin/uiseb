@@ -26,4 +26,9 @@ class Video extends Model
     {
         return $this->belongsTo(Paper::class);
     }
+
+    public function revisis()
+    {
+        return $this->hasMany(RevisiVideo::class);
+    }
 }

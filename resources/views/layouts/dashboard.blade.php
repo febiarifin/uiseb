@@ -36,6 +36,7 @@
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.css" rel="stylesheet"/>
     <link rel="stylesheet" href="{{ asset('assets/css/timeline.css') }}">
+    <link href="https://vjs.zencdn.net/7.19.2/video-js.css" rel="stylesheet" />
 </head>
 
 <body id="page-top">

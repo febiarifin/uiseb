@@ -40,8 +40,8 @@ class Paper extends Model
         return $this->hasMany(RevisiPaper::class);
     }
 
-    public function video()
+    public function videos()
     {
-        return $this->hasOne(Video::class);
+        return $this->hasMany(Video::class);
     }
 }

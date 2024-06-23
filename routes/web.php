@@ -8,6 +8,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\PaperController;
+use App\Http\Controllers\PDFController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\SpeakerController;
 use App\Http\Controllers\TimelineController;
@@ -69,6 +70,8 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('abstraks/reviewer/delete/{id}', [AbstrakController::class, 'reviewerDelete'])->name('abstraks.reviewer.delete');
         Route::put('papers/reviewer/store/{id}', [PaperController::class, 'reviewerStore'])->name('papers.reviewer.store');
         Route::get('papers/reviewer/delete/{id}', [PaperController::class, 'reviewerDelete'])->name('papers.reviewer.delete');
+        Route::get('videos/review/{video}', [VideoController::class, 'review'])->name('videos.review');
+        Route::put('videos/review/store/{id}', [VideoController::class, 'reviewStore'])->name('videos.review.store');
     });
 
     Route::group(['middleware' => 'isAdminReviewerEditor'], function () {
@@ -95,6 +98,8 @@ Route::group(['middleware' => 'auth'], function () {
         Route::resource('papers', PaperController::class);
         Route::resource('videos', VideoController::class);
     });
+
+    Route::get('print/{id}/{type}', [PDFController::class, 'print_review'])->name('print.review');
 });
 
 Route::get('/storage-link', function () {

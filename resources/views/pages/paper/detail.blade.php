@@ -230,12 +230,12 @@
                     @if ($revisi->file)
                         <small>File Revisi: <a href="{{ asset($revisi->file) }}" target="_blank"> <i
                                     class="fas fa-download"></i>
-                                {{ \App\Helpers\AppHelper::file_short_name($revisi->file) }}</a></b></small>
+                                {{ \App\Helpers\AppHelper::file_short_name($revisi->file) }}</a></small>
                     @endif
                     <br>
                     <small>File Paper: <a href="{{ asset($revisi->file_paper) }}" target="_blank"> <i
                                 class="fas fa-download"></i>
-                            {{ \App\Helpers\AppHelper::file_short_name($revisi->file_paper) }}</a></b></small>
+                            {{ \App\Helpers\AppHelper::file_short_name($revisi->file_paper) }}</a></small>
                 </div>
             @endforeach
             <div class="mt-4">
