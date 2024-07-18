@@ -75,6 +75,7 @@
               Don't have account?
               <a href="{{ route('register.index') }}" class="text-primary">Register</a>
             </p>
+            <p><a href="{{ route('forget.password.get') }}" class="text-primary">Forgot Password?</a></p>
           </div>
         </div>
       </form>

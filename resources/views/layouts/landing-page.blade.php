@@ -28,7 +28,19 @@
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 
     <link rel="stylesheet" href="{{ asset('assets/css/timeline.css') }}">
-    
+    <style>
+        .bg-batik {
+            background-image: url('{{ asset('assets/images/bg-batik-20.png') }}');
+            background-size: cover;
+            background-repeat: no-repeat;
+        }
+        .bg-wayang {
+            background-image: url('{{ asset('assets/images/bg-wayang-50.png') }}');
+            background-size: cover;
+            background-repeat: no-repeat;
+        }
+    </style>
+
 </head>
 
 <body>

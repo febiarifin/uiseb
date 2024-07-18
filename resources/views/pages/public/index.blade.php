@@ -89,7 +89,7 @@
     <!-- Counter Section End -->
 
     <!-- Home About Section Begin -->
-    <section class="home-about-section spad">
+    <section class="home-about-section spad bg-batik">
         <div class="container">
             <div class="row">
                 <div class="col-lg-6">
@@ -112,8 +112,8 @@
     <!-- Home About Section End -->
 
     <!-- Speaker Section Begin -->
-    <section class="team-member-section mt-5" id="conference-section">
-        <div class="container">
+    <section class="team-member-section bg-wayang" id="conference-section">
+        <div class="container mt-5">
             <div class="row">
                 <div class="col-lg-12">
                     <div class="section-title">
@@ -125,7 +125,7 @@
                 </div>
             </div>
         </div>
-        <div class="row bg-primary text-white">
+        <div class="row">
             <div class="col-md-6 text-center p-3">
                 <h3 class="mt-5">KEYNOTE SPEAKER</h3>
                 <div class="row mt-5 mb-5">
@@ -155,7 +155,7 @@
     <!--Speaker Section End -->
 
     <!--Scope and Timeline -->
-    <section class="scope-timeline-section spad">
+    <section class="scope-timeline-section spad bg-batik">
         <div class="container">
             <div class="row mb-5">
                 <div class="col-lg-6">
@@ -221,7 +221,7 @@
     <!-- Pricing Section End -->
 
     <!-- Committeess Section Begin -->
-    <section class="schedule-section spad">
+    <section class="schedule-section spad bg-wayang">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
@@ -298,7 +298,7 @@
     <!-- Committeess Section End -->
 
     <!-- Submission Section Begin -->
-    <section class="latest-blog spad" id="submission-section">
+    <section class="latest-blog spad bg-batik" id="submission-section">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
@@ -343,7 +343,7 @@
     <!-- Submission Section End -->
 
     <!-- Contact Section Begin -->
-    <section class="contact-section spad">
+    <section class="contact-section spad bg-wayang">
         <div class="container">
             <div class="row">
                 <div class="col-lg-6">

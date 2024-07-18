@@ -31,10 +31,18 @@
             <form action="{{ route('register.store') }}" id="registerForm" class="comment-form contact-form" method="POST">
                 @csrf
                 <div class="row p-3">
-                    <div class="col-md-6">
-                        <label>Full Name (For Certificate)</label>
-                        <input type="text" placeholder="Input your full name" name="name" value="{{ old('name') }}"
+                    <div class="col-md-4">
+                        <label>First Name</label>
+                        <input type="text" placeholder="Input your first name" name="first_name" value="{{ old('first_name') }}"
                             required />
+                    </div>
+                    <div class="col-md-4">
+                        <label>Middle Name</label>
+                        <input type="text" placeholder="Input your middle name" name="middle_name" value="{{ old('middle_name') }}"/>
+                    </div>
+                    <div class="col-md-4">
+                        <label>Last Name</label>
+                        <input type="text" placeholder="Input your last name" name="last_name" value="{{ old('last_name') }}"/>
                     </div>
                     <div class="col-md-6">
                         <label>Email</label>
@@ -79,6 +87,16 @@
                         </select>
                     </div>
                     <div class="col-md-6">
+                        <label>Degree</label>
+                        <select name="degree" required>
+                            <option value="">--pilih--</option>
+                            <option value="Associate degree">Associate degree</option>
+                            <option value="Bachelor’s degree">Bachelor’s degree</option>
+                            <option value="Master’s degree">Master’s degree</option>
+                            <option value="Doctoral degree">Doctoral degree</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6">
                         <label>Subject Background</label>
                         <select name="subject_background" required>
                             <option value="">--pilih--</option>
@@ -98,6 +116,11 @@
                             id="confirm_password" required />
                     </div>
                     <div class="col-md-12">
+                        <label>Research Interest</label>
+                        <input type="text" placeholder="Input your research interest" required name="research_interest"
+                            value="{{ old('research_interest') }}" />
+                    </div>
+                    {{-- <div class="col-md-12">
                         <label>Category</label>
                         <select name="category_id" required>
                             <option value="">--pilih--</option>
@@ -111,7 +134,7 @@
                                 </option>
                             @endforeach
                         </select>
-                    </div>
+                    </div> --}}
                     <div class="col-12 text-center mt-5">
                         <button type="submit" class="site-btn mb-2" id="registerButton">
                             REGISTER

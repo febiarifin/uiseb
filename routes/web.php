@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AbstrakController;
 use App\Http\Controllers\ArticleController;
+use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\HomeController;
@@ -99,9 +100,15 @@ Route::group(['middleware' => 'auth'], function () {
         Route::resource('videos', VideoController::class);
     });
 
-    Route::get('print/{id}/{type}', [PDFController::class, 'print_review'])->name('print.review');
+    Route::get('print/review/{id}', [PDFController::class, 'print_review'])->name('print.review');
 });
 
-Route::get('/storage-link', function () {
-    Artisan::call('storage:link');
-});
+// Route::get('/storage-link', function () {
+//     Artisan::call('storage:link');
+// });
+
+// Forgot Password
+Route::get('forget-password', [ForgotPasswordController::class, 'showForgetPasswordForm'])->name('forget.password.get');
+Route::post('forget-password', [ForgotPasswordController::class, 'submitForgetPasswordForm'])->name('forget.password.post');
+Route::get('reset-password/{token}', [ForgotPasswordController::class, 'showResetPasswordForm'])->name('reset.password.get');
+Route::post('reset-password', [ForgotPasswordController::class, 'submitResetPasswordForm'])->name('reset.password.post');

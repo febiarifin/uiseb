@@ -14,8 +14,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
-use Mail;
 
 class RegisterController extends Controller
 {
@@ -34,7 +34,7 @@ class RegisterController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'name' => ['required'],
+            'first_name' => ['required'],
             'email' => ['required', 'email:dns', 'unique:users'],
             'phone_number' => ['required'],
             'country_code' => ['required'],
@@ -43,12 +43,17 @@ class RegisterController extends Controller
             'subject_background' => ['required'],
             'password' => ['required'],
             'confirm_password' => ['required'],
-            'category_id' => ['required'],
+            // 'category_id' => ['required'],
+            'degree' => ['required'],
+            'research_interest' => ['required'],
         ]);
 
         list($code, $name) = explode(',', $validatedData['country_code']);
         $code = str_replace('+', '', $code);
         $validatedData['phone_number'] = trim($code).$validatedData['phone_number'];
+        $validatedData['first_name'] = $request->first_name;
+        $validatedData['middle_name'] = $request->middle_name;
+        $validatedData['last_name'] = $request->last_name;
 
         $validatedData['password'] = Hash::make($validatedData['password']);
         $validatedData['type'] =  User::TYPE_PESERTA;
@@ -61,8 +66,8 @@ class RegisterController extends Controller
         ]);
 
         $validatedData['user_id'] = $user->id;
-        $registration = Registration::create($validatedData);
-        AppHelper::create_abstrak($registration);
+        // $registration = Registration::create($validatedData);
+        // AppHelper::create_abstrak($registration);
 
         try {
             Mail::send('emails.verification', ['token' => $token], function ($message) use ($request) {
@@ -156,7 +161,8 @@ class RegisterController extends Controller
 
     public function registrationUser()
     {
-        $registrations = Auth::user()->registrations()->with(['category'])->orderBy('created_at', 'desc')->get();
+        $user = User::findOrFail(Auth::user()->id);
+        $registrations = $user->registrations()->with(['category'])->orderBy('created_at', 'desc')->get();
         $data = [
             'title' => 'Registration',
             'subtitle' => null,

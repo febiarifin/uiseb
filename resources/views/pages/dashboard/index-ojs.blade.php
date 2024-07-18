@@ -121,8 +121,11 @@
                                                   Print
                                                 </a>
                                                 <div class="dropdown-menu">
-                                                  <a class="dropdown-item" href="#">LOA</a>
-                                                  <a class="dropdown-item" href="#">CERTIFICATE</a>
+                                                  <a class="dropdown-item" href="#" target="_blank">LOA</a>
+                                                  @if ($registration->category->is_paper)
+                                                  <a class="dropdown-item" href="{{ route('print.review', base64_encode($registration->id).uniqid()) }}" target="_blank">REVIEWS</a>
+                                                  @endif
+                                                  <a class="dropdown-item" href="#" target="_blank">CERTIFICATE</a>
                                                 </div>
                                               </div>
                                             @endif
@@ -176,12 +179,12 @@
                                                                 class="fas fa-upload"></i>
                                                             Submit Abstrak</a>
                                                     @endif
-                                                    @if ($abstrak->status == \App\Models\Abstrak::ACCEPTED)
+                                                    {{-- @if ($abstrak->status == \App\Models\Abstrak::ACCEPTED)
                                                         <a href="{{ route('print.review', [base64_encode($abstrak->id), 'abstrak']) }}"
                                                             class="btn btn-secondary btn-sm" target="_blank"><i
                                                                 class="fas fa-print"></i>
                                                             Print Review</a>
-                                                    @endif
+                                                    @endif --}}
                                                     @if ($abstrak->file)
                                                         <a href="{{ route('abstraks.show', $abstrak->id) }}"
                                                             class="btn btn-info btn-sm "><i
@@ -235,12 +238,12 @@
                                                                         class="fas fa-upload"></i>
                                                                     Submit Paper</a>
                                                             @endif
-                                                            @if ($paper->status == \App\Models\Paper::ACCEPTED)
+                                                            {{-- @if ($paper->status == \App\Models\Paper::ACCEPTED)
                                                                 <a href="{{ route('print.review', [base64_encode($paper->id), 'paper']) }}"
                                                                     class="btn btn-secondary btn-sm" target="_blank"><i
                                                                         class="fas fa-print"></i>
                                                                     Print Review</a>
-                                                            @endif
+                                                            @endif --}}
                                                             @if ($paper->file)
                                                                 <a href="{{ route('papers.show', $paper->id) }}"
                                                                     class="btn btn-info btn-sm "><i
