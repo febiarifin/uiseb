@@ -17,6 +17,10 @@ return new class extends Migration
             $table->id();
             $table->string('title')->nullable();
             $table->string('file')->nullable();
+            $table->string('type_paper')->nullable();
+            $table->text('abstract')->nullable();
+            $table->text('keyword')->nullable();
+            $table->boolean('originality')->default(0);
             $table->tinyInteger('status')->nullable();
             $table->timestamp('acc_at')->nullable();
             $table->timestamps();

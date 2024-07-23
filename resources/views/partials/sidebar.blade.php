@@ -52,6 +52,16 @@
                 <i class="fas fa-fw fa-star"></i>
                 <span>Review Paper</span></a>
         </li> --}}
+        <li class="nav-item {{ $active == 'published' ? 'active' : null }}">
+            <a class="nav-link" href="{{ route('paper.published.review') }}">
+                <i class="fas fa-fw fa-check-circle"></i>
+                <span>Validasi Publikasi</span></a>
+        </li>
+        <li class="nav-item {{ $active == 'published_history' ? 'active' : null }}">
+            <a class="nav-link" href="{{ route('paper.published.history') }}">
+                <i class="fas fa-fw fa-check-circle"></i>
+                <span>History Publikasi</span></a>
+        </li>
         <li class="nav-item {{ $active == 'registration' ? 'active' : null }}">
             <a class="nav-link" href="{{ route('registration.history') }}">
                 <i class="fas fa-fw fa-clock"></i>

@@ -78,6 +78,7 @@ class AbstrakController extends Controller
             'subtitle' => null,
             'active' => 'dashboard',
             'abstrak' => $abstrak,
+            'user' => $abstrak->registration->user,
         ];
         return view('pages.abstrak.edit', $data);
     }
@@ -93,7 +94,10 @@ class AbstrakController extends Controller
     {
         $validatedData = $request->validate([
             'title' => ['required'],
-            'file' => ['required','mimes:docx','max:5000'],
+            'type_paper' => ['required'],
+            'keyword' => ['required'],
+            'abstract' => ['required'],
+            'file' => ['required', 'mimes:docx', 'max:5000'],
         ]);
         // if (count($abstrak->penulis) != 0) {
         //     foreach ($abstrak->penulis as $author) {
@@ -101,18 +105,22 @@ class AbstrakController extends Controller
         //     }
         // }
         if ($request->first_names) {
-            for ($i=0; $i < count($request->first_names); $i++) {
+            for ($i = 0; $i < count($request->first_names); $i++) {
                 Penulis::create([
                     'first_name' => $request->first_names[$i],
+                    'middle_name' => $request->middle_names[$i],
                     'last_name' => $request->last_names[$i],
                     'email' => $request->emails[$i],
                     'affiliate' => $request->affiliates[$i],
                     'coresponding' => $request->corespondings[$i],
+                    'degree' => $request->degrees[$i],
+                    'address' => $request->address[$i],
+                    'research_interest' => $request->research_interests[$i],
                     'abstrak_id' => $abstrak->id,
                 ]);
             }
         }
-        $validatedData['file'] = AppHelper::upload_file($request->file,'files');
+        $validatedData['file'] = AppHelper::upload_file($request->file, 'files');
         $validatedData['status'] = Abstrak::REVIEW;
         $abstrak->update($validatedData);
         if (count($abstrak->users) == 0) {
@@ -168,25 +176,40 @@ class AbstrakController extends Controller
         $validatedData = $request->validate([
             'note' => ['required'],
             //'status' => ['required'],
-            'file' => [Rule::requiredIf(function () use($request) {
-                if (empty($request->file)) {
-                    return false;
-                }
-                return true;
-            }), 'mimes:docx,pdf', 'max:1000'],
+            'file' => [
+                Rule::requiredIf(function () use ($request) {
+                    if (empty($request->file)) {
+                        return false;
+                    }
+                    return true;
+                }),
+                'mimes:docx,pdf',
+                'max:1000'
+            ],
         ]);
         if ($request->file) {
             $validatedData['file'] = AppHelper::upload_file($request->file, 'files');
         }
-        $validatedData['status'] = $request->status;
+        if (Auth::user()->type == User::TYPE_REVIEWER) {
+            $validatedData['status'] = $request->status;
+        } else {
+            if ($request->status == Abstrak::REVISI_MAYOR || $request->status == Abstrak::REVISI_MINOR) {
+                $status = 'REVISI';
+            } else if ($request->status == Abstrak::REJECTED) {
+                $status = 'REJECTED';
+            } else if ($request->status == Abstrak::ACCEPTED) {
+                $status = 'ACCEPTED';
+            }
+            $validatedData['note'] = $validatedData['note'] . '<div>Rekomendasi status: <span class="badge badge-secondary">' . $status . '</span></div>';
+        }
         $validatedData['file_abstrak'] = $abstrak->file;
         $validatedData['abstrak_id'] = $abstrak->id;
         $validatedData['user_id'] = Auth::user()->id;
         RevisiAbstrak::create($validatedData);
-        if ($request->status) {
+        if ($request->status && Auth::user()->type == User::TYPE_REVIEWER) {
             if ($validatedData['status'] == Abstrak::REJECTED) {
                 AppHelper::create_abstrak($abstrak->registration);
-            }else if ($validatedData['status'] == Abstrak::ACCEPTED) {
+            } else if ($validatedData['status'] == Abstrak::ACCEPTED) {
                 AppHelper::create_paper($abstrak);
             }
             $abstrak->update([

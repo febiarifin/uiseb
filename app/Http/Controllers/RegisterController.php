@@ -51,6 +51,7 @@ class RegisterController extends Controller
         list($code, $name) = explode(',', $validatedData['country_code']);
         $code = str_replace('+', '', $code);
         $validatedData['phone_number'] = trim($code).$validatedData['phone_number'];
+        $validatedData['name'] = $request->first_name.' '.$request->middle_name.' '.$request->last_name;
         $validatedData['first_name'] = $request->first_name;
         $validatedData['middle_name'] = $request->middle_name;
         $validatedData['last_name'] = $request->last_name;

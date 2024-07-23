@@ -16,10 +16,14 @@ class Abstrak extends Model
     public const ACCEPTED = 5;
 
     protected $fillable = [
+        'type_paper',
         'title',
         'file',
         'status',
         'acc_at',
+        'originality',
+        'abstract',
+        'keyword',
         'registration_id',
     ];
 

@@ -44,20 +44,21 @@ class HomeController extends Controller
         ];
         if (Auth::user()->type == User::TYPE_PESERTA) {
             // $view = 'pages.dashboard.index-user';
+            $registrations = Auth::user()->registrations()
+            ->with([
+                'category',
+                'abstraks' => function ($query) {
+                    $query->with([
+                        'papers' => function ($query) {
+                            $query->with('videos');
+                        }
+                    ]);
+                }
+            ])
+            ->orderBy('created_at', 'desc')
+            ->get();
             $view = 'pages.dashboard.index-ojs';
-            $data['registrations'] = Auth::user()->registrations()
-                ->with([
-                    'category',
-                    'abstraks' => function ($query) {
-                        $query->with([
-                            'papers' => function ($query) {
-                                $query->with('videos');
-                            }
-                        ]);
-                    }
-                ])
-                ->orderBy('created_at', 'desc')
-                ->get();
+            $data['registrations'] = $registrations;
         } else {
             if (Auth::user()->type == User::TYPE_ADMIN) {
                 $view = 'pages.dashboard.index';
@@ -73,10 +74,10 @@ class HomeController extends Controller
                         ->get();
                 } else {
                     $data['abstraks'] = Abstrak::orderBy('created_at', 'desc')
-                        ->where('status', Abstrak::REVIEW)
+                        ->where('status', Abstrak::ACCEPTED)
                         ->get();
                     $data['papers'] = Paper::orderBy('created_at', 'desc')
-                        ->where('status', Paper::REVIEW)
+                        ->where('status', Paper::ACCEPTED)
                         ->get();
                     $data['videos'] = Video::orderBy('created_at', 'desc')
                         ->where('status', Video::REVIEW)

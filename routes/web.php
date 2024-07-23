@@ -59,6 +59,9 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('registration/history', [RegisterController::class, 'registrationHistory'])->name('registration.history');
         Route::get('registration/validation', [RegisterController::class, 'registrationValidation'])->name('registration.validation');
         Route::get('registration/validate/{id}', [RegisterController::class, 'registrationValidate'])->name('registration.validate');
+        Route::get('paper/validate-publication', [PaperController::class, 'publishedReview'])->name('paper.published.review');
+        Route::get('paper/validate-publication-acc/{paper}', [PaperController::class, 'publishedAcc'])->name('paper.published.acc');
+        Route::get('paper/history-publication', [PaperController::class, 'publishedPaper'])->name('paper.published.history');
     });
 
     Route::group(['middleware' => 'isAdminReviewer'], function () {
@@ -92,6 +95,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::put('upload/payment/{id}', [RegisterController::class, 'uploadPaymentStore'])->name('upload.payment.store');
         Route::get('upload/paper/{id}', [RegisterController::class, 'uploadPaper'])->name('upload.paper');
         Route::put('upload/paper/{id}', [RegisterController::class, 'uploadPaperStore'])->name('upload.paper.store');
+        Route::get('paper/published/{paper}', [PaperController::class, 'published'])->name('paper.published');
         Route::get('registrations/list', [RegisterController::class, 'registrationList'])->name('registration.list');
         Route::get('registrations/create/{id}', [RegisterController::class, 'registrationCreate'])->name('registration.create');
         Route::post('registrations/store', [RegisterController::class, 'registrationstore'])->name('registration.store');

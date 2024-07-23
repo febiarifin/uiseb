@@ -20,6 +20,8 @@ return new class extends Migration
             $table->text('bibliography')->nullable();
             $table->string('file')->nullable();
             $table->tinyInteger('status')->nullable();
+            $table->boolean('is_published')->nullable();
+            $table->boolean('published_review')->nullable();
             $table->timestamp('acc_at')->nullable();
             $table->timestamps();
             $table->foreignId('abstrak_id')->constrained();

@@ -31,17 +31,25 @@
                 <table class="table table-bordered">
                     <tr>
                         <th>Nama Depan</th>
+                        <th>Nama Tengah</th>
                         <th>Nama Belakang</th>
                         <th>Email</th>
                         <th>Afiliasi</th>
+                        <th>Degree</th>
+                        <th>Address</th>
+                        <th>Research Interest</th>
                         <th>Coresponding</th>
                     </tr>
                     @foreach ($paper->abstrak->penulis as $author)
                         <tr>
                             <td>{{ $author->first_name }}</td>
+                            <td>{{ $author->middle_name }}</td>
                             <td>{{ $author->last_name }}</td>
                             <td>{{ $author->email }}</td>
                             <td>{{ $author->affiliate }}</td>
+                            <td>{{ $author->degree }}</td>
+                            <td>{{ $author->address }}</td>
+                            <td>{{ $author->research_interest }}</td>
                             <td>
                                 @if ($author->coresponding)
                                     <span class="badge badge-light"><i class="fas fa-check-circle"></i> Sebagai
@@ -169,11 +177,20 @@
                                     <div class="modal-body">
                                         <div class="mb-3">
                                             <label>Catatan</label>
-                                            <input id="note" type="hidden" name="note" required>
-                                            <trix-editor input="note"></trix-editor>
-                                            @error('note')
-                                                <small class="text-danger">{{ $message }}</small>
-                                            @enderror
+                                            @if (Auth::user()->type == \App\Models\User::TYPE_REVIEWER)
+                                                @foreach ($comments as $comment)
+                                                    <div class="mb-3">
+                                                        <label>{{ $comment }}</label>
+                                                        <input type="text" name="comments[]" class="form-control" required>
+                                                    </div>
+                                                @endforeach
+                                            @else
+                                                <input id="note" type="hidden" name="note" required>
+                                                <trix-editor input="note"></trix-editor>
+                                                @error('note')
+                                                    <small class="text-danger">{{ $message }}</small>
+                                                @enderror
+                                            @endif
                                         </div>
                                         <div class="mb-3">
                                             <label>File (Opsional)</label>
@@ -217,13 +234,17 @@
         </div>
         <div class="card-body">
             @foreach ($revisis as $revisi)
-                <div class="border shadow rounded p-2 mb-2 @if ($revisi->user->type == \App\Models\User::TYPE_EDITOR) border-warning @else border-secondary @endif">
+                <div
+                    class="border shadow rounded p-2 mb-2 @if ($revisi->user->type == \App\Models\User::TYPE_EDITOR) border-warning @else border-secondary @endif">
                     <div class="d-flex">
                         <div class="flex-grow-1">
-                            <small class="text-muted">{{ \App\Helpers\AppHelper::parse_date($revisi->created_at) }}</small>
+                            <small
+                                class="text-muted">{{ \App\Helpers\AppHelper::parse_date($revisi->created_at) }}</small>
                         </div>
                         <div class="flex-shrink-0">
-                            <small class="text-muted">{{ $revisi->user->type == \App\Models\User::TYPE_EDITOR ? 'Checked Turnitin by' : 'Reviewed by' }} <b>{{ $revisi->user->name }}</b></small>
+                            <small
+                                class="text-muted">{{ $revisi->user->type == \App\Models\User::TYPE_EDITOR ? 'Checked Turnitin by' : 'Reviewed by' }}
+                                <b>{{ $revisi->user->name }}</b></small>
                         </div>
                     </div>
                     {!! nl2br($revisi->note) !!}

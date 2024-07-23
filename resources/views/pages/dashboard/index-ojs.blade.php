@@ -4,8 +4,8 @@
         @if (Auth::user()->type == \App\Models\User::TYPE_PESERTA)
             <li class="nav-item" role="presentation">
                 <button class="nav-link active" id="pills-registration-tab" data-toggle="pill" data-target="#pills-registration"
-                    type="button" role="tab" aria-controls="pills-registration"
-                    aria-selected="true">Registration</button>
+                    type="button" role="tab" aria-controls="pills-registration" aria-selected="true">Registration <span
+                        class="badge badge-danger">{{ count($registrations) }}</span></button>
             </li>
         @endif
         <li class="nav-item" role="presentation">
@@ -16,6 +16,7 @@
                     Abstrak
                 @else
                     Review Abstrak
+                    <span class="badge badge-danger">{{ count($abstraks) }}</span>
                 @endif
             </button>
         </li>
@@ -26,6 +27,7 @@
                     Paper
                 @else
                     Review Paper
+                    <span class="badge badge-danger">{{ count($papers) }}</span>
                 @endif
             </button>
         </li>
@@ -37,6 +39,7 @@
                         Video
                     @else
                         Review Video
+                        <span class="badge badge-danger">{{ count($videos) }}</span>
                     @endif
                 </button>
             </li>
@@ -96,7 +99,9 @@
                                             @elseif ($registration->is_valid == \App\Models\Registration::NOT_VALID)
                                                 <span class="badge badge-warning">NOT ACCEPTED</span>
                                             @elseif ($registration->payment_image)
-                                                <span class="badge badge-secondary">REVIEW</span>
+                                                <span class="badge badge-secondary">Waiting for Validation</span>
+                                            @else
+                                                <span class="badge badge-secondary">UNPAID</span>
                                             @endif
                                         </td>
                                         <td class="d-flex">
@@ -116,18 +121,26 @@
                                                 @endif
                                             @endif
                                             @if ($registration->is_valid == \App\Models\Registration::IS_VALID)
-                                            <div class="dropdown mr-1">
-                                                <a class="btn btn-secondary btn-sm dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
-                                                  Print
-                                                </a>
-                                                <div class="dropdown-menu">
-                                                  <a class="dropdown-item" href="#" target="_blank">LOA</a>
-                                                  @if ($registration->category->is_paper)
-                                                  <a class="dropdown-item" href="{{ route('print.review', base64_encode($registration->id).uniqid()) }}" target="_blank">REVIEWS</a>
-                                                  @endif
-                                                  <a class="dropdown-item" href="#" target="_blank">CERTIFICATE</a>
+                                                <div class="dropdown mr-1">
+                                                    <a class="btn btn-secondary btn-sm dropdown-toggle" href="#"
+                                                        role="button" data-toggle="dropdown" aria-expanded="false">
+                                                        Print
+                                                    </a>
+                                                    <div class="dropdown-menu">
+                                                        <a class="dropdown-item" href="#" target="_blank">INVOICE</a>
+                                                        <a class="dropdown-item" href="#" target="_blank">LOA</a>
+                                                        @if ($registration->category->is_paper)
+                                                            <a class="dropdown-item"
+                                                                href="{{ route('print.review', base64_encode($registration->id) . uniqid()) }}"
+                                                                target="_blank">REVIEWS</a>
+                                                            <a class="dropdown-item"
+                                                                href="{{ route('print.review', base64_encode($registration->id) . uniqid()) }}"
+                                                                target="_blank">SYMPOSIUM</a>
+                                                        @endif
+                                                        <a class="dropdown-item" href="#"
+                                                            target="_blank">CERTIFICATE</a>
+                                                    </div>
                                                 </div>
-                                              </div>
                                             @endif
                                             <a href="{{ route('registration.detail', $registration->id) }}"
                                                 class="btn btn-info btn-sm"><i class="fas fa-info-circle"></i></a>
@@ -166,7 +179,7 @@
                                                     @elseif ($abstrak->status == \App\Models\Abstrak::ACCEPTED)
                                                         <span class="badge badge-success">ACCEPTED</span>
                                                     @elseif ($abstrak->status == \App\Models\Abstrak::REVIEW)
-                                                        <span class="badge badge-secondary">REVIEW</span>
+                                                        <span class="badge badge-secondary">Waiting for Review</span>
                                                     @endif
                                                 </td>
                                                 <td>
@@ -225,7 +238,8 @@
                                                             @elseif ($paper->status == \App\Models\Paper::ACCEPTED)
                                                                 <span class="badge badge-success">ACCEPTED</span>
                                                             @elseif ($paper->status == \App\Models\Paper::REVIEW)
-                                                                <span class="badge badge-secondary">REVIEW</span>
+                                                                <span class="badge badge-secondary">Waiting for
+                                                                    Review</span>
                                                             @endif
                                                         </td>
                                                         <td>
@@ -252,63 +266,80 @@
                                                         </td>
                                                     </tr>
 
-                                                    @if (count($paper->videos) != 0)
-                                                        <tr bgcolor="#a2bee5" class="text-white">
-                                                            <th colspan="3">Video</th>
-                                                            <th>Link Video</th>
-                                                            <th>Accepeted At</th>
-                                                            <th>Status</th>
-                                                            <th>Action</th>
-                                                        </tr>
-                                                        @foreach ($paper->videos as $video)
-                                                            <tr bgcolor="#cdd6e4">
-                                                                <td colspan="3">{{ $abstrak->title }}</td>
-                                                                <td>
-                                                                    @if ($video->link)
-                                                                        <a href="{{ $video->link }}" target="_blank"
-                                                                            download><i class="fab fa-youtube"></i>
-                                                                            View
-                                                                            Video</a>
-                                                                    @endif
-                                                                </td>
-                                                                <td>
-                                                                    @if ($video->acc_at)
-                                                                        <b>{{ \App\Helpers\AppHelper::parse_date_short($video->acc_at) }}</b>
-                                                                    @endif
-                                                                </td>
-                                                                <td>
-                                                                    @if ($video->status == \App\Models\Video::REVISI_MINOR)
-                                                                        <span class="badge badge-warning">REVISI
-                                                                            MINOR</span>
-                                                                    @elseif ($video->status == \App\Models\Video::REVISI_MAYOR)
-                                                                        <span class="badge badge-warning">REVISI
-                                                                            MAYOR</span>
-                                                                    @elseif ($video->status == \App\Models\Video::REJECTED)
-                                                                        <span class="badge badge-danger">REJECTED</span>
-                                                                    @elseif ($video->status == \App\Models\Video::ACCEPTED)
-                                                                        <span class="badge badge-success">ACCEPTED</span>
-                                                                    @elseif ($video->status == \App\Models\Video::REVIEW)
-                                                                        <span class="badge badge-secondary">REVIEW</span>
-                                                                    @endif
-                                                                </td>
-                                                                <td>
-                                                                    @if (
-                                                                        $video->status != \App\Models\Video::ACCEPTED &&
-                                                                            $video->status != \App\Models\Video::REVIEW &&
-                                                                            $video->status != \App\Models\Video::REJECTED)
-                                                                        <a href="{{ route('videos.edit', $video->id) }}"
-                                                                            class="btn btn-primary btn-sm mb-2"><i
-                                                                                class="fas fa-upload"></i>
-                                                                            Submit Video</a>
-                                                                    @endif
-                                                                    @if ($video->link)
-                                                                        <a href="{{ route('videos.show', $video->id) }}"
-                                                                            class="btn btn-info btn-sm "><i
-                                                                                class="fas fa-info-circle"></i></a>
-                                                                    @endif
-                                                                </td>
+                                                    @if ($paper->published_review == \App\Models\Paper::PUBLISHED_REVIEW)
+                                                        @if (count($paper->videos) != 0)
+                                                            <tr bgcolor="#a2bee5" class="text-white">
+                                                                <th colspan="3">Video</th>
+                                                                <th>Link Video</th>
+                                                                <th>Accepeted At</th>
+                                                                <th>Status</th>
+                                                                <th>Action</th>
                                                             </tr>
-                                                        @endforeach
+                                                            @foreach ($paper->videos as $video)
+                                                                <tr bgcolor="#cdd6e4">
+                                                                    <td colspan="3">{{ $abstrak->title }}</td>
+                                                                    <td>
+                                                                        @if ($video->link)
+                                                                            <a href="{{ $video->link }}" target="_blank"
+                                                                                download><i class="fab fa-youtube"></i>
+                                                                                View
+                                                                                Video</a>
+                                                                        @endif
+                                                                    </td>
+                                                                    <td>
+                                                                        @if ($video->acc_at)
+                                                                            <b>{{ \App\Helpers\AppHelper::parse_date_short($video->acc_at) }}</b>
+                                                                        @endif
+                                                                    </td>
+                                                                    <td>
+                                                                        @if ($video->status == \App\Models\Video::REVISI_MINOR)
+                                                                            <span class="badge badge-warning">REVISI
+                                                                                MINOR</span>
+                                                                        @elseif ($video->status == \App\Models\Video::REVISI_MAYOR)
+                                                                            <span class="badge badge-warning">REVISI
+                                                                                MAYOR</span>
+                                                                        @elseif ($video->status == \App\Models\Video::REJECTED)
+                                                                            <span
+                                                                                class="badge badge-danger">REJECTED</span>
+                                                                        @elseif ($video->status == \App\Models\Video::ACCEPTED)
+                                                                            <span
+                                                                                class="badge badge-success">ACCEPTED</span>
+                                                                        @elseif ($video->status == \App\Models\Video::REVIEW)
+                                                                            <span class="badge badge-secondary">Waiting for
+                                                                                Review</span>
+                                                                        @endif
+                                                                    </td>
+                                                                    <td>
+                                                                        @if (
+                                                                            $video->status != \App\Models\Video::ACCEPTED &&
+                                                                                $video->status != \App\Models\Video::REVIEW &&
+                                                                                $video->status != \App\Models\Video::REJECTED)
+                                                                            <a href="{{ route('videos.edit', $video->id) }}"
+                                                                                class="btn btn-primary btn-sm mb-2"><i
+                                                                                    class="fas fa-upload"></i>
+                                                                                Submit Video</a>
+                                                                        @endif
+                                                                        @if ($video->link)
+                                                                            <a href="{{ route('videos.show', $video->id) }}"
+                                                                                class="btn btn-info btn-sm "><i
+                                                                                    class="fas fa-info-circle"></i></a>
+                                                                        @endif
+                                                                    </td>
+                                                                </tr>
+                                                            @endforeach
+                                                        @endif
+                                                    @else
+                                                        <tr>
+                                                            <td colspan="6">
+                                                                KONFIRMASI PUBLIKASI PAPER
+                                                            </td>
+                                                            <td>
+                                                                <a href="{{ route('paper.published', $paper->id) }}"
+                                                                    class="btn btn-primary"
+                                                                    onclick="return confirm('Yakin ingin konfirmasi publikasi paper?')"><i
+                                                                        class="fas fa-check-circle"></i> KONFIRMASI</a>
+                                                            </td>
+                                                        </tr>
                                                     @endif
                                                 @endforeach
                                             @endif
@@ -376,7 +407,7 @@
                                             @elseif ($abstrak->status == \App\Models\Abstrak::ACCEPTED)
                                                 <span class="badge badge-success">ACCEPTED</span>
                                             @elseif ($abstrak->status == \App\Models\Abstrak::REVIEW)
-                                                <span class="badge badge-secondary">REVIEW</span>
+                                                <span class="badge badge-secondary">Waiting for Review</span>
                                             @endif
                                         </td>
                                         <td>
@@ -418,7 +449,7 @@
                                                 @elseif ($abstrak->status == \App\Models\Abstrak::ACCEPTED)
                                                     <span class="badge badge-success">ACCEPTED</span>
                                                 @elseif ($abstrak->status == \App\Models\Abstrak::REVIEW)
-                                                    <span class="badge badge-secondary">REVIEW</span>
+                                                    <span class="badge badge-secondary">Waiting for Review</span>
                                                 @endif
                                             </td>
                                             <td>
@@ -497,7 +528,7 @@
                                     @elseif ($paper->status == \App\Models\Paper::ACCEPTED)
                                         <span class="badge badge-success">ACCEPTED</span>
                                     @elseif ($paper->status == \App\Models\Paper::REVIEW)
-                                        <span class="badge badge-secondary">REVIEW</span>
+                                        <span class="badge badge-secondary">Waiting for Review</span>
                                     @endif
                                 </td>
                                 <td>
@@ -542,7 +573,7 @@
                                             @elseif ($paper->status == \App\Models\Paper::ACCEPTED)
                                                 <span class="badge badge-success">ACCEPTED</span>
                                             @elseif ($paper->status == \App\Models\Paper::REVIEW)
-                                                <span class="badge badge-secondary">REVIEW</span>
+                                                <span class="badge badge-secondary">Waiting for Review</span>
                                             @endif
                                         </td>
                                         <td>
@@ -621,7 +652,7 @@
                                         @elseif ($video->status == \App\Models\Video::ACCEPTED)
                                             <span class="badge badge-success">ACCEPTED</span>
                                         @elseif ($video->status == \App\Models\Video::REVIEW)
-                                            <span class="badge badge-secondary">REVIEW</span>
+                                            <span class="badge badge-secondary">Waiting for Review</span>
                                         @endif
                                     </td>
                                     <td>
@@ -663,7 +694,7 @@
                                                     @elseif ($video->status == \App\Models\Paper::ACCEPTED)
                                                         <span class="badge badge-success">ACCEPTED</span>
                                                     @elseif ($video->status == \App\Models\Paper::REVIEW)
-                                                        <span class="badge badge-secondary">REVIEW</span>
+                                                        <span class="badge badge-secondary">Waiting for Review</span>
                                                     @endif
                                                 </td>
                                                 <td>

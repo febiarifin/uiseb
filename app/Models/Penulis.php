@@ -11,11 +11,15 @@ class Penulis extends Model
 
     protected $fillable = [
         'first_name',
+        'middle_name',
         'last_name',
         'email',
         'affiliate',
         'coresponding',
         'abstrak_id',
+        'degree',
+        'address',
+        'research_interest',
     ];
 
     public function abstrak()

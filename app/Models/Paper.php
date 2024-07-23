@@ -14,6 +14,17 @@ class Paper extends Model
     public const REVISI_MAYOR = 3;
     public const REJECTED = 4;
     public const ACCEPTED = 5;
+    public const IS_PUBLISHED = 1;
+    public const PUBLISHED_REVIEW = 1;
+
+    public const COMMENTS = [
+        'Is the manuscript important for scientific community?',
+        'Is the title of the article suitable?',
+        'Is the abstract of the article comprehensive?',
+        'Are subsections and structure of the manuscript appropriate?',
+        'Do you think the manuscript is scientifically correct?',
+        'Are the references sufficient and recent? If you have suggestion of additional references, please mention in the review form',
+    ];
 
     protected $fillable = [
         'abstract',
@@ -22,7 +33,9 @@ class Paper extends Model
         'file',
         'status',
         'acc_at',
-        'abstrak_id'
+        'abstrak_id',
+        'is_published',
+        'published_review',
     ];
 
     public function abstrak()

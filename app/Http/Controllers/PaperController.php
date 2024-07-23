@@ -126,6 +126,7 @@ class PaperController extends Controller
             'paper' => $paper,
             'reviewers' => User::where('type', User::TYPE_REVIEWER)->get(),
             'revisis' => $paper->revisis()->orderBy('created_at', 'desc')->paginate(5),
+            'comments' => Paper::COMMENTS,
         ];
         return view('pages.paper.detail', $data);
     }
@@ -149,7 +150,7 @@ class PaperController extends Controller
     {
         $paper = Paper::findOrFail($id);
         $validatedData = $request->validate([
-            'note' => ['required'],
+            // 'note' => ['required'],
             //'status' => ['required'],
             'file' => [Rule::requiredIf(function () use($request) {
                 if (empty($request->file)) {
@@ -161,12 +162,28 @@ class PaperController extends Controller
         if ($request->file) {
             $validatedData['file'] = AppHelper::upload_file($request->file, 'files');
         }
-        $validatedData['status'] = $request->status;
+        if (Auth::user()->type == User::TYPE_REVIEWER) {
+            $validatedData['status'] = $request->status;
+            for ($i=0; $i< count(Paper::COMMENTS); $i++) {
+                $notes[] = "<label>".Paper::COMMENTS[$i]."<br><b>".$request->comments[$i]."</b></label><br><br>";
+            }
+            $validatedData['note'] = implode("", $notes);
+        } else {
+            $validatedData['note'] = $request->note;
+            if ($request->status == Paper::REVISI_MAYOR || $request->status == Paper::REVISI_MINOR) {
+                $status = 'REVISI';
+            } else if ($request->status == Paper::REJECTED) {
+                $status = 'REJECTED';
+            } else if ($request->status == Paper::ACCEPTED) {
+                $status = 'ACCEPTED';
+            }
+            $validatedData['note'] = $validatedData['note'] . '<div>Rekomendasi status: <span class="badge badge-secondary">' . $status . '</span></div>';
+        }
         $validatedData['file_paper'] = $paper->file;
         $validatedData['paper_id'] = $paper->id;
         $validatedData['user_id'] = Auth::user()->id;
         RevisiPaper::create($validatedData);
-        if ($request->status) {
+        if ($request->status && Auth::user()->type == User::TYPE_REVIEWER) {
             if ($validatedData['status'] == Paper::REJECTED) {
                 AppHelper::create_paper($paper->abstrak);
             }else if ($validatedData['status'] == Paper::ACCEPTED) {
@@ -179,5 +196,45 @@ class PaperController extends Controller
         }
         Toastr::success('Review paper berhasil disimpan', 'Success', ["positionClass" => "toast-top-right"]);
         return back();
+    }
+
+    public function published(Paper $paper)
+    {
+        $paper->update([
+            'published_review' => Paper::PUBLISHED_REVIEW,
+        ]);
+        Toastr::success('Konfirmasi publikasi paper berhasil disimpan. Silahka tunggu validasi dari admin', 'Success', ["positionClass" => "toast-top-right"]);
+        return back();
+    }
+
+    public function publishedReview()
+    {
+        $data = [
+            'title' => 'Validasi Publikasi',
+            'subtitle' => "Tabel Konfirmasi Publikasi Paper",
+            'active' => 'published',
+            'papers' => Paper::with(['abstrak'])->where('published_review', Paper::PUBLISHED_REVIEW)->where('is_published', null)->get(),
+        ];
+        return view('pages.paper.published', $data);
+    }
+
+    public function publishedAcc(Paper $paper)
+    {
+        $paper->update([
+            'is_published' => Paper::IS_PUBLISHED,
+        ]);
+        Toastr::success('Acc publikasi paper berhasil disimpan', 'Success', ["positionClass" => "toast-top-right"]);
+        return back();
+    }
+
+    public function publishedPaper()
+    {
+        $data = [
+            'title' => 'History Publikasi paper',
+            'subtitle' => "Tabel istory Publikasi paper",
+            'active' => 'published_history',
+            'papers' => Paper::with(['abstrak'])->where('is_published', Paper::IS_PUBLISHED)->get(),
+        ];
+        return view('pages.paper.published', $data);
     }
 }
