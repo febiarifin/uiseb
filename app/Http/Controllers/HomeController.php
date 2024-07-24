@@ -7,6 +7,7 @@ use App\Models\Category;
 use App\Models\Page;
 use App\Models\Paper;
 use App\Models\Registration;
+use App\Models\Setting;
 use App\Models\User;
 use App\Models\Video;
 use Carbon\Carbon;
@@ -32,6 +33,7 @@ class HomeController extends Controller
             'month' => $date->month,
             'day' => $date->day,
             'year' => $date->year,
+            'setting' => Setting::first(),
         ];
         return view('pages.public.index', $data);
     }

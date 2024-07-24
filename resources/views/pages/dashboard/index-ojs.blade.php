@@ -95,7 +95,7 @@
                                         </td>
                                         <td>
                                             @if ($registration->is_valid == \App\Models\Registration::IS_VALID)
-                                                <span class="badge badge-success">ACCEPTED</span>
+                                                <span class="badge badge-success">PAID</span>
                                             @elseif ($registration->is_valid == \App\Models\Registration::NOT_VALID)
                                                 <span class="badge badge-warning">NOT ACCEPTED</span>
                                             @elseif ($registration->payment_image)
@@ -127,7 +127,7 @@
                                                         Print
                                                     </a>
                                                     <div class="dropdown-menu">
-                                                        <a class="dropdown-item" href="#" target="_blank">INVOICE</a>
+                                                        <a class="dropdown-item" href="{{ route('registration.print.invoice', $registration->id) }}">INVOICE</a>
                                                         <a class="dropdown-item" href="#" target="_blank">LOA</a>
                                                         @if ($registration->category->is_paper)
                                                             <a class="dropdown-item"

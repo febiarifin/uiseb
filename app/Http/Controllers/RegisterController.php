@@ -368,4 +368,16 @@ class RegisterController extends Controller
         Toastr::success('Registration was successful', 'Success', ["positionClass" => "toast-top-right"]);
         return redirect()->route('dashboard');
     }
+
+    public function printInvoice(Registration $registration)
+    {
+        $data = [
+            'title' => 'Invoice Registration',
+            'subtitle' => null,
+            'active' => 'dashboard',
+            'registration' => $registration,
+        ];
+        return view('pages.registration.invoice', $data);
+    }
+
 }

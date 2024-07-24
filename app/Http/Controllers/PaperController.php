@@ -237,4 +237,5 @@ class PaperController extends Controller
         ];
         return view('pages.paper.published', $data);
     }
+
 }

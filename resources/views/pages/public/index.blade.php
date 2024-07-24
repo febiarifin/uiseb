@@ -337,6 +337,26 @@
                             target="_blank">{{ $article->name }}</a>
                     @endforeach
                 </div>
+                <div class="mt-5 col-12 text-center">
+                    @if ($setting->template_abstract)
+                        <a href="{{ asset($setting->template_abstract) }}" class="primary-btn mb-3">Template Abstrak</a>
+                    @endif
+                    @if ($setting->template_full_paper)
+                        <a href="{{ asset($setting->template_full_paper) }}" class="primary-btn mb-3">Template Full Paper</a>
+                    @endif
+                    @if ($setting->confirmation_letter)
+                        <a href="{{ asset($setting->confirmation_letter) }}" class="primary-btn mb-3">Confirmation Letter</a>
+                    @endif
+                    @if ($setting->copyright_letter)
+                        <a href="{{ asset($setting->copyright_letter) }}" class="primary-btn mb-3">Copyright Letter</a>
+                    @endif
+                    @if ($setting->self_declare_letter)
+                        <a href="{{ asset($setting->self_declare_letter) }}" class="primary-btn mb-3">Self Declare Letter</a>
+                    @endif
+                    @if ($setting->template_video)
+                        <a href="{{ asset($setting->template_video) }}" class="primary-btn" target="_blank">Template Video</a>
+                    @endif
+                </div>
             </div>
         </div>
     </section>

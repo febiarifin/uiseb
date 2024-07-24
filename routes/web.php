@@ -11,6 +11,7 @@ use App\Http\Controllers\PageController;
 use App\Http\Controllers\PaperController;
 use App\Http\Controllers\PDFController;
 use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\SettingController;
 use App\Http\Controllers\SpeakerController;
 use App\Http\Controllers\TimelineController;
 use App\Http\Controllers\UserController;
@@ -56,6 +57,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::resource('contacts', ContactController::class);
         Route::resource('speakers', SpeakerController::class);
         Route::resource('articles', ArticleController::class);
+        Route::resource('settings', SettingController::class);
         Route::get('registration/history', [RegisterController::class, 'registrationHistory'])->name('registration.history');
         Route::get('registration/validation', [RegisterController::class, 'registrationValidation'])->name('registration.validation');
         Route::get('registration/validate/{id}', [RegisterController::class, 'registrationValidate'])->name('registration.validate');
@@ -97,6 +99,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::put('upload/paper/{id}', [RegisterController::class, 'uploadPaperStore'])->name('upload.paper.store');
         Route::get('paper/published/{paper}', [PaperController::class, 'published'])->name('paper.published');
         Route::get('registrations/list', [RegisterController::class, 'registrationList'])->name('registration.list');
+        Route::get('registrations/print-invoice/{registration}', [RegisterController::class, 'printInvoice'])->name('registration.print.invoice');
         Route::get('registrations/create/{id}', [RegisterController::class, 'registrationCreate'])->name('registration.create');
         Route::post('registrations/store', [RegisterController::class, 'registrationstore'])->name('registration.store');
         Route::resource('abstraks', AbstrakController::class);

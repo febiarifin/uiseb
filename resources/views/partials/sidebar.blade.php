@@ -67,6 +67,11 @@
                 <i class="fas fa-fw fa-clock"></i>
                 <span>Riwayat Pendaftaran</span></a>
         </li>
+        <li class="nav-item {{ $active == 'setting' ? 'active' : null }}">
+            <a class="nav-link" href="{{ route('settings.edit', 1) }}">
+                <i class="fas fa-fw fa-check-circle"></i>
+                <span>Pengaturan</span></a>
+        </li>
     @endif
 
     @if (Auth::user()->type == \App\Models\User::TYPE_REVIEWER)
