@@ -75,5 +75,7 @@ class DatabaseSeeder extends Seeder
                 'is_paper' => $is_papers[$i],
             ]);
         }
+
+        Setting::create();
     }
 }
