@@ -109,6 +109,22 @@
                     </div>
                 @endif
             </div>
+            <div class="mb-3">
+                <label>Abstrak</label>
+                <div class="p-2 rounded border">
+                    {!! nl2br($abstrak->abstract) !!}
+                </div>
+            </div>
+            <div class="mb-3">
+                <label>Keyword</label>
+                <br>
+                @php
+                    $keywords = explode(',', $abstrak->keyword);
+                @endphp
+                @foreach ($keywords as $keyword)
+                    <span class="badge badge-info mr-1">{{ $keyword }}</span>
+                @endforeach
+            </div>
             @if ($abstrak->acc_at)
                 <div class="mb-3">
                     <label><i class="fas fa-calendar"></i> Accepted At</label>

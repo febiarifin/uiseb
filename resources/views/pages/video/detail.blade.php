@@ -32,17 +32,25 @@
                 <table class="table table-bordered">
                     <tr>
                         <th>Nama Depan</th>
+                        <th>Nama Tengah</th>
                         <th>Nama Belakang</th>
                         <th>Email</th>
                         <th>Afiliasi</th>
+                        <th>Degree</th>
+                        <th>Address</th>
+                        <th>Research Interest</th>
                         <th>Coresponding</th>
                     </tr>
                     @foreach ($video->paper->abstrak->penulis as $author)
                         <tr>
                             <td>{{ $author->first_name }}</td>
+                            <td>{{ $author->middle_name }}</td>
                             <td>{{ $author->last_name }}</td>
                             <td>{{ $author->email }}</td>
                             <td>{{ $author->affiliate }}</td>
+                            <td>{{ $author->degree }}</td>
+                            <td>{{ $author->address }}</td>
+                            <td>{{ $author->research_interest }}</td>
                             <td>
                                 @if ($author->coresponding)
                                     <span class="badge badge-light"><i class="fas fa-check-circle"></i> Sebagai

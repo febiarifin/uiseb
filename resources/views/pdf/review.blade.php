@@ -70,6 +70,7 @@
         </tr>
     </table>
 
+    <h4>Review Abstrak</h4>
     <table>
         <tr>
             <th width="250" class="text-left">Reviewer</th>
@@ -81,15 +82,16 @@
                     @if ($revisi->user->type == \App\Models\User::TYPE_REVIEWER)
                         <div class="row">
                             <div class="column">
-                                <small>
-                                    <b>{{ $revisi->user->name }}: </b> <br>
-                                    {{ strip_tags($revisi->note) }}
-                                </small>
+                                <small><b>{{ $revisi->user->name }}: </b></small>
                             </div>
                             <div class="column text-right">
                                 <small>{{ \App\Helpers\AppHelper::parse_date_short($revisi->created_at) }}</small>
                             </div>
+                            <div>
+                                <small>{{ strip_tags($revisi->note) }}</small>
+                            </div>
                         </div>
+                        <hr style="border: 1px solid black;">
                     @endif
                 @endforeach
             </td>
@@ -98,16 +100,95 @@
                     @if ($revisi->user->type == \App\Models\User::TYPE_EDITOR)
                         <div class="row">
                             <div class="column">
-                                <small><b>{{ $revisi->user->name }}: </b> <br>
-                                    {{ strip_tags($revisi->note) }}
+                                <small><b>{{ $revisi->user->name }}: </b></small>
+                            </div>
+                            <div class="column text-right">
+                                <small>{{ \App\Helpers\AppHelper::parse_date_short($revisi->created_at) }}</small>
+                            </div>
+                            <div>
+                                <small>{{ strip_tags($revisi->note) }}</small>
+                            </div>
+                        </div>
+                        <hr style="border: 1px solid black;">
+                    @endif
+                @endforeach
+            </td>
+        </tr>
+    </table>
+    <h4>Review Paper</h4>
+    <table>
+        <tr>
+            <th width="250" class="text-left">Reviewer</th>
+            <th width="250" class="text-left">Editor</th>
+        </tr>
+        <tr>
+            <td height="680" style="text-align: left; vertical-align:top;">
+                @foreach ($paper->revisis as $revisi)
+                    @if ($revisi->user->type == \App\Models\User::TYPE_REVIEWER)
+                        <div class="row">
+                            <div class="column">
+                                <small>
+                                    <b>{{ $revisi->user->name }}: </b> <br>
                                 </small>
                             </div>
                             <div class="column text-right">
                                 <small>{{ \App\Helpers\AppHelper::parse_date_short($revisi->created_at) }}</small>
                             </div>
+                            <div>
+                                <small>{!! nl2br($revisi->note) !!}</small>
+                            </div>
                         </div>
+                        <hr style="border: 1px solid black;">
                     @endif
                 @endforeach
+            </td>
+            <td style="text-align: left; vertical-align:top;">
+                @foreach ($paper->revisis as $revisi)
+                    @if ($revisi->user->type == \App\Models\User::TYPE_EDITOR)
+                        <div class="row">
+                            <div class="column">
+                                <small><b>{{ $revisi->user->name }}: </b></small>
+                            </div>
+                            <div class="column text-right">
+                                <small>{{ \App\Helpers\AppHelper::parse_date_short($revisi->created_at) }}</small>
+                            </div>
+                            <div>
+                                {{ strip_tags($revisi->note) }}
+                            </div>
+                        </div>
+                        <hr style="border: 1px solid black;">
+                    @endif
+                @endforeach
+            </td>
+        </tr>
+    </table>
+    <h4>Review Video</h4>
+    <table>
+        <tr>
+            <th width="500" class="text-left">Editor</th>
+        </tr>
+        <tr>
+            <td style="text-align: left; vertical-align:top;">
+                @if ($video)
+                    @if (count($video->revisis) != 0)
+                        @foreach ($video->revisis as $revisi)
+                            <div class="row">
+                                <div class="column">
+                                    <small>
+                                        <b>{{ $revisi->user->name }}: </b>
+                                    </small>
+                                </div>
+                                <div class="column text-right">
+                                    <small>{{ \App\Helpers\AppHelper::parse_date_short($revisi->created_at) }}</small>
+                                </div>
+                                <div>
+                                    <small>{!! nl2br($revisi->note) !!}</small>
+                                </div>
+                            </div>
+                            <hr style="border: 1px solid black;">
+                        @endforeach
+                    @endif
+                @endif
             </td>
         </tr>
     </table>
