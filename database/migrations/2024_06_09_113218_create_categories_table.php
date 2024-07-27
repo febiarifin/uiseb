@@ -19,7 +19,9 @@ return new class extends Migration
             $table->text('description');
             $table->integer('amount');
             $table->boolean('is_paper')->nullable();
+            $table->boolean('is_active')->default(1);
             $table->timestamps();
+            $table->foreignId('page_id')->constrained();
         });
     }
 

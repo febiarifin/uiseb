@@ -27,7 +27,7 @@ class HomeController extends Controller
         $data = [
             'title' => config('app.name'),
             'page' => $page,
-            'categories' => Category::all(),
+            'categories' => $page->categories()->where('is_active', Category::IS_ACTIVE)->get(),
             'editors' => User::where('type', User::TYPE_EDITOR)->get(),
             'committees' => User::where('type', User::TYPE_COMMITTEE)->get(),
             'month' => $date->month,

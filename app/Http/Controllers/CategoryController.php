@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Page;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
 
@@ -35,6 +36,7 @@ class CategoryController extends Controller
             'title' => 'Buat Kategori',
             'subtitle' => null,
             'active' => 'category',
+            'pages' => Page::all(),
         ];
         return view('pages.category.create', $data);
     }
@@ -51,8 +53,10 @@ class CategoryController extends Controller
             'name' => ['required'],
             'description' => ['required'],
             'amount' => ['required'],
+            'page_id' => ['required'],
         ]);
         $validatedData['is_paper'] = $request->is_paper ? Category::IS_PAPER : 0;
+        // $validatedData['is_active'] = $request->is_active ? Category::IS_ACTIVE : 0;
         Category::create($validatedData);
         Toastr::success('Kategori berhasil ditambahkan', 'Success', ["positionClass" => "toast-top-right"]);
         return redirect()->route('categories.index');
@@ -82,6 +86,7 @@ class CategoryController extends Controller
             'subtitle' => null,
             'active' => 'category',
             'category' => $category,
+            'pages' => Page::all(),
         ];
         return view('pages.category.edit', $data);
     }
@@ -99,8 +104,10 @@ class CategoryController extends Controller
             'name' => ['required'],
             'description' => ['required'],
             'amount' => ['required'],
+            'page_id' => ['required'],
         ]);
         $validatedData['is_paper'] = $request->is_paper ? Category::IS_PAPER : 0;
+        $validatedData['is_active'] = $request->is_active ? Category::IS_ACTIVE : 0;
         $category->update($validatedData);
         Toastr::success('Kategori berhasil diupdate', 'Success', ["positionClass" => "toast-top-right"]);
         return redirect()->route('categories.index');

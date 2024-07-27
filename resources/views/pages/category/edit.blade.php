@@ -24,12 +24,29 @@
                 <label>Fee Kategori</label>
                 <input type="number" class="form-control" name="amount" value="{{ $category->amount }}" required>
             </div>
+            <div class="mb-3">
+                <label>Pilih Halaman</label>
+                <select name="page_id" class="form-control" required>
+                    <option value="">--pilih--</option>
+                    @foreach ($pages as $page)
+                        <option value="{{ $page->id }}" {{ $category->page->id == $page->id ? 'selected' : '' }}>{{ $page->name }}</option>
+                    @endforeach
+                </select>
+            </div>
             <div class="form-check mb-3">
                 <input class="form-check-input" type="checkbox" name="is_paper" @if ($category->is_paper)
                 checked
                 @endif>
                 <label class="form-check-label" for="flexCheckDefault">
                   Dengan Paper
+                </label>
+            </div>
+            <div class="form-check mb-3">
+                <input class="form-check-input" type="checkbox" name="is_active" @if ($category->is_active)
+                checked
+                @endif>
+                <label class="form-check-label" for="flexCheckDefault">
+                  Aktifkan Kategori
                 </label>
             </div>
             <button type="submit" class="btn btn-primary mt-3"><i class="fas fa-check"></i> SIMPAN</button>

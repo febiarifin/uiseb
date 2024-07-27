@@ -45,4 +45,9 @@ class Page extends Model
     {
         return $this->hasMany(Contact::class);
     }
+
+    public function categories()
+    {
+        return $this->hasMany(Category::class);
+    }
 }
