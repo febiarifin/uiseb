@@ -44,7 +44,7 @@
                                         <span class="badge badge-secondary">+ PAPER</span>
                                     @endif
                                 </td>
-                                <td>{{ \App\Helpers\AppHelper::currency($registration->category->amount) }}</td>
+                                <td>{{ \App\Helpers\AppHelper::currency($registration->category) }}</td>
                                 <td>{{ \App\Helpers\AppHelper::parse_date($registration->created_at) }}</td>
                                 <td class="d-flex">
                                     <a href="{{ route('registration.detail', $registration->id) }}"

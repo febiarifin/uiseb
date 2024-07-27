@@ -41,6 +41,10 @@
     <br><br>
     <table>
         <tr>
+            <td width="100">Type Paper</td>
+            <td width="400">{{ $abstrak->type_paper }}</td>
+        </tr>
+        <tr>
             <td width="100">Title</td>
             <td width="400">{{ $abstrak->title }}</td>
         </tr>
@@ -77,7 +81,7 @@
             <th width="250" class="text-left">Editor</th>
         </tr>
         <tr>
-            <td height="500" style="text-align: left; vertical-align:top;">
+            <td height="450" style="text-align: left; vertical-align:top;">
                 @foreach ($abstrak->revisis as $revisi)
                     @if ($revisi->user->type == \App\Models\User::TYPE_REVIEWER)
                         <div class="row">

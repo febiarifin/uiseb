@@ -207,7 +207,7 @@
                                 @endif
                             </h4>
                             <div class="pi-price">
-                                <h5 class="text-white">{{ \App\Helpers\AppHelper::currency($category->amount) }}</h5>
+                                <h5 class="text-white">{{ \App\Helpers\AppHelper::currency($category) }}</h5>
                             </div>
                             <p class="p-2">{{ $category->description }}</p>
                             <a href="{{ route('register.index') }}" class="price-btn">REGISTER <span
@@ -333,17 +333,32 @@
                     <a href="{{ asset($setting->self_declare_letter) }}" class="primary-btn mb-3">Self Declare Letter</a>
                 @endif
                 @if ($setting->template_video)
-                    <a href="{{ asset($setting->template_video) }}" class="primary-btn" target="_blank">Template Video</a>
+                    <a href="{{ asset($setting->template_video) }}" class="primary-btn" target="_blank">Template
+                        Video</a>
                 @endif
             </div>
             <div class="row mt-5" id="publication-section">
                 <div class="col-lg-12">
                     <div class="section-title">
                         <h2>ARTICLE PUBLICATION:</h2>
-                        <p>
-                            Selected Article will be proposed in Journal or Proceeding
-                            indexed Scopus
+                        <p style="text-align: left !important; color:black;" class="mb-3">
+                            All articles will be published in EDP Sciences (WoS indexed), and selected papers will be published in Sinta and Scopus journals.
                         </p>
+                        <ol style="text-align: left;">
+                            <li>Paper Asia (Scopus Q3)</li>
+                            <li>Management and Accounting Review (MAR) (Scopus Q4)</li>
+                            <li>Proceeding will be published in EDP Science (WoS)</li>
+                            <li>Jurnal Fokus Bisnis (FokBis) (Sirnta 3)</li>
+                            <li>Jurnal Akuntansi FEB UNSIL (Sinta 3)</li>
+                            <li>Jurnal Perpajakan, Manajemen, dan Akuntansi (Permana) (Sinta 4)</li>
+                            <li>Syariati: Jurnal Studi Al-Qur'an dan Hukum (Sinta 4)</li>
+                            <li>Al-Arbah: Journal of lslamic Finance and Banking (Sinta 4)</li>
+                            <li>Among Makarti: Jurnal Ekonomi dan Bisnis (Sinta 4)</li>
+                            <li>Journal of Economic, Management, Accounting, and Technology (Jematech) (Sinta 4)</li>
+                            <li>Jurnal Cakrawala Indonesia (Sinta 4)</li>
+                            <li>Jurnal lImiah Akuntansi dan Keuangan IAK (Sinta 5)</li>
+                            <li>Jurnal Akuntansi dan Mangjemen (Akmen) (Sinta 5)</li>
+                        </ol>
                     </div>
                 </div>
             </div>
@@ -397,7 +412,8 @@
                         @foreach ($page->contacts as $contact)
                             <a href="https://api.whatsapp.com/send?phone={{ $contact->phone_number }}"
                                 class="text-primary" target="_blank"> {{ $contact->phone_number }}
-                                ({{ $contact->name }})</a>
+                                ({{ $contact->name }})
+                            </a>
                             <br>
                         @endforeach
                     </div>
@@ -411,7 +427,7 @@
         <img src="{{ asset('assets/images/Scopus_logo.png') }}" height="80">
         <img src="{{ asset('assets/images/sinta_logo.png') }}" height="80">
     </div>
-    @endsection
+@endsection
 @section('script')
     <script>
         var timerdate = {{ $month }} + '/' + {{ $day }} + '/' + {{ $year }};

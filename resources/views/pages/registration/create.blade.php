@@ -20,7 +20,7 @@
                             @endif
                         </h5>
                         <p class="text-muted">{{ $category->description }}</p>
-                        <h5 class="text-muted">{{ \App\Helpers\AppHelper::currency($category->amount) }}</h5>
+                        <h5 class="text-muted">{{ \App\Helpers\AppHelper::currency($category) }}</h5>
                     </div>
                 </div>
                 <div class="row">

@@ -43,6 +43,7 @@ class HomeController extends Controller
         $data = [
             'title' => 'Dashboard',
             'active' => 'dashboard',
+            'setting' => Setting::first(),
         ];
         if (Auth::user()->type == User::TYPE_PESERTA) {
             // $view = 'pages.dashboard.index-user';

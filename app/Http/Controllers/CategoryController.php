@@ -53,10 +53,11 @@ class CategoryController extends Controller
             'name' => ['required'],
             'description' => ['required'],
             'amount' => ['required'],
+            'amount_max' => ['required'],
             'page_id' => ['required'],
         ]);
         $validatedData['is_paper'] = $request->is_paper ? Category::IS_PAPER : 0;
-        // $validatedData['is_active'] = $request->is_active ? Category::IS_ACTIVE : 0;
+        $validatedData['is_dollar'] = $request->is_dollar ? Category::IS_DOLAR : 0;
         Category::create($validatedData);
         Toastr::success('Kategori berhasil ditambahkan', 'Success', ["positionClass" => "toast-top-right"]);
         return redirect()->route('categories.index');
@@ -104,9 +105,11 @@ class CategoryController extends Controller
             'name' => ['required'],
             'description' => ['required'],
             'amount' => ['required'],
+            'amount_max' => ['required'],
             'page_id' => ['required'],
         ]);
         $validatedData['is_paper'] = $request->is_paper ? Category::IS_PAPER : 0;
+        $validatedData['is_dollar'] = $request->is_dollar ? Category::IS_DOLAR : 0;
         $validatedData['is_active'] = $request->is_active ? Category::IS_ACTIVE : 0;
         $category->update($validatedData);
         Toastr::success('Kategori berhasil diupdate', 'Success', ["positionClass" => "toast-top-right"]);

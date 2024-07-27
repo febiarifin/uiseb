@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Helpers\AppHelper;
 use App\Models\Paper;
 use App\Models\RevisiPaper;
+use App\Models\Setting;
 use App\Models\User;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
@@ -76,6 +77,7 @@ class PaperController extends Controller
             'subtitle' => null,
             'active' => 'dashboard',
             'paper' => $paper,
+            'setting' => Setting::first(),
         ];
         return view('pages.paper.edit', $data);
     }

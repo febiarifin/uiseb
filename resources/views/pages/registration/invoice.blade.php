@@ -46,11 +46,11 @@
                                 <span class="badge badge-secondary">+ PAPER</span>
                             @endif
                         </td>
-                        <td>{{ \App\Helpers\AppHelper::currency($registration->category->amount) }}</td>
+                        <td>{{ \App\Helpers\AppHelper::currency($registration->category) }}</td>
                     </tr>
                     <tr>
                         <td colspan="2"><b>AMOUNT TOTAL</b></td>
-                        <td>{{ \App\Helpers\AppHelper::currency($registration->category->amount) }}</td>
+                        <td>{{ \App\Helpers\AppHelper::currency($registration->category) }}</td>
                     </tr>
                 </tbody>
             </table>

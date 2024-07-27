@@ -20,9 +20,23 @@
                 <label>Deskripsi Kategori</label>
                 <textarea name="description" class="form-control" required>{{ $category->description }}</textarea>
             </div>
-            <div class="mb-3">
-                <label>Fee Kategori</label>
-                <input type="number" class="form-control" name="amount" value="{{ $category->amount }}" required>
+            <div class="row">
+                <div class="col-md-6">
+                    <label>Start Fee</label>
+                    <input type="text" inputmode="numeric" class="form-control" name="amount" value="{{ $category->amount }}" required>
+                </div>
+                <div class="col-md-6">
+                    <label>Max Fee</label>
+                    <input type="text" inputmode="numeric" class="form-control" name="amount_max" value="{{ $category->amount_max }}" required>
+                </div>
+            </div>
+            <div class="form-check mb-3">
+                <input class="form-check-input" type="checkbox" name="is_dollar" @if ($category->is_dollar)
+                checked
+                @endif>
+                <label class="form-check-label" for="flexCheckDefault">
+                  Mata Uang Dollar
+                </label>
             </div>
             <div class="mb-3">
                 <label>Pilih Halaman</label>

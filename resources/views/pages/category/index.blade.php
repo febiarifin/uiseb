@@ -43,7 +43,7 @@
                                 @endif
                             </td>
                             <td>{{ $category->description }}</td>
-                            <td>{{ \App\Helpers\AppHelper::currency($category->amount) }}</td>
+                            <td>{{ \App\Helpers\AppHelper::currency($category) }}</td>
                             <td class="d-flex">
                                 <a href="{{ route('categories.edit', $category->id) }}" class="btn btn-info btn-sm"><i class="fas fa-edit"></i></a>
                                 &nbsp;

@@ -7,6 +7,7 @@ use App\Models\Abstrak;
 use App\Models\Paper;
 use App\Models\Penulis;
 use App\Models\RevisiAbstrak;
+use App\Models\Setting;
 use App\Models\User;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
@@ -79,6 +80,7 @@ class AbstrakController extends Controller
             'active' => 'dashboard',
             'abstrak' => $abstrak,
             'user' => $abstrak->registration->user,
+            'setting' => Setting::first(),
         ];
         return view('pages.abstrak.edit', $data);
     }

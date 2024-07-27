@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Helpers\AppHelper;
 use App\Models\RevisiVideo;
+use App\Models\Setting;
 use App\Models\Video;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
@@ -73,6 +74,7 @@ class VideoController extends Controller
             'subtitle' => null,
             'active' => 'dashboard',
             'video' => $video,
+            'setting' => Setting::first(),
         ];
         return view('pages.video.edit', $data);
     }

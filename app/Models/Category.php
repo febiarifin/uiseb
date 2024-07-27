@@ -11,15 +11,17 @@ class Category extends Model
 
     public const IS_PAPER = 1;
     public const IS_ACTIVE = 1;
-    public const IS_DISABLE = 0;
+    public const IS_DOLAR = 1;
 
     protected $fillable = [
         'name',
         'description',
         'amount',
+        'amount_max',
         'is_paper',
         'page_id',
         'is_active',
+        'is_dollar',
     ];
 
     public function registrations()

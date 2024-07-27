@@ -61,7 +61,7 @@
                 <div class="mb-3 col-md-2">
                     <label>Fee</label>
                     <input type="text" class="form-control"
-                        value="{{ \App\Helpers\AppHelper::currency($registration->category->amount) }}" disabled>
+                        value="{{ \App\Helpers\AppHelper::currency($registration->category) }}" disabled>
                 </div>
             </div>
             @if ($type == 'review' || $type == 'detail')

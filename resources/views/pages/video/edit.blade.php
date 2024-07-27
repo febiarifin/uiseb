@@ -9,11 +9,14 @@
             </div>
         </div>
         <div class="card-body">
+            <div class="alert alert-primary">
+                <i class="fas fa-info-circle"></i> You can see the video template at the following link <a href="{{ asset($setting->template_video) }}" target="_blank"><i class="fab fa-youtube"></i> Video Template</a>
+            </div>
             <form action="{{ route('videos.update', $video->id) }}" method="post">
                 @method('put')
                 @csrf
                 <div class="mb-3">
-                    <label>Judul</label>
+                    <label>Title</label>
                     <input type="text" class="form-control" value="{{ $video->paper->abstrak->title }}" name="title" disabled>
                 </div>
                 <div class="mb-3">

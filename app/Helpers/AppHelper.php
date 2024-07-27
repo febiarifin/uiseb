@@ -10,10 +10,13 @@ use Illuminate\Support\Str;
 
 class AppHelper{
 
-    public static function currency($number)
+    public static function currency($category)
     {
-        $new_number = "Rp " . number_format($number, 0, ',', '.');
-        return $new_number;
+        // $new_number = "Rp " . number_format($number, 0, ',', '.');
+        $currency = $category->is_dollar ? 'USD ' : 'IDR ';
+        $amount = $currency . number_format($category->amount, 0, ',', '.');
+        $amount_max = $currency . number_format($category->amount_max, 0, ',', '.');
+        return $amount.' - '.$amount_max;
     }
 
     public static function convert_base64($base_path)

@@ -19,9 +19,21 @@
                     <label>Deskripsi Kategori</label>
                     <textarea name="description" class="form-control" required></textarea>
                 </div>
-                <div class="mb-3">
-                    <label>Fee Kategori</label>
-                    <input type="number" class="form-control" name="amount" required>
+                <div class="row">
+                    <div class="col-md-6">
+                        <label>Start Fee</label>
+                        <input type="text" inputmode="numeric" class="form-control" name="amount" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label>Max Fee</label>
+                        <input type="text" inputmode="numeric" class="form-control" name="amount_max" required>
+                    </div>
+                </div>
+                <div class="form-check mb-3">
+                    <input class="form-check-input" type="checkbox" name="is_dollar">
+                    <label class="form-check-label" for="flexCheckDefault">
+                        Mata Uang Dollar
+                    </label>
                 </div>
                 <div class="mb-3">
                     <label>Pilih Halaman</label>

@@ -48,7 +48,7 @@
                                         <span class="badge badge-secondary">+ PAPER</span>
                                     @endif
                                 </td>
-                                <td>{{ \App\Helpers\AppHelper::currency($registration->category->amount) }}</td>
+                                <td>{{ \App\Helpers\AppHelper::currency($registration->category) }}</td>
                                 <td>
                                     @if ($registration->is_valid == \App\Models\Registration::IS_VALID)
                                         <span class="badge badge-success">VALID</span>

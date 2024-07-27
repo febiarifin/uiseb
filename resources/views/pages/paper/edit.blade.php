@@ -10,22 +10,22 @@
         </div>
         <div class="card-body">
             <div class="alert alert-primary">
-                Template paper <a href=""><I class="fas fa-download"></I> DOWNLOAD</a>
+                <i class="fas fa-info-circle"></i> You can see the paper template at the following link <a href="{{ asset($setting->template_full_paper) }}" target="_blank"><i class="fas fa-download"></i> Paper Template</a>
             </div>
             <form action="{{ route('papers.update', $paper->id) }}" method="post" enctype="multipart/form-data">
                 @method('put')
                 @csrf
                 <div class="mb-3">
-                    <label>Judul Abstrak</label>
+                    <label>Abstract Title</label>
                     <input type="text" class="form-control" value="{{ $paper->abstrak->title }}" name="title" disabled>
                 </div>
                 <div class="mb-3">
                     <label>Author</label>
                     <table class="table table-bordered">
                         <tr>
-                            <th>Nama Depan</th>
-                            <th>Nama Tengah</th>
-                            <th>Nama Belakang</th>
+                            <th>First Name</th>
+                            <th>Middle Name</th>
+                            <th>Last Name</th>
                             <th>Email</th>
                             <th>Afiliasi</th>
                             <th>Degree</th>
@@ -54,12 +54,12 @@
                     </table>
                 </div>
                 <div class="col-md-12 mb-3">
-                    <label>Abstrak</label>
+                    <label>Abstract</label>
                     <input id="abstract" type="hidden" name="abstract" value="{{ $paper->abstract }}" required>
                     <trix-editor input="abstract"></trix-editor>
                 </div>
                 <div class="col-md-12 mb-3">
-                    <label>Daftar Pustaka</label>
+                    <label>Bibliography</label>
                     <input id="bibliography" type="hidden" name="bibliography" value="{{ $paper->bibliography }}" required>
                     <trix-editor input="bibliography"></trix-editor>
                 </div>
@@ -68,7 +68,7 @@
                     <br>
                     <input type="text" class="form-control" data-role="tagsinput" name="keyword" value="{{ $paper->keyword }}" required>
                     <br>
-                    <small>Enter jika ingin menginputan lebih dari satu.</small>
+                    <small>Enter if you want to input more than one</small>
                 </div>
                 <div class="mb-3">
                     <label>File (Format: <b>.docx</b>)</label>

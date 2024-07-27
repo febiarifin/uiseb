@@ -10,14 +10,14 @@
         </div>
         <div class="card-body">
             <div class="alert alert-primary">
-                Template abstrak <a href=""><I class="fas fa-download"></I> DOWNLOAD</a>
+                <i class="fas fa-info-circle"></i> You can see the abstract template at the following link <a href="{{ asset($setting->template_abstract) }}" target="_blank"><i class="fas fa-download"></i> Abstract Template</a>
             </div>
             <form action="{{ route('abstraks.update', $abstrak->id) }}" method="post" enctype="multipart/form-data"
                 id="dynamicForm" onsubmit="updateCheckboxes()">
                 @method('put')
                 @csrf
                 <div class="mb-3">
-                    <label>Jenis Paper</label>
+                    <label>Type Paper</label>
                     <select name="type_paper" class="form-control" required>
                         <option value="">--pilih--</option>
                         <option value="Literature review"
@@ -28,7 +28,7 @@
                     </select>
                 </div>
                 <div class="mb-3">
-                    <label>Judul (Min: 20 Words)</label>
+                    <label>Title (Min: 20 Words)</label>
                     <input type="text" class="form-control" value="{{ $abstrak->title }}" name="title" required>
                 </div>
                 <div class="row form-set border border-secondary rounded m-1 mb-3">
@@ -77,17 +77,17 @@
                         @endforeach
                     @else
                         <div class="col-md-4 mb-3">
-                            <label>Nama Depan</label>
+                            <label>First Name</label>
                             <input type="text" class="form-control" name="first_names[]" value="{{ $user->first_name }}"
                                 required>
                         </div>
                         <div class="col-md-4 mb-3">
-                            <label>Nama Tengah</label>
+                            <label>Middle Name</label>
                             <input type="text" class="form-control" name="middle_names[]"
                                 value="{{ $user->middle_name }}">
                         </div>
                         <div class="col-md-4 mb-3">
-                            <label>Nama Belakang</label>
+                            <label>Last Name</label>
                             <input type="text" class="form-control" name="last_names[]" value="{{ $user->last_name }}">
                         </div>
                         <div class="col-md-4 mb-3">
@@ -96,7 +96,7 @@
                                 required>
                         </div>
                         <div class="col-md-4 mb-3">
-                            <label>Afiliasi</label>
+                            <label>Affiliate</label>
                             <input type="text" class="form-control" name="affiliates[]" value="{{ $user->institution }}"
                                 required>
                         </div>
@@ -151,7 +151,7 @@
                     <input type="text" class="form-control" data-role="tagsinput" name="keyword"
                         value="{{ $abstrak->keyword }}" required>
                     <br>
-                    <small>Enter jika ingin menginputan lebih dari satu.</small>
+                    <small>Enter if you want to input more than one</small>
                 </div>
                 <div class="mb-3">
                     <label>File (Format: <b>.docx</b>)</label>
