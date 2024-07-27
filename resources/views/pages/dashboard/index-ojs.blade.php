@@ -134,7 +134,7 @@
                                                                 href="{{ route('print.review', base64_encode($registration->id) . uniqid()) }}"
                                                                 target="_blank">REVIEWS</a>
                                                             <a class="dropdown-item"
-                                                                href="{{ route('print.review', base64_encode($registration->id) . uniqid()) }}"
+                                                                href="{{ route('print.symposium', base64_encode($registration->id) . uniqid()) }}"
                                                                 target="_blank">SYMPOSIUM</a>
                                                         @endif
                                                         <a class="dropdown-item" href="#"

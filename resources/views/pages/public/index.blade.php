@@ -316,6 +316,26 @@
                     <a href="{{ route('register.index') }}" class="primary-btn">REGISTRATION</a>
                 </div>
             </div>
+            <div class="mt-5 col-12 text-center">
+                @if ($setting->template_abstract)
+                    <a href="{{ asset($setting->template_abstract) }}" class="primary-btn mb-3">Template Abstrak</a>
+                @endif
+                @if ($setting->template_full_paper)
+                    <a href="{{ asset($setting->template_full_paper) }}" class="primary-btn mb-3">Template Full Paper</a>
+                @endif
+                @if ($setting->confirmation_letter)
+                    <a href="{{ asset($setting->confirmation_letter) }}" class="primary-btn mb-3">Confirmation Letter</a>
+                @endif
+                @if ($setting->copyright_letter)
+                    <a href="{{ asset($setting->copyright_letter) }}" class="primary-btn mb-3">Copyright Letter</a>
+                @endif
+                @if ($setting->self_declare_letter)
+                    <a href="{{ asset($setting->self_declare_letter) }}" class="primary-btn mb-3">Self Declare Letter</a>
+                @endif
+                @if ($setting->template_video)
+                    <a href="{{ asset($setting->template_video) }}" class="primary-btn" target="_blank">Template Video</a>
+                @endif
+            </div>
             <div class="row mt-5" id="publication-section">
                 <div class="col-lg-12">
                     <div class="section-title">
@@ -336,26 +356,6 @@
                         <a href="{{ $article->link }}" class="primary-btn col-4"
                             target="_blank">{{ $article->name }}</a>
                     @endforeach
-                </div>
-                <div class="mt-5 col-12 text-center">
-                    @if ($setting->template_abstract)
-                        <a href="{{ asset($setting->template_abstract) }}" class="primary-btn mb-3">Template Abstrak</a>
-                    @endif
-                    @if ($setting->template_full_paper)
-                        <a href="{{ asset($setting->template_full_paper) }}" class="primary-btn mb-3">Template Full Paper</a>
-                    @endif
-                    @if ($setting->confirmation_letter)
-                        <a href="{{ asset($setting->confirmation_letter) }}" class="primary-btn mb-3">Confirmation Letter</a>
-                    @endif
-                    @if ($setting->copyright_letter)
-                        <a href="{{ asset($setting->copyright_letter) }}" class="primary-btn mb-3">Copyright Letter</a>
-                    @endif
-                    @if ($setting->self_declare_letter)
-                        <a href="{{ asset($setting->self_declare_letter) }}" class="primary-btn mb-3">Self Declare Letter</a>
-                    @endif
-                    @if ($setting->template_video)
-                        <a href="{{ asset($setting->template_video) }}" class="primary-btn" target="_blank">Template Video</a>
-                    @endif
                 </div>
             </div>
         </div>
@@ -406,7 +406,12 @@
         </div>
     </section>
     <!-- Contact Section End -->
-@endsection
+    <div class="text-center p-2" style="background-color: #f3f3f3;">
+        <img src="{{ asset('assets/images/Web_of_Science-2.png') }}" height="80">
+        <img src="{{ asset('assets/images/Scopus_logo.png') }}" height="80">
+        <img src="{{ asset('assets/images/Sinta_logo.png') }}" height="80">
+    </div>
+    @endsection
 @section('script')
     <script>
         var timerdate = {{ $month }} + '/' + {{ $day }} + '/' + {{ $year }};
