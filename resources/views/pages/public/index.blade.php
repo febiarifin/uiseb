@@ -39,13 +39,13 @@
                         <h4 class="text-white">
                             {!! nl2br($page->about_1) !!}
                         </h4>
-                        <div class="mainmenu">
-                            @if ($setting->flayer)
-                                <a href="{{ asset($setting->flayer) }}" class="primary-btn mt-4">DOWNLOAD FLAYER</a>
-                            @else
-                                <a href="#about-section" class="primary-btn mt-4">MORE INFORMATION</a>
-                            @endif
-                        </div>
+                        {{-- <div class="mainmenu">
+                        </div> --}}
+                        @if ($setting->flayer)
+                            <a href="{{ asset($setting->flayer) }}" class="primary-btn mt-4">DOWNLOAD FLAYER</a>
+                        @else
+                            <a href="#about-section" class="primary-btn mt-4">MORE INFORMATION</a>
+                        @endif
                     </div>
                 </div>
                 <div class="col-lg-5">
