@@ -17,6 +17,7 @@ class Setting extends Model
         'confirmation_letter',
         'copyright_letter',
         'self_declare_letter',
+        'flayer',
     ];
 
 }

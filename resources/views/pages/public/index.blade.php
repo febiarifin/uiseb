@@ -40,7 +40,11 @@
                             {!! nl2br($page->about_1) !!}
                         </h4>
                         <div class="mainmenu">
-                            <a href="#about-section" class="primary-btn mt-4">MORE INFORMATION</a>
+                            @if ($setting->flayer)
+                                <a href="{{ asset($setting->flayer) }}" class="primary-btn mt-4">DOWNLOAD FLAYER</a>
+                            @else
+                                <a href="#about-section" class="primary-btn mt-4">MORE INFORMATION</a>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -342,7 +346,8 @@
                     <div class="section-title">
                         <h2>ARTICLE PUBLICATION:</h2>
                         <p style="text-align: left !important; color:black;" class="mb-3">
-                            All articles will be published in EDP Sciences (WoS indexed), and selected papers will be published in Sinta and Scopus journals.
+                            All articles will be published in EDP Sciences (WoS indexed), and selected papers will be
+                            published in Sinta and Scopus journals.
                         </p>
                         <ol style="text-align: left;">
                             <li>Paper Asia (Scopus Q3)</li>

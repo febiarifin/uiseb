@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('confirmation_letter')->nullable();
             $table->string('copyright_letter')->nullable();
             $table->string('self_declare_letter')->nullable();
+            $table->string('flayer')->nullable();
             $table->timestamps();
         });
     }

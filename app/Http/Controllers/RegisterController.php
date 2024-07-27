@@ -7,6 +7,7 @@ use App\Mail\NotificationMail;
 use App\Models\Category;
 use App\Models\Registration;
 use App\Models\Revision;
+use App\Models\Setting;
 use App\Models\User;
 use App\Models\UserVerify;
 use Brian2694\Toastr\Facades\Toastr;
@@ -110,6 +111,7 @@ class RegisterController extends Controller
             'subtitle' => null,
             'active' => 'registration',
             'registration' => $registration,
+            'setting' => Setting::first(),
         ];
         return view('pages.registration.payment', $data);
     }

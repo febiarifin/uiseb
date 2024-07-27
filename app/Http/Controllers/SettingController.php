@@ -80,8 +80,8 @@ class SettingController extends Controller
     {
         $setting = Setting::first();
         $validatedData = $request->validate([
-            'information' => ['required'],
-            'template_video' => ['required'],
+            // 'information' => ['required'],
+            // 'template_video' => ['required'],
             'template_abstract' => [Rule::requiredIf(function() use($request){
                 if (empty($request->template_abstract)) {
                     return false;
@@ -112,7 +112,15 @@ class SettingController extends Controller
                 }
                 return true;
             }),'mimes:docx','max: 5000'],
+            'flayer' => [Rule::requiredIf(function() use($request){
+                if (empty($request->flayer)) {
+                    return false;
+                }
+                return true;
+            }),'mimes:pdf','max: 5000'],
         ]);
+        $validatedData['information'] = $request->information;
+        $validatedData['template_video'] = $request->template_video;
         if ($request->template_abstract) {
             AppHelper::delete_file($setting->template_abstract);
             $validatedData['template_abstract'] = AppHelper::upload_file($request->template_abstract, 'files');
@@ -133,8 +141,12 @@ class SettingController extends Controller
             AppHelper::delete_file($setting->self_declare_letter);
             $validatedData['self_declare_letter'] = AppHelper::upload_file($request->self_declare_letter, 'files');
         };
+        if ($request->flayer) {
+            AppHelper::delete_file($setting->flayer);
+            $validatedData['flayer'] = AppHelper::upload_file($request->flayer, 'files');
+        };
         $setting->update($validatedData);
-        Toastr::success('Paper berhasil disubmit', 'Success', ["positionClass" => "toast-top-right"]);
+        Toastr::success('Setting berhasil disimpan', 'Success', ["positionClass" => "toast-top-right"]);
         return back();
     }
 

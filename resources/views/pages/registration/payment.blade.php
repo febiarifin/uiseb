@@ -13,7 +13,7 @@
             @method('put')
             @csrf
             <div class="alert alert-primary mb-3">
-                Pembayaran Transfer ke Nomor Rekening 1234567890 a.n UISEB
+                {!! nl2br($setting->information) !!}
             </div>
             <div class="mb-3">
                 <label>Bukti Pembayaran (Format: jpg, jpeg, png. Max: 500Kb)</label>
