@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('name');
             $table->text('description');
             $table->date('date');
+            $table->date('date_end')->nullable();
             $table->timestamps();
             $table->foreignId('page_id')->constrained();
         });

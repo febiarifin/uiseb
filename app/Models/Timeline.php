@@ -13,6 +13,7 @@ class Timeline extends Model
         'name',
         'description',
         'date',
+        'date_end',
         'page_id',
     ];
 

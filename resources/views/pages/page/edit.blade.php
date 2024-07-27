@@ -109,7 +109,11 @@
                         <li>
                             <span class="text-primary">{{ $timeline->name }}</span>
                             <span
-                                class="float-right text-primary">{{ \App\Helpers\AppHelper::parse_date_timeline($timeline->date) }}</span>
+                                class="float-right text-primary">{{ \App\Helpers\AppHelper::parse_date_timeline($timeline->date) }}
+                                @if ($timeline->date_end)
+                                    - {{ \App\Helpers\AppHelper::parse_date_timeline($timeline->date_end) }}
+                                @endif
+                            </span>
                             <p class="text-justify">{{ $timeline->description }}</p>
                             <form action="{{ route('timelines.destroy', $timeline->id) }}" method="post">
                                 @method('delete')
@@ -197,15 +201,15 @@
                 @else
                     @foreach ($page->contacts as $contact)
                         <a href="https://api.whatsapp.com/send?phone={{ $contact->phone_number }}"
-                            class="btn btn-secondary rounded-pill" target="_blank">{{ $contact->phone_number }} ({{ $contact->name }}) <i
-                                class="fab fa-whatsapp"></i></a>
-                                <form action="{{ route('contacts.destroy', $contact->id) }}" method="post">
-                                    @method('delete')
-                                    @csrf
-                                    <button type="submit" class="btn btn-danger btn-sm"
-                                        onclick="return confirm('Yakin ingin dihapus?')"><i class="fas fa-trash"></i></button>
-                                </form>
-                                &nbsp;
+                            class="btn btn-secondary rounded-pill" target="_blank">{{ $contact->phone_number }}
+                            ({{ $contact->name }}) <i class="fab fa-whatsapp"></i></a>
+                        <form action="{{ route('contacts.destroy', $contact->id) }}" method="post">
+                            @method('delete')
+                            @csrf
+                            <button type="submit" class="btn btn-danger btn-sm"
+                                onclick="return confirm('Yakin ingin dihapus?')"><i class="fas fa-trash"></i></button>
+                        </form>
+                        &nbsp;
                     @endforeach
                 @endif
             </div>
@@ -238,6 +242,10 @@
                         <div class="mb-3">
                             <label>Tanggal</label>
                             <input type="date" class="form-control" name="date" required>
+                        </div>
+                        <div class="mb-3">
+                            <label>Tanggal Berakhir (Opsional)</label>
+                            <input type="date" class="form-control" name="date_end">
                         </div>
                     </div>
                     <div class="modal-footer">

@@ -177,8 +177,12 @@
                             @foreach ($page->timelines as $timeline)
                                 <li>
                                     <span class="text-primary">{{ $timeline->name }}</span>
-                                    <span
-                                        class="float-right text-primary">{{ \App\Helpers\AppHelper::parse_date_timeline($timeline->date) }}</span>
+                                    <span class="float-right text-primary">
+                                        {{ \App\Helpers\AppHelper::parse_date_timeline($timeline->date) }}
+                                        @if ($timeline->date_end)
+                                        - {{ \App\Helpers\AppHelper::parse_date_timeline($timeline->date_end) }}
+                                        @endif
+                                    </span>
                                     <p class="text-justify">{{ $timeline->description }}</p>
                                 </li>
                             @endforeach

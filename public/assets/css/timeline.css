@@ -4,7 +4,7 @@ ul.timeline {
 }
 ul.timeline:before {
     content: ' ';
-    background: #d4d9df;
+    background: #4871f9;
     display: inline-block;
     position: absolute;
     left: 9px;
@@ -32,7 +32,7 @@ ul.timeline > li:before {
 .select2-container--default .select2-selection--single {
     width: 100% !important;
     height: 46px !important;
-    background: #f4f6f8 !important;
+    background: #4871f9 !important;
     padding-left: 20px !important;
     padding-right: 5px !important;
     border: none !important;
@@ -60,8 +60,8 @@ ul.timeline > li:before {
 
 .bootstrap-tagsinput .tag {
     margin-right: 2px;
-    color: white !important;
-    background-color: #0d6efd;
+    color: black !important;
+    background-color: #98b6e2;
     padding: 2px 4px 2px 4px;
     border-radius: 10px;
     width: 100% !important;

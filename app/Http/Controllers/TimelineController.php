@@ -42,6 +42,7 @@ class TimelineController extends Controller
             'description' => ['required'],
             'page_id' => ['required'],
         ]);
+        $validatedData['date_end'] = $request->date_end;
         Timeline::create($validatedData);
         Toastr::success('Timeline berhasil dibuat', 'Success', ["positionClass" => "toast-top-right"]);
         return back();
