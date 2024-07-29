@@ -132,7 +132,7 @@
         <div class="row">
             <div class="col-md-6 text-center p-3">
                 <h3 class="mt-5">KEYNOTE SPEAKER</h3>
-                <div class="row mt-5 mb-5">
+                <div class="row mt-5 mb-5 justify-content-center">
                     @foreach ($page->speakers()->where('is_keynote', \App\Models\Speaker::IS_KEYNOTE)->get() as $keynote)
                         <div class="col-md-4 text-center">
                             <img src="{{ asset($keynote->image) }}" class="rounded" alt="Rounded Image" height="150" />
@@ -146,13 +146,20 @@
             </div>
             <div class="col-md-6 p-3">
                 <h3 class="mt-5 text-center">INVITED SPEAKER</h3>
-                <ol class="p-5">
+                <div class="row mt-5 mb-5 justify-content-center">
                     @foreach ($page->speakers()->where('is_keynote', \App\Models\Speaker::IS_INVITED)->get() as $invited)
-                        <li>
+                        {{-- <li>
                             {{ $invited->name }} ({{ $invited->institution }})
-                        </li>
+                        </li> --}}
+                        <div class="col-md-4 text-center">
+                            <img src="{{ asset($invited->image) }}" class="rounded" alt="Rounded Image" height="150" />
+                            <p>
+                                <b>{{ $invited->name }}</b> <br />
+                                {{ $invited->institution }}
+                            </p>
+                        </div>
                     @endforeach
-                </ol>
+                </div>
             </div>
         </div>
     </section>

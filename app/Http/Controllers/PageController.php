@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Helpers\AppHelper;
 use App\Models\Category;
 use App\Models\Page;
+use App\Models\Setting;
 use App\Models\User;
 use Brian2694\Toastr\Facades\Toastr;
 use Carbon\Carbon;
@@ -73,6 +74,7 @@ class PageController extends Controller
             'month' => $date->month,
             'day' => $date->day,
             'year' => $date->year,
+            'setting' => Setting::first(),
         ];
         return view('pages.public.index', $data);
     }
