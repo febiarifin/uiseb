@@ -80,7 +80,7 @@ class HomeController extends Controller
                         ->where('status', Abstrak::ACCEPTED)
                         ->get();
                     $data['papers'] = Paper::orderBy('created_at', 'desc')
-                        ->where('status', Paper::ACCEPTED)
+                        ->where('status', Paper::REVIEW_EDITOR)
                         ->get();
                     $data['videos'] = Video::orderBy('created_at', 'desc')
                         ->where('status', Video::REVIEW)

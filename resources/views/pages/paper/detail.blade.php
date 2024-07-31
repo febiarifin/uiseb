@@ -16,7 +16,7 @@
                     <span class="badge badge-danger">REJECTED</span>
                 @elseif ($paper->status == \App\Models\Paper::ACCEPTED)
                     <span class="badge badge-success">ACCEPTED</span>
-                @elseif ($paper->status == \App\Models\Paper::REVIEW)
+                @elseif ($paper->status == \App\Models\Paper::REVIEW || $paper->status == \App\Models\Paper::REVIEW_EDITOR)
                     <span class="badge badge-secondary">REVIEW</span>
                 @endif
             </div>
@@ -181,7 +181,8 @@
                                                 @foreach ($comments as $comment)
                                                     <div class="mb-3">
                                                         <label>{{ $comment }}</label>
-                                                        <input type="text" name="comments[]" class="form-control" required>
+                                                        <input type="text" name="comments[]" class="form-control"
+                                                            required>
                                                     </div>
                                                 @endforeach
                                             @else
@@ -192,6 +193,12 @@
                                                 @enderror
                                             @endif
                                         </div>
+                                        @if (Auth::user()->type == \App\Models\User::TYPE_EDITOR)
+                                            <div class="mb-3">
+                                                <label>Hasil Check Turnitin (Dalam %)</label>
+                                                <input type="text" class="form-control" name="result" required>
+                                            </div>
+                                        @endif
                                         <div class="mb-3">
                                             <label>File (Opsional)</label>
                                             <input type="file" class="form-control @error('file') is-invalid @enderror"
@@ -213,6 +220,17 @@
                                                     </option>
                                                     <option value="{{ \App\Models\Abstrak::REJECTED }}">REJECTED</option>
                                                     <option value="{{ \App\Models\Abstrak::ACCEPTED }}">ACCEPTED</option>
+                                                </select>
+                                            </div>
+                                        @elseif (Auth::user()->type == \App\Models\User::TYPE_EDITOR)
+                                            <div class="mb-3">
+                                                <label>Status</label>
+                                                <select name="status" class="form-control" required>
+                                                    <option value="">--pilih--</option>
+                                                    <option value="{{ \App\Models\Abstrak::REVISI_MINOR }}">TIDAK LULUS
+                                                        CHECK TURNITIN</option>
+                                                    <option value="{{ \App\Models\Abstrak::REVIEW }}">LULUS CHECK TURNITIN
+                                                    </option>
                                                 </select>
                                             </div>
                                         @endif

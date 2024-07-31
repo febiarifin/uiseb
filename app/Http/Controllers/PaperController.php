@@ -95,10 +95,10 @@ class PaperController extends Controller
             'abstract' => ['required'],
             'bibliography' => ['required'],
             'keyword' => ['required'],
-            'file' => ['required','mimes:docx','max:5000'],
+            'file' => ['required', 'mimes:docx', 'max:5000'],
         ]);
         $validatedData['file'] = AppHelper::upload_file($request->file, 'files');
-        $validatedData['status'] = Paper::REVIEW;
+        $validatedData['status'] = Paper::REVIEW_EDITOR;
         $paper->update($validatedData);
         if (count($paper->users) == 0) {
             $randomReviewer = User::where('type', User::TYPE_REVIEWER)->inRandomOrder()->first();
@@ -154,48 +154,51 @@ class PaperController extends Controller
         $validatedData = $request->validate([
             // 'note' => ['required'],
             //'status' => ['required'],
-            'file' => [Rule::requiredIf(function () use($request) {
-                if (empty($request->file)) {
-                    return false;
-                }
-                return true;
-            }), 'mimes:docx,pdf', 'max:1000'],
+            'file' => [
+                Rule::requiredIf(function () use ($request) {
+                    if (empty($request->file)) {
+                        return false;
+                    }
+                    return true;
+                }),
+                'mimes:docx,pdf',
+                'max:1000'
+            ],
         ]);
         if ($request->file) {
             $validatedData['file'] = AppHelper::upload_file($request->file, 'files');
         }
         if (Auth::user()->type == User::TYPE_REVIEWER) {
             $validatedData['status'] = $request->status;
-            for ($i=0; $i< count(Paper::COMMENTS); $i++) {
-                $notes[] = "<label>".Paper::COMMENTS[$i]."<br><b>".$request->comments[$i]."</b></label><br><br>";
+            for ($i = 0; $i < count(Paper::COMMENTS); $i++) {
+                $notes[] = "<label>" . Paper::COMMENTS[$i] . "<br><b>" . $request->comments[$i] . "</b></label><br><br>";
             }
             $validatedData['note'] = implode("", $notes);
         } else {
             $validatedData['note'] = $request->note;
             if ($request->status == Paper::REVISI_MAYOR || $request->status == Paper::REVISI_MINOR) {
-                $status = 'REVISI';
-            } else if ($request->status == Paper::REJECTED) {
-                $status = 'REJECTED';
-            } else if ($request->status == Paper::ACCEPTED) {
-                $status = 'ACCEPTED';
+                $status = 'NOT ACCEPTED CHECK TURNITIN';
+            } else if ($request->status == Paper::REVIEW) {
+                $status = 'ACCEPTED CHECK TURNITIN';
             }
-            $validatedData['note'] = $validatedData['note'] . '<div>Rekomendasi status: <span class="badge badge-secondary">' . $status . '</span></div>';
+            $validatedData['note'] = $validatedData['note'] . '<div>Result Turnitin Check: <span class="badge badge-warning">' . $request->result . '%</span></div>' . '<div>Status: <span class="badge badge-info">' . $status . '</span></div>';
+            $validatedData['status'] = $request->status;
         }
         $validatedData['file_paper'] = $paper->file;
         $validatedData['paper_id'] = $paper->id;
         $validatedData['user_id'] = Auth::user()->id;
         RevisiPaper::create($validatedData);
-        if ($request->status && Auth::user()->type == User::TYPE_REVIEWER) {
-            if ($validatedData['status'] == Paper::REJECTED) {
-                AppHelper::create_paper($paper->abstrak);
-            }else if ($validatedData['status'] == Paper::ACCEPTED) {
-                AppHelper::create_video($paper);
-            }
-            $paper->update([
-                'status' => $validatedData['status'],
-                'acc_at' => $validatedData['status'] == Paper::ACCEPTED ? now() : null,
-            ]);
+        // if ($request->status && Auth::user()->type == User::TYPE_REVIEWER) {
+        if ($validatedData['status'] == Paper::REJECTED) {
+            AppHelper::create_paper($paper->abstrak);
+        } else if ($validatedData['status'] == Paper::ACCEPTED) {
+            AppHelper::create_video($paper);
         }
+        $paper->update([
+            'status' => $validatedData['status'],
+            'acc_at' => $validatedData['status'] == Paper::ACCEPTED ? now() : null,
+        ]);
+        // }
         Toastr::success('Review paper berhasil disimpan', 'Success', ["positionClass" => "toast-top-right"]);
         return back();
     }

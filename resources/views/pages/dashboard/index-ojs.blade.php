@@ -238,7 +238,7 @@
                                                                 <span class="badge badge-danger">REJECTED</span>
                                                             @elseif ($paper->status == \App\Models\Paper::ACCEPTED)
                                                                 <span class="badge badge-success">ACCEPTED</span>
-                                                            @elseif ($paper->status == \App\Models\Paper::REVIEW)
+                                                            @elseif ($paper->status == \App\Models\Paper::REVIEW || $paper->status == \App\Models\Paper::REVIEW_EDITOR)
                                                                 <span class="badge badge-secondary">Waiting for
                                                                     Review</span>
                                                             @endif
@@ -247,7 +247,7 @@
                                                             @if (
                                                                 $paper->status != \App\Models\Paper::ACCEPTED &&
                                                                     $paper->status != \App\Models\Paper::REVIEW &&
-                                                                    $paper->status != \App\Models\Paper::REJECTED &&
+                                                                    $paper->status != \App\Models\Paper::REJECTED && $paper->status != \App\Models\Paper::REVIEW_EDITOR &&
                                                                     $registration->is_valid == \App\Models\Registration::IS_VALID)
                                                                 <a href="{{ route('papers.edit', $paper->id) }}"
                                                                     class="btn btn-primary btn-sm mb-2"><i

@@ -73,6 +73,7 @@ class DatabaseSeeder extends Seeder
         //         'description' => fake()->paragraph(10),
         //         'amount' => $amounts[$i],
         //         'is_paper' => $is_papers[$i],
+        //         'page_id' => 1,
         //     ]);
         // }
 

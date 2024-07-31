@@ -14,6 +14,7 @@ class Paper extends Model
     public const REVISI_MAYOR = 3;
     public const REJECTED = 4;
     public const ACCEPTED = 5;
+    public const REVIEW_EDITOR = 6;
     public const IS_PUBLISHED = 1;
     public const PUBLISHED_REVIEW = 1;
 

@@ -78,7 +78,7 @@
                     <div class="col-md-6">
                         <label>Position</label>
                         <select name="position" required>
-                            <option value="">--pilih--</option>
+                            <option value="">--Choose--</option>
                             <option value="Lecturer">Lecturer</option>
                             <option value="Researcher">Researcher</option>
                             <option value="Teacher">Teacher</option>
@@ -89,7 +89,7 @@
                     <div class="col-md-6">
                         <label>Degree</label>
                         <select name="degree" required>
-                            <option value="">--pilih--</option>
+                            <option value="">--Choose--</option>
                             <option value="Associate degree">Associate degree</option>
                             <option value="Bachelor’s degree">Bachelor’s degree</option>
                             <option value="Master’s degree">Master’s degree</option>
@@ -99,7 +99,7 @@
                     <div class="col-md-6">
                         <label>Subject Background</label>
                         <select name="subject_background" required>
-                            <option value="">--pilih--</option>
+                            <option value="">--Choose--</option>
                             <option value="Pharmacy">Pharmacy</option>
                             <option value="Chemistry">Chemistry</option>
                             <option value="Statistics">Statistics</option>
@@ -123,7 +123,7 @@
                     {{-- <div class="col-md-12">
                         <label>Category</label>
                         <select name="category_id" required>
-                            <option value="">--pilih--</option>
+                            <option value="">--Choose--</option>
                             @foreach ($categories as $category)
                                 <option value="{{ $category->id }}">
                                     {{ $category->name }}

@@ -19,7 +19,7 @@
                 <div class="mb-3">
                     <label>Type Paper</label>
                     <select name="type_paper" class="form-control" required>
-                        <option value="">--pilih--</option>
+                        <option value="">--Choose--</option>
                         <option value="Literature review"
                             {{ $abstrak->type_paper == 'Literature review' ? 'selected' : null }}>Literature review</option>
                         <option value="Original research paper"
@@ -103,7 +103,7 @@
                         <div class="col-md-4 mb-3">
                             <label>Degree</label>
                             <select name="degrees[]" class="form-control" required>
-                                <option value="">--pilih--</option>
+                                <option value="">--Choose--</option>
                                 <option value="Associate degree">Associate degree</option>
                                 <option value="Bachelor’s degree">Bachelor’s degree</option>
                                 <option value="Master’s degree">Master’s degree</option>

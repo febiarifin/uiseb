@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('name');
             $table->text('description');
             $table->integer('amount');
-            $table->integer('amount_max');
+            $table->integer('amount_max')->nullable();
             $table->boolean('is_paper')->nullable();
             $table->boolean('is_active')->default(1);
             $table->boolean('is_dollar')->default(0);
