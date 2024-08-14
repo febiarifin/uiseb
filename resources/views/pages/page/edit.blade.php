@@ -43,6 +43,11 @@
                         <trix-editor input="about_2"></trix-editor>
                     </div>
                     <div class="col-md-12 mb-3">
+                        <label>Teks Selayang Pandang</label>
+                        <input id="about_3" type="hidden" name="about_3" value="{{ $page->about_3 }}" required>
+                        <trix-editor input="about_3"></trix-editor>
+                    </div>
+                    <div class="col-md-12 mb-3">
                         <label>Scope</label>
                         <input id="scope" type="hidden" name="scope" value="{{ $page->scope }}" required>
                         <trix-editor input="scope"></trix-editor>
@@ -52,7 +57,7 @@
                         <input id="submission" type="hidden" name="submission" value="{{ $page->submission }}" required>
                         <trix-editor input="submission"></trix-editor>
                     </div>
-                    <div class="col-md-4 mb-3">
+                    <div class="col-md-3 mb-3">
                         <label>Image Background</label>
                         <input type="file" class="form-control @error('image_1') is-invalid @enderror" name="image_1"
                             accept=".png,.jpeg,.jpg">
@@ -63,7 +68,7 @@
                             <img src="{{ asset($page->image_1) }}" height="100" class="mt-2">
                         @endif
                     </div>
-                    <div class="col-md-4
+                    <div class="col-md-3
                             mb-3">
                         <label>Image About Atas</label>
                         <input type="file" class="form-control @error('image_2') is-invalid @enderror" name="image_2"
@@ -75,7 +80,7 @@
                             <img src="{{ asset($page->image_2) }}" height="100" class="mt-2">
                         @endif
                     </div>
-                    <div class="col-md-4
+                    <div class="col-md-3
                             mb-3">
                         <label>Image About Bawah</label>
                         <input type="file" class="form-control @error('image_3') is-invalid @enderror" name="image_3"
@@ -85,6 +90,18 @@
                         @enderror
                         @if ($page->image_3)
                             <img src="{{ asset($page->image_3) }}" height="100" class="mt-2">
+                        @endif
+                    </div>
+                    <div class="col-md-3
+                    mb-3">
+                        <label>Image Halaman About</label>
+                        <input type="file" class="form-control @error('image_4') is-invalid @enderror" name="image_4"
+                            accept=".png,.jpeg,.jpg">
+                        @error('image_4')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                        @if ($page->image_4)
+                            <img src="{{ asset($page->image_4) }}" height="100" class="mt-2">
                         @endif
                     </div>
                 </div>
@@ -140,7 +157,12 @@
                 Tidak ada speaker
             @else
                 @foreach ($page->speakers as $speaker)
-                    <div class="col-md-3 text-center border rounded p-2 shadow">
+                    <div class="col-md-3 text-center border rounded p-2 shadow position-relative">
+                        @if ($speaker->logo)
+                            <div class="background-image" style="background-image: url('{{ asset($speaker->logo) }}');">
+                            </div>
+                        @endif
+
                         @if ($speaker->image)
                             <img src="{{ asset($speaker->image) }}" height="100"> <br>
                         @endif
@@ -149,13 +171,44 @@
                         <span>{{ $speaker->institution }}</span>
                         <br>
                         <span>{{ $speaker->is_keynote ? 'KEYNOTE SPEAKER' : 'INVITED SPEAKER' }}</span>
-                        <form action="{{ route('speakers.destroy', $speaker->id) }}" method="post">
-                            @method('delete')
-                            @csrf
-                            <button type="submit" class="btn btn-danger btn-sm"
-                                onclick="return confirm('Yakin ingin dihapus?')"><i class="fas fa-trash"></i></button>
-                        </form>
+                        <hr>
+                        <span class="text-justify">{{ $speaker->description }}</span>
                     </div>
+                    <form action="{{ route('speakers.destroy', $speaker->id) }}" method="post">
+                        @method('delete')
+                        @csrf
+                        <button type="submit" class="btn btn-danger btn-sm"
+                            onclick="return confirm('Yakin ingin dihapus?')"><i class="fas fa-trash"></i></button>
+                    </form>
+                @endforeach
+            @endif
+        </div>
+    </div>
+
+    <div class="card shadow mb-4">
+        <div class="card-header d-flex">
+            <h6 class="m-0 font-weight-bold text-primary flex-grow-1">Sponsor</h6>
+            <a class="btn btn-primary btn-sm" href="#" data-toggle="modal" data-target="#sponsorModal">
+                <i class="fas fa-plus-circle"></i> Tambah Sponsor
+            </a>
+        </div>
+        <div class="card-body row">
+            @if (count($page->sponsors) == 0)
+                Tidak ada sponsor
+            @else
+                @foreach ($page->sponsors as $sponsor)
+                    <div class="col-md-3 text-center border rounded p-2 shadow">
+                        @if ($sponsor->image)
+                            <img src="{{ asset($sponsor->image) }}" height="100"> <br>
+                        @endif
+                        <span>{{ $sponsor->name }}</span>
+                    </div>
+                    <form action="{{ route('sponsors.destroy', $sponsor->id) }}" method="post">
+                        @method('delete')
+                        @csrf
+                        <button type="submit" class="btn btn-danger btn-sm"
+                            onclick="return confirm('Yakin ingin dihapus?')"><i class="fas fa-trash"></i></button>
+                    </form>
                 @endforeach
             @endif
         </div>
@@ -202,7 +255,8 @@
                     @foreach ($page->contacts as $contact)
                         <a href="https://api.whatsapp.com/send?phone={{ $contact->phone_number }}"
                             class="btn btn-secondary rounded-pill" target="_blank">{{ $contact->phone_number }}
-                            ({{ $contact->name }}) <i class="fab fa-whatsapp"></i></a>
+                            ({{ $contact->name }})
+                            <i class="fab fa-whatsapp"></i></a>
                         <form action="{{ route('contacts.destroy', $contact->id) }}" method="post">
                             @method('delete')
                             @csrf
@@ -281,10 +335,22 @@
                             <input type="text" class="form-control" name="institution" required>
                         </div>
                         <div class="mb-3">
+                            <label>Biografi</label>
+                            <textarea name="description" class="form-control" required></textarea>
+                        </div>
+                        <div class="mb-3">
                             <label>Foto</label>
                             <input type="file" class="form-control @error('image') is-invalid @enderror"
-                                name="image">
+                                name="image" accept=".png,.jpg,.jpeg">
                             @error('image')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="mb-3">
+                            <label>Logo Institusi</label>
+                            <input type="file" class="form-control @error('logo') is-invalid @enderror" name="logo"
+                                accept=".png,.jpg,.jpeg">
+                            @error('logo')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
@@ -295,6 +361,43 @@
                                 <option value="1">KEYNOTE SPEAKER</option>
                                 <option value="0">INVITE SPEAKER</option>
                             </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                        <button class="btn btn-primary" type="submit">Simpan</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sponsor Modal-->
+    <div class="modal fade" id="sponsorModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Tambah Sponsor</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <form action="{{ route('sponsors.store') }}" method="post" enctype="multipart/form-data">
+                    @csrf
+                    <input type="hidden" name="page_id" value="{{ $page->id }}">
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label>Nama</label>
+                            <input type="text" class="form-control" name="name" required>
+                        </div>
+                        <div class="mb-3">
+                            <label>Logo</label>
+                            <input type="file" class="form-control @error('image') is-invalid @enderror"
+                                name="image" accept=".png,.jpg,.jpeg" required>
+                            @error('image')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
                         </div>
                     </div>
                     <div class="modal-footer">

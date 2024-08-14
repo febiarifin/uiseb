@@ -23,17 +23,18 @@ class HomeController extends Controller
         if (!$page) {
             $page = Page::with(['timelines', 'contacts', 'speakers', 'articles'])->first();
         }
-        $date = Carbon::parse($page->date);
+        $deadline_date = Carbon::parse($page->date);
         $data = [
             'title' => config('app.name'),
             'page' => $page,
             'categories' => $page->categories()->where('is_active', Category::IS_ACTIVE)->get(),
             'editors' => User::where('type', User::TYPE_EDITOR)->get(),
             'committees' => User::where('type', User::TYPE_COMMITTEE)->get(),
-            'month' => $date->month,
-            'day' => $date->day,
-            'year' => $date->year,
+            'month' => $deadline_date->month,
+            'day' => $deadline_date->day,
+            'year' => $deadline_date->year,
             'setting' => Setting::first(),
+            'deadline_date' => $deadline_date->format('Ymd'),
         ];
         return view('pages.public.index', $data);
     }
@@ -101,6 +102,32 @@ class HomeController extends Controller
             // ->get();
         }
         return view($view, $data);
+    }
+
+    public function about()
+    {
+        $page = Page::where('status', Page::ENABLE)->whereYear('created_at', now())->first();
+        if (!$page) {
+            $page = Page::first();
+        }
+        $data = [
+            'title' => config('app.name'),
+            'page' => $page,
+        ];
+        return view('pages.public.about', $data);
+    }
+
+    public function conference()
+    {
+        $page = Page::where('status', Page::ENABLE)->whereYear('created_at', now())->first();
+        if (!$page) {
+            $page = Page::first();
+        }
+        $data = [
+            'title' => config('app.name'),
+            'page' => $page,
+        ];
+        return view('pages.public.conference', $data);
     }
 
     public function logout()

@@ -13,6 +13,7 @@ use App\Http\Controllers\PDFController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\SpeakerController;
+use App\Http\Controllers\SponsorController;
 use App\Http\Controllers\TimelineController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VideoController;
@@ -32,6 +33,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('public.index');
 Route::get('account/verify/{token}', [RegisterController::class, 'verifyAccount'])->name('user.verify');
+
+Route::get('/about', [HomeController::class, 'about'])->name('public.about');
+Route::get('/conference', [HomeController::class, 'conference'])->name('public.conference');
 
 Route::group(['middleware' => 'guest'], function () {
     Route::get('register', [RegisterController::class, 'index'])->name('register.index');
@@ -58,6 +62,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::resource('speakers', SpeakerController::class);
         Route::resource('articles', ArticleController::class);
         Route::resource('settings', SettingController::class);
+        Route::resource('sponsors', SponsorController::class);
         Route::get('registration/history', [RegisterController::class, 'registrationHistory'])->name('registration.history');
         Route::get('registration/validation', [RegisterController::class, 'registrationValidation'])->name('registration.validation');
         Route::get('registration/validate/{id}', [RegisterController::class, 'registrationValidate'])->name('registration.validate');

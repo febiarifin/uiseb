@@ -5,20 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Speaker extends Model
+class Sponsor extends Model
 {
     use HasFactory;
 
-    public const IS_KEYNOTE = 1;
-    public const IS_INVITED = 0;
-
     protected $fillable = [
         'image',
-        'logo',
         'name',
-        'description',
-        'institution',
-        'is_keynote',
         'page_id',
     ];
 

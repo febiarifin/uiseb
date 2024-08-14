@@ -18,9 +18,11 @@ class Page extends Model
         'date',
         'about_1',
         'about_2',
+        'about_3',
         'image_1',
         'image_2',
         'image_3',
+        'image_4',
         'scope',
         'submission',
         'status',
@@ -49,5 +51,10 @@ class Page extends Model
     public function categories()
     {
         return $this->hasMany(Category::class);
+    }
+
+    public function sponsors()
+    {
+        return $this->hasMany(Sponsor::class);
     }
 }

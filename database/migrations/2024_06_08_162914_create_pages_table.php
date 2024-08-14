@@ -20,9 +20,11 @@ return new class extends Migration
             $table->dateTime('date')->nullable();
             $table->text('about_1')->nullable();
             $table->text('about_2')->nullable();
+            $table->text('about_3')->nullable();
             $table->string('image_1')->nullable();
             $table->string('image_2')->nullable();
             $table->string('image_3')->nullable();
+            $table->string('image_4')->nullable();
             $table->text('scope')->nullable();
             $table->text('submission')->nullable();
             $table->boolean('status')->default(0);

@@ -122,11 +122,23 @@
     // });
 
     $('.mainmenu a').on('click', function(e) {
-        e.preventDefault();
-        $('html, body').animate({
-            scrollTop: $($(this).attr('href')).offset().top
-        }, 500);
+        var target = $(this).attr('href');
+
+        // Jika target adalah URL penuh atau "Conference", biarkan browser menangani
+        if (target.startsWith('http') || target.startsWith('https')) {
+            return true; // Lanjutkan dengan tindakan default (navigasi)
+        }
+
+        // Jika target adalah ID, dan elemen tersebut ada di halaman
+        if (target.startsWith('#') && $(target).length) {
+            e.preventDefault(); // Mencegah tindakan default
+            $('html, body').animate({
+                scrollTop: $(target).offset().top
+            }, 500);
+        }
     });
+
+
 
     $(document).ready(function(){
         function validatePasswords() {

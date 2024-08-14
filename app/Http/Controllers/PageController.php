@@ -91,7 +91,7 @@ class PageController extends Controller
             'title' => 'Edit Halaman',
             'subtitle' => null,
             'active' => 'page',
-            'page' => Page::with(['timelines','contacts','articles','speakers'])->where('id', $page->id)->first(),
+            'page' => Page::with(['timelines','contacts','articles','speakers','sponsors'])->where('id', $page->id)->first(),
         ];
         return view('pages.page.edit', $data);
     }
@@ -111,6 +111,7 @@ class PageController extends Controller
             'date' => ['required'],
             'about_1' => ['required'],
             'about_2' => ['required'],
+            'about_3' => ['required'],
             'image_1' => [Rule::requiredIf(function () use($request) {
                 if (empty($request->image_1)) {
                     return false;
@@ -118,13 +119,19 @@ class PageController extends Controller
                 return true;
             }), 'mimes:jpg,png,jpeg', 'max:1000'],
             'image_2' => [Rule::requiredIf(function () use($request) {
-                if (empty($request->image_1)) {
+                if (empty($request->image_2)) {
                     return false;
                 }
                 return true;
             }), 'mimes:jpg,png,jpeg', 'max:1000'],
             'image_3' => [Rule::requiredIf(function () use($request) {
-                if (empty($request->image_1)) {
+                if (empty($request->image_3)) {
+                    return false;
+                }
+                return true;
+            }), 'mimes:jpg,png,jpeg', 'max:1000'],
+            'image_4' => [Rule::requiredIf(function () use($request) {
+                if (empty($request->image_4)) {
                     return false;
                 }
                 return true;
@@ -143,6 +150,10 @@ class PageController extends Controller
         if ($request->image_3) {
             AppHelper::delete_file($page->image_3);
             $validatedData['image_3'] = AppHelper::upload_file($request->image_3,'images');
+        }
+        if ($request->image_4) {
+            AppHelper::delete_file($page->image_4);
+            $validatedData['image_4'] = AppHelper::upload_file($request->image_4,'images');
         }
         $page->update($validatedData);
         Toastr::success('Update berhasil disimpan', 'Success', ["positionClass" => "toast-top-right"]);

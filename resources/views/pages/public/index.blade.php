@@ -1,31 +1,7 @@
 @extends('layouts.landing-page')
 
 @section('content')
-    <!-- Header Section Begin -->
-    <header class="header-section bg-white fixed-top shadow-sm">
-        <div class="container">
-            <div class="logo">
-                <a href="{{ route('public.index') }}">
-                    <img src="{{ asset('manup-master') }}/img/logo_UISEB.png" alt="" height="40" />
-                </a>
-            </div>
-            <div class="nav-menu">
-                <nav class="mainmenu mobile-menu">
-                    <ul>
-                        <li><a href="#about-section">About</a></li>
-                        <li><a href="#conference-section">Conference</a></li>
-                        <li><a href="#registration-section">Registration</a></li>
-                        <li><a href="#submission-section">Submission</a></li>
-                        <li><a href="#publication-section">Publication</a></li>
-                    </ul>
-                </nav>
-                <a href="{{ route('register.index') }}" class="primary-btn top-btn"><i class="fa fa-ticket"></i>
-                    Register</a>
-            </div>
-            <div id="mobile-menu-wrap"></div>
-        </div>
-    </header>
-    <!-- Header End -->
+    @include('partials.header')
 
     <!-- About Section-->
     <section class="hero-section set-bg mt-5"
@@ -86,6 +62,13 @@
                             <p>Seconds</p>
                         </div>
                     </div>
+                    <div class="text-center mt-3">
+                        <a target="_blank" rel="noopener" target="_blank"
+                            href="https://calendar.google.com/calendar/render?action=TEMPLATE&dates={{ $deadline_date }}T180000Z%2F{{ $deadline_date }}T200000Z&details=UISEB"
+                            class="cta btn-yellow"
+                            style="background-color: #F4D66C; font-size: 18px; font-family: Helvetica, Arial, sans-serif; font-weight:bold; text-decoration: none; padding: 14px 20px; color: #1D2025; border-radius: 5px; display:inline-block; mso-padding-alt:0; box-shadow:0 3px 6px rgba(0,0,0,.2);"><span
+                                style="mso-text-raise:15pt;">Add to your Google Calendar {{ $deadline_date }}</span></a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -104,6 +87,7 @@
                 </div>
                 <div class="col-lg-6">
                     <div class="ha-text">
+                        {{-- <h2>WELCOME {{ $page->theme }}</h2> --}}
                         <h2>WELCOME {{ $page->theme }}</h2>
                         <p class="text-justify">
                             {!! nl2br($page->about_2) !!}
@@ -134,14 +118,20 @@
                 <h3 class="mt-5 text-center">INVITED SPEAKER</h3>
                 <div class="row mt-5 mb-5 justify-content-center">
                     @foreach ($page->speakers()->where('is_keynote', \App\Models\Speaker::IS_INVITED)->get() as $invited)
-                        {{-- <li>
-                            {{ $invited->name }} ({{ $invited->institution }})
-                        </li> --}}
-                        <div class="col-md-4 text-center">
-                            <img src="{{ asset($invited->image) }}" class="rounded" alt="Rounded Image" height="150" />
+                        <div class="col-md-4 text-center position-relative" style="overflow: hidden;">
+                            @if ($speaker->logo)
+                                <div class="background-image-2"
+                                    style="background-image: url('{{ asset($speaker->logo) }}');"></div>
+                            @endif
+
+                            @if ($speaker->image)
+                                <img src="{{ asset($speaker->image) }}" class="rounded" alt="Speaker Image"
+                                    height="150" />
+                            @endif
+
                             <p>
-                                <b>{{ $invited->name }}</b> <br />
-                                {{ $invited->institution }}
+                                <b>{{ $speaker->name }}</b> <br />
+                                {{ $speaker->institution }}
                             </p>
                         </div>
                     @endforeach
@@ -151,8 +141,17 @@
                 <h3 class="mt-5">KEYNOTE SPEAKER</h3>
                 <div class="row mt-5 mb-5 justify-content-center">
                     @foreach ($page->speakers()->where('is_keynote', \App\Models\Speaker::IS_KEYNOTE)->get() as $keynote)
-                        <div class="col-md-4 text-center">
-                            <img src="{{ asset($keynote->image) }}" class="rounded" alt="Rounded Image" height="150" />
+                        <div class="col-md-4 p-2 text-center position-relative box-speaker" style="overflow: hidden;">
+                            @if ($keynote->logo)
+                                <div class="background-image-2"
+                                    style="background-image: url('{{ asset($keynote->logo) }}');"></div>
+                            @endif
+
+                            @if ($keynote->image)
+                                <img src="{{ asset($keynote->image) }}" class="rounded" alt="Speaker Image"
+                                    height="150" />
+                            @endif
+
                             <p>
                                 <b>{{ $keynote->name }}</b> <br />
                                 {{ $keynote->institution }}
@@ -187,7 +186,7 @@
                                     <span class="float-right text-primary">
                                         {{ \App\Helpers\AppHelper::parse_date_timeline($timeline->date) }}
                                         @if ($timeline->date_end)
-                                        - {{ \App\Helpers\AppHelper::parse_date_timeline($timeline->date_end) }}
+                                            - {{ \App\Helpers\AppHelper::parse_date_timeline($timeline->date_end) }}
                                         @endif
                                     </span>
                                     <p class="text-justify">{{ $timeline->description }}</p>
@@ -202,7 +201,8 @@
     <!--Scope and Timeline End -->
 
     <!-- Pricing Section Begin -->
-    <section class="pricing-section set-bg spad" data-setbg="{{ asset('manup-master') }}/img/pricing-bg.jpg"
+    <section class="pricing-section set-bg spad"
+        data-setbg="{{ asset($page->image_1 ? $page->image_1 : 'manup-master/img/pricing-bg.jpg') }}"
         id="registration-section">
         <div class="container">
             <div class="row">
@@ -443,6 +443,13 @@
         <img src="{{ asset('assets/images/Scopus_logo.png') }}" height="80">
         <img src="{{ asset('assets/images/sinta_logo.png') }}" height="80">
     </div>
+    @if (count($page->sponsors) != 0)
+        <div class="text-center p-2" style="background-color: #f3f3f3;">
+            @foreach ($page->sponsors as $sponsor)
+                <img src="{{ asset($sponsor->image) }}" height="80">
+            @endforeach
+        </div>
+    @endif
 @endsection
 @section('script')
     <script>
