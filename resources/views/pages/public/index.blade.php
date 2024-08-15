@@ -119,19 +119,19 @@
                 <div class="row mt-5 mb-5 justify-content-center">
                     @foreach ($page->speakers()->where('is_keynote', \App\Models\Speaker::IS_INVITED)->get() as $invited)
                         <div class="col-md-4 text-center position-relative" style="overflow: hidden;">
-                            @if ($speaker->logo)
+                            @if ($invited->logo)
                                 <div class="background-image-2"
-                                    style="background-image: url('{{ asset($speaker->logo) }}');"></div>
+                                    style="background-image: url('{{ asset($invited->logo) }}');"></div>
                             @endif
 
-                            @if ($speaker->image)
-                                <img src="{{ asset($speaker->image) }}" class="rounded" alt="Speaker Image"
+                            @if ($invited->image)
+                                <img src="{{ asset($invited->image) }}" class="rounded" alt="Speaker Image"
                                     height="150" />
                             @endif
 
                             <p>
-                                <b>{{ $speaker->name }}</b> <br />
-                                {{ $speaker->institution }}
+                                <b>{{ $invited->name }}</b> <br />
+                                {{ $invited->institution }}
                             </p>
                         </div>
                     @endforeach
