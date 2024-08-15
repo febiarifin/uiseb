@@ -51,14 +51,14 @@ class RegisterController extends Controller
 
         list($code, $name) = explode(',', $validatedData['country_code']);
         $code = str_replace('+', '', $code);
-        $validatedData['phone_number'] = trim($code).$validatedData['phone_number'];
-        $validatedData['name'] = $request->first_name.' '.$request->middle_name.' '.$request->last_name;
+        $validatedData['phone_number'] = trim($code) . $validatedData['phone_number'];
+        $validatedData['name'] = $request->first_name . ' ' . $request->middle_name . ' ' . $request->last_name;
         $validatedData['first_name'] = $request->first_name;
         $validatedData['middle_name'] = $request->middle_name;
         $validatedData['last_name'] = $request->last_name;
 
         $validatedData['password'] = Hash::make($validatedData['password']);
-        $validatedData['type'] =  User::TYPE_PESERTA;
+        $validatedData['type'] = User::TYPE_PESERTA;
         $user = User::create($validatedData);
 
         $token = Str::random(64);
@@ -72,7 +72,10 @@ class RegisterController extends Controller
         // AppHelper::create_abstrak($registration);
 
         try {
-            Mail::send('emails.verification', ['token' => $token], function ($message) use ($request) {
+            Mail::send('emails.verification', [
+                'token' => $token,
+                'user' => $user,
+            ], function ($message) use ($request) {
                 $message->to($request->email);
                 $message->subject('Registration Verification Email');
             });
@@ -129,6 +132,17 @@ class RegisterController extends Controller
         $validatedData['payment_image'] = AppHelper::upload_file($request->payment_image, 'images');
         $validatedData['is_valid'] = null;
         $registration->update($validatedData);
+        try {
+            Mail::send('emails.payment-received', [
+                'user' => $registration->user,
+                'registration' => $registration,
+            ], function ($message) use ($registration) {
+                $message->to($registration->user->email);
+                $message->subject('Payment Received');
+                $message->attach(public_path($registration->payment_image));
+            });
+        } catch (\Exception $e) {
+        }
         return redirect()->route('dashboard');
     }
 
@@ -196,9 +210,9 @@ class RegisterController extends Controller
     public function registrationValidation()
     {
         $registrations = Registration::with(['category', 'user'])
-        ->where('is_valid', null)
-        ->where('payment_image', '!=', null)
-        ->get();
+            ->where('is_valid', null)
+            ->where('payment_image', '!=', null)
+            ->get();
         $data = [
             'title' => 'Validasi Pendaftaran',
             'subtitle' => 'Tabel Pendaftaran Peserta',
@@ -230,10 +244,24 @@ class RegisterController extends Controller
         ]);
         Toastr::success('Pendaftaran berhasil divalidasi', 'Success', ["positionClass" => "toast-top-right"]);
         try {
-            Mail::to($registration->user->email)->send(new NotificationMail([
-                'subject' => 'Registration Validation',
-                'message' => 'Congratulations, your registration has been ACC!',
-            ]));
+            Mail::send('emails.payment-received', [
+                'user' => $registration->user,
+                'registration' => $registration,
+            ], function ($message) use ($registration) {
+                $message->to($registration->user->email);
+                $message->subject('Payment Accepted');
+                $pdfController = app()->make(PDFController::class);
+                $response = $pdfController->print_invoice(base64_encode($registration->id));
+                $tempFile = tempnam(sys_get_temp_dir(), 'invoice_') . '.pdf';
+                file_put_contents($tempFile, $response->getContent());
+                $message->attach($tempFile, [
+                    'as' => 'INVOICE_'.$registration->id. $registration->category->name . '.pdf',
+                    'mime' => 'application/pdf',
+                ]);
+                register_shutdown_function(function () use ($tempFile) {
+                    @unlink($tempFile);
+                });
+            });
         } catch (\Exception $e) {
         }
         return redirect()->route('registration.validation');
@@ -368,6 +396,27 @@ class RegisterController extends Controller
         ]);
         AppHelper::create_abstrak($registration);
         Toastr::success('Registration was successful', 'Success', ["positionClass" => "toast-top-right"]);
+        try {
+            Mail::send('emails.confirmation-registration', [
+                'user' => $registration->user,
+                'registration' => $registration,
+            ], function ($message) use ($registration) {
+                $message->to($registration->user->email);
+                $message->subject('Registration Confirmation');
+                $pdfController = app()->make(PDFController::class);
+                $response = $pdfController->print_invoice(base64_encode($registration->id));
+                $tempFile = tempnam(sys_get_temp_dir(), 'invoice_') . '.pdf';
+                file_put_contents($tempFile, $response->getContent());
+                $message->attach($tempFile, [
+                    'as' => 'INVOICE_'.$registration->id. $registration->category->name . '.pdf',
+                    'mime' => 'application/pdf',
+                ]);
+                register_shutdown_function(function () use ($tempFile) {
+                    @unlink($tempFile);
+                });
+            });
+        } catch (\Exception $e) {
+        }
         return redirect()->route('dashboard');
     }
 

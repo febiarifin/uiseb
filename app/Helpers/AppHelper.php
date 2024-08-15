@@ -16,7 +16,7 @@ class AppHelper{
         $currency = $category->is_dollar ? 'USD ' : 'IDR ';
         $amount = $currency . number_format($category->amount, 0, ',', '.');
         $amount_max = $currency . number_format($category->amount_max, 0, ',', '.');
-        return $amount.' - '.$amount_max;
+        return $category->amount_max != 0 ? $amount.' - '.$amount_max : $amount;
     }
 
     public static function convert_base64($base_path)

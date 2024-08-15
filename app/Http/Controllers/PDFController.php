@@ -62,4 +62,33 @@ class PDFController extends Controller
         return $pdf->stream('SYMPOSIUM_' . $registration->category->name . '.pdf');
     }
 
+    public function print_invoice($id)
+    {
+        $registration = Registration::with(['user', 'category'])->findOrFail(base64_decode($id));
+        $data = [
+            'title' => 'Print Invoice: '. $registration->category->name,
+            'logo' => AppHelper::convert_base64('public/manup-master/img/logo_UISEB.png'),
+            'registration' => $registration,
+        ];
+        $pdf = PDF::loadView('pdf.invoice', $data);
+        return $pdf->stream('INVOICE_'.$registration->id. $registration->category->name . '.pdf');
+    }
+
+    public function print_loa($id)
+    {
+        $registration = Registration::with(['user', 'category'])->findOrFail(base64_decode($id));
+        $abstrak = $registration->abstraks()->where('status', Abstrak::ACCEPTED)->first();
+        // $paper = $abstrak->papers()->where('status', Paper::ACCEPTED)->first();
+        $data = [
+            'title' => 'Print LOA: '. $registration->category->name,
+            'logo' => AppHelper::convert_base64('public/manup-master/img/logo_UISEB.png'),
+            'footer_kop' => AppHelper::convert_base64('public/assets/images/footer-kop.png'),
+            'registration' => $registration,
+            'abstrak' => $abstrak,
+            // 'paper' => $paper,
+        ];
+        $pdf = PDF::loadView('pdf.loa', $data);
+        return $pdf->stream('LOA_'.$registration->id. $registration->category->name . '.pdf');
+    }
+
 }

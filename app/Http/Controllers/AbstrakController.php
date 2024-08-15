@@ -13,6 +13,7 @@ use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Validation\Rule;
 
 class AbstrakController extends Controller
@@ -129,6 +130,18 @@ class AbstrakController extends Controller
             $randomReviewer = User::where('type', User::TYPE_REVIEWER)->inRandomOrder()->first();
             $abstrak->users()->attach($randomReviewer->id);
         }
+        try {
+            Mail::send('emails.submission-received', [
+                'user' => $abstrak->registration->user,
+                'abstrak' => $abstrak,
+                'paper' => null,
+            ], function ($message) use ($abstrak) {
+                $message->to($abstrak->registration->user->email);
+                $message->subject('Submission Received');
+                $message->attach(public_path($abstrak->file));
+            });
+        } catch (\Exception $e) {
+        }
         Toastr::success('Abstrak berhasil disubmit', 'Success', ["positionClass" => "toast-top-right"]);
         return redirect()->route('dashboard');
     }
@@ -174,7 +187,7 @@ class AbstrakController extends Controller
 
     public function reviewStore(Request $request, $id)
     {
-        $abstrak = Abstrak::findOrFail($id);
+        $abstrak = Abstrak::with(['registration', 'registration.user'])->findOrFail($id);
         $validatedData = $request->validate([
             'note' => ['required'],
             //'status' => ['required'],
@@ -208,16 +221,52 @@ class AbstrakController extends Controller
         $validatedData['abstrak_id'] = $abstrak->id;
         $validatedData['user_id'] = Auth::user()->id;
         RevisiAbstrak::create($validatedData);
+        $abstrak->update([
+            'status' => $validatedData['status'],
+            'acc_at' => $validatedData['status'] == Abstrak::ACCEPTED ? now() : null,
+        ]);
         if ($request->status && Auth::user()->type == User::TYPE_REVIEWER) {
             if ($validatedData['status'] == Abstrak::REJECTED) {
                 AppHelper::create_abstrak($abstrak->registration);
             } else if ($validatedData['status'] == Abstrak::ACCEPTED) {
                 AppHelper::create_paper($abstrak);
+                try {
+                    Mail::send('emails.submission-accepted', [
+                        'user' => $abstrak->registration->user,
+                        'abstrak' => $abstrak,
+                        'paper' => null,
+                        'note' => $request->note,
+                    ], function ($message) use ($abstrak) {
+                        $message->to($abstrak->registration->user->email);
+                        $message->subject('Submission Accepted');
+                        $pdfController = app()->make(PDFController::class);
+                        $response = $pdfController->print_loa(base64_encode($abstrak->registration->id));
+                        $tempFile = tempnam(sys_get_temp_dir(), 'loa_') . '.pdf';
+                        file_put_contents($tempFile, $response->getContent());
+                        $message->attach($tempFile, [
+                            'as' => 'LOA_' . $abstrak->registration->id . $abstrak->registration->category->name . '.pdf',
+                            'mime' => 'application/pdf',
+                        ]);
+                        register_shutdown_function(function () use ($tempFile) {
+                            @unlink($tempFile);
+                        });
+                    });
+                } catch (\Exception $e) {
+                }
+            } else if ($validatedData['status'] == Abstrak::REVISI_MAYOR || $validatedData['status'] == Abstrak::REVISI_MINOR) {
+                try {
+                    Mail::send('emails.submission-revisi', [
+                        'user' => $abstrak->registration->user,
+                        'abstrak' => $abstrak,
+                        'paper' => null,
+                        'note' => $request->note,
+                    ], function ($message) use ($abstrak) {
+                        $message->to($abstrak->registration->user->email);
+                        $message->subject('Submission Revision');
+                    });
+                } catch (\Exception $e) {
+                }
             }
-            $abstrak->update([
-                'status' => $validatedData['status'],
-                'acc_at' => $validatedData['status'] == Abstrak::ACCEPTED ? now() : null,
-            ]);
         }
         Toastr::success('Review abstrak berhasil disimpan', 'Success', ["positionClass" => "toast-top-right"]);
         return back();

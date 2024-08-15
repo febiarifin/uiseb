@@ -114,6 +114,8 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('print/review/{id}', [PDFController::class, 'print_review'])->name('print.review');
     Route::get('print/symposium/{id}', [PDFController::class, 'print_symposium'])->name('print.symposium');
+    Route::get('print/invoice/{id}', [PDFController::class, 'print_invoice'])->name('print.invoice');
+    Route::get('print/loa/{id}', [PDFController::class, 'print_loa'])->name('print.loa');
 });
 
 // Route::get('/storage-link', function () {

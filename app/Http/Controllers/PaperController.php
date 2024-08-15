@@ -11,6 +11,7 @@ use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Validation\Rule;
 
 class PaperController extends Controller
@@ -104,6 +105,18 @@ class PaperController extends Controller
             $randomReviewer = User::where('type', User::TYPE_REVIEWER)->inRandomOrder()->first();
             $paper->users()->attach($randomReviewer->id);
         }
+        try {
+            Mail::send('emails.submission-received', [
+                'user' => $paper->abstrak->registration->user,
+                'abstrak' => $paper->abstrak,
+                'paper' => $paper,
+            ], function ($message) use ($paper) {
+                $message->to($paper->abstrak->registration->user->email);
+                $message->subject('Submission Received');
+                $message->attach(public_path($paper->file));
+            });
+        } catch (\Exception $e) {
+        }
         Toastr::success('Paper berhasil disubmit', 'Success', ["positionClass" => "toast-top-right"]);
         return redirect()->route('dashboard');
     }
@@ -188,16 +201,52 @@ class PaperController extends Controller
         $validatedData['paper_id'] = $paper->id;
         $validatedData['user_id'] = Auth::user()->id;
         RevisiPaper::create($validatedData);
+        $paper->update([
+            'status' => $validatedData['status'],
+            'acc_at' => $validatedData['status'] == Paper::ACCEPTED ? now() : null,
+        ]);
         // if ($request->status && Auth::user()->type == User::TYPE_REVIEWER) {
         if ($validatedData['status'] == Paper::REJECTED) {
             AppHelper::create_paper($paper->abstrak);
         } else if ($validatedData['status'] == Paper::ACCEPTED) {
             AppHelper::create_video($paper);
+            try {
+                Mail::send('emails.submission-accepted', [
+                    'user' => $paper->abstrak->registration->user,
+                    'abstrak' => $paper->abstrak,
+                    'paper' => $paper,
+                    'note' => $validatedData['note'],
+                ], function ($message) use ($paper) {
+                    $message->to($paper->abstrak->registration->user->email);
+                    $message->subject('Submission Accepted');
+                    $pdfController = app()->make(PDFController::class);
+                    $response = $pdfController->print_loa(base64_encode($paper->abstrak->registration->id));
+                    $tempFile = tempnam(sys_get_temp_dir(), 'loa_') . '.pdf';
+                    file_put_contents($tempFile, $response->getContent());
+                    $message->attach($tempFile, [
+                        'as' => 'LOA_' . $paper->abstrak->registration->id . $paper->abstrak->registration->category->name . '.pdf',
+                        'mime' => 'application/pdf',
+                    ]);
+                    register_shutdown_function(function () use ($tempFile) {
+                        @unlink($tempFile);
+                    });
+                });
+            } catch (\Exception $e) {
+            }
+        } else if ($validatedData['status'] == Paper::REVISI_MAYOR || $validatedData['status'] == Paper::REVISI_MINOR) {
+            try {
+                Mail::send('emails.submission-revisi', [
+                    'user' => $paper->abstrak->registration->user,
+                    'abstrak' => $paper->abstrak,
+                    'paper' => $paper,
+                    'note' => $validatedData['note'],
+                ], function ($message) use ($paper) {
+                    $message->to($paper->abstrak->registration->user->email);
+                    $message->subject('Submission Revision');
+                });
+            } catch (\Exception $e) {
+            }
         }
-        $paper->update([
-            'status' => $validatedData['status'],
-            'acc_at' => $validatedData['status'] == Paper::ACCEPTED ? now() : null,
-        ]);
         // }
         Toastr::success('Review paper berhasil disimpan', 'Success', ["positionClass" => "toast-top-right"]);
         return back();

@@ -53,7 +53,7 @@ class CategoryController extends Controller
             'name' => ['required'],
             'description' => ['required'],
             'amount' => ['required'],
-            'amount_max' => ['required'],
+            // 'amount_max' => ['required'],
             'page_id' => ['required'],
         ]);
         $validatedData['is_paper'] = $request->is_paper ? Category::IS_PAPER : 0;
@@ -105,7 +105,7 @@ class CategoryController extends Controller
             'name' => ['required'],
             'description' => ['required'],
             'amount' => ['required'],
-            'amount_max' => ['required'],
+            // 'amount_max' => ['required'],
             'page_id' => ['required'],
         ]);
         $validatedData['is_paper'] = $request->is_paper ? Category::IS_PAPER : 0;

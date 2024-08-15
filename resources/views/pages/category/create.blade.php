@@ -26,7 +26,7 @@
                     </div>
                     <div class="col-md-6">
                         <label>Max Fee</label>
-                        <input type="text" inputmode="numeric" class="form-control" name="amount_max" required>
+                        <input type="text" inputmode="numeric" class="form-control" name="amount_max">
                     </div>
                 </div>
                 <div class="form-check mb-3">
