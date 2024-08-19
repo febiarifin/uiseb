@@ -19,6 +19,7 @@
                             <th>#</th>
                             <th>Nama Peserta</th>
                             <th>Email Peserta</th>
+                            <th>Institusi / Afiliasi</th>
                             <th>Kategori Pendaftaran</th>
                             <th>Harga</th>
                             <th>Tanggal Daftar</th>
@@ -33,6 +34,7 @@
                             <th>#</th>
                             <th>Nama Peserta</th>
                             <th>Email Peserta</th>
+                            <th>Institusi / Afiliasi</th>
                             <th>Kategori Pendaftaran</th>
                             <th>Harga</th>
                             <th>Tanggal Daftar</th>
@@ -57,6 +59,7 @@
                                 <td>{{ $no++ }}</td>
                                 <td>{{ $registration->user->name }}</td>
                                 <td>{{ $registration->user->email }}</td>
+                                <td>{{ $registration->user->institution }}</td>
                                 <td>{{ $registration->category->name }}
                                     @if ($registration->category->is_paper)
                                         <span class="badge badge-secondary">+ PAPER</span>
