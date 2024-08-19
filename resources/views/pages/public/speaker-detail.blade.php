@@ -20,6 +20,7 @@
                             <span class="d-block h4 mb-0 text-primary mt-3">{{ $speaker->name }}</span>
                             <!-- Subtitle -->
                             <span class="d-block text-sm text-blank">{{ $speaker->institution }}</span>
+                            <span class="text-muted">{{ $speaker->is_keynote == \App\Models\Speaker::IS_KEYNOTE ? 'KEYNOTE SPEAKER' : 'INVITED SPEAKER' }}</span>
                             <hr>
                             <p class="text-justify text-muted">
                                 {{ $speaker->description }}

@@ -174,7 +174,7 @@
                         <div class="box"><img class="rounded-circle" src="{{ asset($speaker->image) }}" style="max-height: 180px;">
                             <h3 class="name">{{ $speaker->name }}</h3>
                             <p class="title">
-                                {{ $speaker->is_keynote == \App\Models\Speaker::IS_INVITED ? 'KEYNOTE SPEAKER' : 'INVITED SPEAKER' }}
+                                {{ $speaker->is_keynote == \App\Models\Speaker::IS_KEYNOTE ? 'KEYNOTE SPEAKER' : 'INVITED SPEAKER' }}
                             </p>
                             <p class="description">{{ $speaker->institution }}</p>
                             <div class="social">
