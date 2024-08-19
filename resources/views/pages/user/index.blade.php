@@ -136,7 +136,7 @@
                         </div>
                         <div class="mb-3">
                             <label>Password Default</label>
-                            <input type="text" class="form-control" value="UISEB123" disabled>
+                            <input type="text" class="form-control" value="UISEB247" disabled>
                         </div>
                     </div>
                     <div class="modal-footer">
