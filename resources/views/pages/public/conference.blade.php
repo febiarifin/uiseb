@@ -14,7 +14,7 @@
             <div class="row people">
                 @foreach ($page->speakers as $speaker)
                     <div class="col-md-6 col-lg-4 item">
-                        <div class="box"><img class="rounded-circle" src="{{ asset($speaker->image) }}">
+                        <div class="box"><img class="rounded-circle" src="{{ asset($speaker->image) }}" style="max-height: 180px;">
                             <h3 class="name">{{ $speaker->name }}</h3>
                             <p class="title">
                                 {{ $speaker->is_keynote == \App\Models\Speaker::IS_INVITED ? 'KEYNOTE SPEAKER' : 'INVITED SPEAKER' }}

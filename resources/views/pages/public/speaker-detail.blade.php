@@ -12,7 +12,7 @@
                         <div class="d-flex justify-content-center">
                             <a href="#" class="avatar avatar-xl">
                                 <img alt="{{ $speaker->name }}"
-                                    src="{{ asset($speaker->image) }}" class="rounded-circle">
+                                    src="{{ asset($speaker->image) }}" class="rounded-circle" height="200">
                             </a>
                         </div>
                         <div class="text-center my-6">
