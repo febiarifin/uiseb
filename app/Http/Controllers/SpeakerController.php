@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\AppHelper;
+use App\Models\Page;
 use App\Models\Speaker;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
@@ -76,7 +77,16 @@ class SpeakerController extends Controller
      */
     public function show(Speaker $speaker)
     {
-        //
+        $page = Page::where('status', Page::ENABLE)->whereYear('created_at', now())->first();
+        if (!$page) {
+            $page = Page::first();
+        }
+        $data = [
+            'title' => $speaker->name,
+            'page' => $page,
+            'speaker' => $speaker,
+        ];
+        return view('pages.public.speaker-detail', $data);
     }
 
     /**

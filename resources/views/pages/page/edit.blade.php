@@ -57,6 +57,16 @@
                         <input id="submission" type="hidden" name="submission" value="{{ $page->submission }}" required>
                         <trix-editor input="submission"></trix-editor>
                     </div>
+                    <div class="col-md-12 mb-3">
+                        <label>Author Instruction</label>
+                        <input id="author_instruction" type="hidden" name="author_instruction" value="{{ $page->author_instruction }}" required>
+                        <trix-editor input="author_instruction"></trix-editor>
+                    </div>
+                    <div class="col-md-12 mb-3">
+                        <label>Template Word</label>
+                        <input id="template_word" type="hidden" name="template_word" value="{{ $page->template_word }}" required>
+                        <trix-editor input="template_word"></trix-editor>
+                    </div>
                     <div class="col-md-3 mb-3">
                         <label>Image Background</label>
                         <input type="file" class="form-control @error('image_1') is-invalid @enderror" name="image_1"

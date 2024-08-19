@@ -25,6 +25,8 @@ class Page extends Model
         'image_4',
         'scope',
         'submission',
+        'author_instruction',
+        'template_word',
         'status',
     ];
 

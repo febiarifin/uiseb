@@ -52,7 +52,7 @@ class UserController extends Controller
             'scopus' => ['required'],
             'institution' => ['required'],
         ]);
-        $validatedData['password'] = Hash::make('UISEB123');
+        $validatedData['password'] = Hash::make('UISEB247');
         if ($validatedData['type'] == User::TYPE_PESERTA) {
             $validatedData['is_email_verified'] = User::IS_EMAIL_VERIFIED;
         }
@@ -165,6 +165,15 @@ class UserController extends Controller
         }else{
             Toastr::error('Password lama salah', 'Error', ["positionClass" => "toast-top-right"]);
         }
+        return back();
+    }
+
+    public function resetPassword(User $user)
+    {
+        $user->update([
+            'password' => Hash::make("UISEB247"),
+        ]);
+        Toastr::success('Reset password berhasil. Password baru adalah UISEB247', 'Success', ["positionClass" => "toast-top-right"]);
         return back();
     }
 }

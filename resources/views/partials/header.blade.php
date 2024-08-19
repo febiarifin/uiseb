@@ -9,9 +9,15 @@
         <div class="nav-menu">
             <nav class="mainmenu mobile-menu">
                 <ul>
+                    <li><a href="{{ route('public.index') }}">Home</a></li>
                     <li><a href="{{ route('public.about') }}">About</a></li>
                     <li><a href="{{ route('public.conference') }}">Conference</a></li>
-                    <li><a href="#registration-section">Registration</a></li>
+                    <li><a href="#">For Author</a>
+                        <ul class="dropdown">
+                            <li><a href="{{ route('public.author') }}">Instruction Author</a></li>
+                            <li><a href="{{ route('public.template') }}">Template Word</a></li>
+                        </ul>
+                    </li>
                     <li><a href="#submission-section">Submission</a></li>
                     <li><a href="#publication-section">Publication</a></li>
                 </ul>

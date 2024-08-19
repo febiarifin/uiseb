@@ -138,6 +138,8 @@ class PageController extends Controller
             }), 'mimes:jpg,png,jpeg', 'max:1000'],
             'scope' => ['required'],
             'submission' => ['required'],
+            'author_instruction' => ['required'],
+            'template_word' => ['required'],
         ]);
         if ($request->image_1) {
             AppHelper::delete_file($page->image_1);

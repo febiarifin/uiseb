@@ -27,6 +27,8 @@ return new class extends Migration
             $table->string('image_4')->nullable();
             $table->text('scope')->nullable();
             $table->text('submission')->nullable();
+            $table->text('author_instruction')->nullable();
+            $table->text('template_word')->nullable();
             $table->boolean('status')->default(0);
             $table->timestamps();
         });

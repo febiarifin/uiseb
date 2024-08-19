@@ -30,12 +30,12 @@
     <link rel="stylesheet" href="{{ asset('assets/css/timeline.css') }}">
     <style>
         .bg-batik {
-            background-image: url('{{ asset('assets/images/bg_uiseb_10.png') }}');
+            /* background-image: url('{{ asset('assets/images/bg_uiseb_10.png') }}'); */
             background-size: cover;
             background-repeat: no-repeat;
         }
         .bg-wayang {
-            background-image: url('{{ asset('assets/images/bg-wayang-50.png') }}');
+            /* background-image: url('{{ asset('assets/images/bg-wayang-50.png') }}'); */
             background-size: cover;
             background-repeat: no-repeat;
         }

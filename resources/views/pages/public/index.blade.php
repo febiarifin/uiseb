@@ -10,7 +10,7 @@
             <div class="row">
                 <div class="col-lg-7">
                     <div class="hero-text">
-                        <span>UPCOMING NEW EVENT {{ $page->name }}</span>
+                        {{-- <span>UPCOMING NEW EVENT {{ $page->name }}</span> --}}
                         <h2>{{ $page->theme }}</h2>
                         <h4 class="text-white">
                             {!! nl2br($page->about_1) !!}
@@ -67,7 +67,7 @@
                             href="https://calendar.google.com/calendar/render?action=TEMPLATE&dates={{ $deadline_date }}T180000Z%2F{{ $deadline_date }}T200000Z&details=UISEB"
                             class="cta btn-yellow"
                             style="background-color: #F4D66C; font-size: 18px; font-family: Helvetica, Arial, sans-serif; font-weight:bold; text-decoration: none; padding: 14px 20px; color: #1D2025; border-radius: 5px; display:inline-block; mso-padding-alt:0; box-shadow:0 3px 6px rgba(0,0,0,.2);"><span
-                                style="mso-text-raise:15pt;">Add to your Google Calendar {{ $deadline_date }}</span></a>
+                                style="mso-text-raise:15pt;">Add to your Google Calendar</span></a>
                     </div>
                 </div>
             </div>
@@ -100,7 +100,7 @@
     <!-- Home About Section End -->
 
     <!-- Speaker Section Begin -->
-    <section class="team-member-section bg-wayang" id="conference-section">
+    {{-- <section class="team-member-section bg-wayang" id="conference-section">
         <div class="container mt-5">
             <div class="row">
                 <div class="col-lg-12">
@@ -161,25 +161,50 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section> --}}
+    <div class="team-boxed">
+        <div class="container">
+            <div class="intro">
+                <h2 class="text-center">Who's Speaking </h2>
+                <p class="text-center">These are our communicators, you can see each person information</p>
+            </div>
+            <div class="row people">
+                @foreach ($page->speakers as $speaker)
+                    <div class="col-md-6 col-lg-4 item">
+                        <div class="box"><img class="rounded-circle" src="{{ asset($speaker->image) }}">
+                            <h3 class="name">{{ $speaker->name }}</h3>
+                            <p class="title">
+                                {{ $speaker->is_keynote == \App\Models\Speaker::IS_INVITED ? 'KEYNOTE SPEAKER' : 'INVITED SPEAKER' }}
+                            </p>
+                            <p class="description">{{ $speaker->institution }}</p>
+                            <div class="social">
+                                <a href="{{ route('speaker.detail', $speaker->id) }}"
+                                    class="btn btn-outline-secondary btn-sm rounded-pill text-dark">Speaker Detail</a>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+        </div>
+    </div>
     <!--Speaker Section End -->
 
     <!--Scope and Timeline -->
     <section class="scope-timeline-section spad bg-batik">
         <div class="container">
             <div class="row mb-5">
-                <div class="col-lg-6">
+                <div class="col-12">
                     <div class="ha-text">
-                        <h2>CONFERENCE SCOPE</h2>
+                        <h2 class="text-center">CONFERENCE SCOPE</h2>
                         <div class="container">
                             {!! nl2br($page->scope) !!}
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-12">
                     <div class="ha-text">
-                        <h2>IMPORTANT DATES</h2>
-                        <ul class="timeline">
+                        <h2 class="text-center">IMPORTANT DATES</h2>
+                        {{-- <ul class="timeline">
                             @foreach ($page->timelines as $timeline)
                                 <li>
                                     <span class="text-primary">{{ $timeline->name }}</span>
@@ -192,7 +217,27 @@
                                     <p class="text-justify">{{ $timeline->description }}</p>
                                 </li>
                             @endforeach
-                        </ul>
+                        </ul> --}}
+                        <div class="col-xl-12">
+                            <ul class="timeline-list">
+                                @foreach ($page->timelines as $timeline)
+                                    <!-- Single Experience -->
+                                    <li>
+                                        <div class="timeline_content">
+                                            <span>{{ \App\Helpers\AppHelper::parse_date_timeline($timeline->date) }}
+                                                @if ($timeline->date_end)
+                                                    -
+                                                    {{ \App\Helpers\AppHelper::parse_date_timeline($timeline->date_end) }}
+                                                @endif
+                                            </span>
+                                            <h4>{{ $timeline->name }}</h4>
+                                            <p>{{ $timeline->description }}</p>
+                                        </div>
+                                    </li>
+                                    <!-- Single Experience -->
+                                @endforeach
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -378,78 +423,25 @@
                     </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-12 text-center mb-4">
-                    <h4>Check our previous Conference Proceedings</h4>
+            @if (count($page->articles) != 0)
+                <div class="row">
+                    <div class="col-12 text-center mb-4">
+                        <h4>Check our previous Conference Proceedings</h4>
+                    </div>
+                    <div class="col-12 text-center">
+                        @foreach ($page->articles as $article)
+                            <a href="{{ $article->link }}" class="primary-btn col-4"
+                                target="_blank">{{ $article->name }}</a>
+                        @endforeach
+                    </div>
                 </div>
-                <div class="col-12 text-center">
-                    @foreach ($page->articles as $article)
-                        <a href="{{ $article->link }}" class="primary-btn col-4"
-                            target="_blank">{{ $article->name }}</a>
-                    @endforeach
-                </div>
-            </div>
+            @endif
         </div>
     </section>
     <!-- Submission Section End -->
 
-    <!-- Contact Section Begin -->
-    <section class="contact-section spad bg-wayang">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-6">
-                    <div class="section-title">
-                        <h2>CONTACT US</h2>
-                    </div>
-                    <div class="cs-text">
-                        <div class="ct-address">
-                            <span>Address:</span>
-                            <p>Faculty of Economic and Busines UNSIQ <br /> Jl. KH. Hasyim Asy'ari Km. 03, Kaliber,
-                                Kec. Mojotengah, Kab. Wonosobo,
-                                Jawa Tengah - 56351</p>
-                        </div>
-                        <ul>
-                            <li>
-                                <span>Telephone:</span>
-                                (0286) 3396204
-                            </li>
-                            <li>
-                                <span>Email:</span>
-                                uiseb@feb-unsiq.ac.id
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-lg-6">
-                    <div class="section-title">
-                        <h2>CONTACT PERSON</h2>
-                    </div>
-                    <div class="cs-text">
-                        @foreach ($page->contacts as $contact)
-                            <a href="https://api.whatsapp.com/send?phone={{ $contact->phone_number }}"
-                                class="text-primary" target="_blank"> {{ $contact->phone_number }}
-                                ({{ $contact->name }})
-                            </a>
-                            <br>
-                        @endforeach
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- Contact Section End -->
-    <div class="text-center p-2" style="background-color: #f3f3f3;">
-        <img src="{{ asset('assets/images/Web_of_Science-2.png') }}" height="80">
-        <img src="{{ asset('assets/images/Scopus_logo.png') }}" height="80">
-        <img src="{{ asset('assets/images/sinta_logo.png') }}" height="80">
-    </div>
-    @if (count($page->sponsors) != 0)
-        <div class="text-center p-2" style="background-color: #f3f3f3;">
-            @foreach ($page->sponsors as $sponsor)
-                <img src="{{ asset($sponsor->image) }}" height="80">
-            @endforeach
-        </div>
-    @endif
+    @include('partials.footer')
+
 @endsection
 @section('script')
     <script>

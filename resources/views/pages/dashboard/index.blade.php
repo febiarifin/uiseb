@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="row">
-        @if (Auth::user()->type == \App\Models\User::TYPE_ADMIN)
+        @if (Auth::user()->type == \App\Models\User::TYPE_ADMIN || Auth::user()->type == \App\Models\User::TYPE_SUPER_ADMIN)
             <div class="col-xl-4 col-md-6 mb-4">
                 <div class="card border-left-primary shadow h-100 py-2">
                     <div class="card-body">

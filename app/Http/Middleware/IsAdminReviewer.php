@@ -19,7 +19,7 @@ class IsAdminReviewer
      */
     public function handle(Request $request, Closure $next)
     {
-        if (Auth::user()->type == User::TYPE_ADMIN || Auth::user()->type == User::TYPE_REVIEWER) {
+        if (Auth::user()->type == User::TYPE_ADMIN || Auth::user()->type == User::TYPE_REVIEWER || Auth::user()->type == User::TYPE_SUPER_ADMIN) {
             return $next($request);
         }
         return redirect(RouteServiceProvider::HOME);

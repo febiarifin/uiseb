@@ -68,5 +68,6 @@ class Kernel extends HttpKernel
         'isAdminReviewer' => \App\Http\Middleware\IsAdminReviewer::class,
         'isAdminReviewerEditor' => \App\Http\Middleware\IsAdminReviewerEditor::class,
         'isPeserta' => \App\Http\Middleware\IsPeserta::class,
+        'isSuperAdmin' => \App\Http\Middleware\IsSuperAdmin::class,
     ];
 }

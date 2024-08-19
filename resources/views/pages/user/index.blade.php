@@ -82,6 +82,9 @@
                                                     class="fas fa-trash"></i></button>
                                         </form>
                                     @endif
+                                    &nbsp;
+                                    <a href="{{ route('user.reset', $user->id) }}" class="btn btn-warning btn-sm"  onclick="return confirm('Yakin ingin reset password user {{ $user->name }}?')"><i class="fas fa-lock"></i>
+                                        Reset Password</a>
                                 </td>
                             </tr>
                         @endforeach

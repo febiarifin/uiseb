@@ -8,7 +8,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class IsAdminEditor
+class IsSuperAdmin
 {
     /**
      * Handle an incoming request.
@@ -19,7 +19,7 @@ class IsAdminEditor
      */
     public function handle(Request $request, Closure $next)
     {
-        if (Auth::user()->type == User::TYPE_ADMIN || Auth::user()->type == User::TYPE_EDITOR  || Auth::user()->type == User::TYPE_SUPER_ADMIN) {
+        if (Auth::user()->type == User::TYPE_SUPER_ADMIN) {
             return $next($request);
         }
         return redirect(RouteServiceProvider::HOME);

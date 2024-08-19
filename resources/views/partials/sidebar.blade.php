@@ -18,7 +18,7 @@
             <span>Dashboard</span></a>
     </li>
 
-    @if (Auth::user()->type == \App\Models\User::TYPE_PESERTA)
+    @if (Auth::user()->type == \App\Models\User::TYPE_PESERTA || Auth::user()->type == \App\Models\User::TYPE_SUPER_ADMIN)
         {{-- <li class="nav-item {{ $active == 'registration' ? 'active' : null }}">
             <a class="nav-link" href="{{ route('registration.user') }}">
                 <i class="fas fa-fw fa-tachometer-alt"></i>
@@ -26,7 +26,20 @@
         </li> --}}
     @endif
 
-    @if (Auth::user()->type == \App\Models\User::TYPE_ADMIN)
+    @if (Auth::user()->type == \App\Models\User::TYPE_SUPER_ADMIN)
+        <li class="nav-item {{ $active == 'editor' ? 'active' : null }}">
+            <a class="nav-link" href="{{ route('access.editor') }}">
+                <i class="fas fa-arrow-right"></i>
+                <span>Akses Editor</span></a>
+        </li>
+        <li class="nav-item {{ $active == 'reviewer' ? 'active' : null }}">
+            <a class="nav-link" href="{{ route('access.reviewer') }}">
+                <i class="fas fa-arrow-right"></i>
+                <span>Akses Reviewer</span></a>
+        </li>
+    @endif
+
+    @if (Auth::user()->type == \App\Models\User::TYPE_ADMIN || Auth::user()->type == \App\Models\User::TYPE_SUPER_ADMIN)
         <li class="nav-item {{ $active == 'page' ? 'active' : null }}">
             <a class="nav-link" href="{{ route('pages.index') }}">
                 <i class="fas fa-fw fa-paste"></i>
@@ -74,7 +87,7 @@
         </li>
     @endif
 
-    @if (Auth::user()->type == \App\Models\User::TYPE_REVIEWER)
+    @if (Auth::user()->type == \App\Models\User::TYPE_REVIEWER || Auth::user()->type == \App\Models\User::TYPE_SUPER_ADMIN)
         {{-- <li class="nav-item {{ $active == 'validation' ? 'active' : null }}">
             <a class="nav-link" href="{{ route('registration.validation') }}">
                 <i class="fas fa-fw fa-check-circle"></i>
@@ -82,7 +95,9 @@
         </li> --}}
     @endif
 
-    @if (Auth::user()->type == \App\Models\User::TYPE_EDITOR || Auth::user()->type == \App\Models\User::TYPE_REVIEWER)
+    @if (Auth::user()->type == \App\Models\User::TYPE_EDITOR ||
+            Auth::user()->type == \App\Models\User::TYPE_REVIEWER ||
+            Auth::user()->type == \App\Models\User::TYPE_SUPER_ADMIN)
         {{-- <li class="nav-item {{ $active == 'review' ? 'active' : null }}">
             <a class="nav-link" href="{{ route('registration.reviews') }}">
                 <i class="fas fa-fw fa-star"></i>

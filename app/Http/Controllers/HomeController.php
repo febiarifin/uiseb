@@ -49,22 +49,22 @@ class HomeController extends Controller
         if (Auth::user()->type == User::TYPE_PESERTA) {
             // $view = 'pages.dashboard.index-user';
             $registrations = Auth::user()->registrations()
-            ->with([
-                'category',
-                'abstraks' => function ($query) {
-                    $query->with([
-                        'papers' => function ($query) {
-                            $query->with('videos');
-                        }
-                    ]);
-                }
-            ])
-            ->orderBy('created_at', 'desc')
-            ->get();
+                ->with([
+                    'category',
+                    'abstraks' => function ($query) {
+                        $query->with([
+                            'papers' => function ($query) {
+                                $query->with('videos');
+                            }
+                        ]);
+                    }
+                ])
+                ->orderBy('created_at', 'desc')
+                ->get();
             $view = 'pages.dashboard.index-ojs';
             $data['registrations'] = $registrations;
         } else {
-            if (Auth::user()->type == User::TYPE_ADMIN) {
+            if (Auth::user()->type == User::TYPE_ADMIN || Auth::user()->type == User::TYPE_SUPER_ADMIN) {
                 $view = 'pages.dashboard.index';
                 $data['registrations'] = Registration::all();
             } else {
@@ -103,7 +103,6 @@ class HomeController extends Controller
         }
         return view($view, $data);
     }
-
     public function about()
     {
         $page = Page::where('status', Page::ENABLE)->whereYear('created_at', now())->first();
@@ -126,8 +125,90 @@ class HomeController extends Controller
         $data = [
             'title' => config('app.name'),
             'page' => $page,
+            'categories' => $page->categories()->where('is_active', Category::IS_ACTIVE)->get(),
+            'editors' => User::where('type', User::TYPE_EDITOR)->get(),
+            'committees' => User::where('type', User::TYPE_COMMITTEE)->get(),
+            'setting' => Setting::first(),
         ];
         return view('pages.public.conference', $data);
+    }
+
+    public function author()
+    {
+        $page = Page::where('status', Page::ENABLE)->whereYear('created_at', now())->first();
+        if (!$page) {
+            $page = Page::first();
+        }
+        $data = [
+            'title' => 'Author Instruction',
+            'page' => $page,
+        ];
+        return view('pages.public.author', $data);
+    }
+
+    public function template()
+    {
+        $page = Page::where('status', Page::ENABLE)->whereYear('created_at', now())->first();
+        if (!$page) {
+            $page = Page::first();
+        }
+        $data = [
+            'title' => 'Template Word',
+            'page' => $page,
+        ];
+        return view('pages.public.template', $data);
+    }
+
+    public function accessEditor()
+    {
+        $data = [
+            'title' => 'Akses Editor',
+            'active' => 'editor',
+            'setting' => Setting::first(),
+        ];
+        $view = 'pages.dashboard.index-ojs';
+        $data['abstraks'] = Abstrak::orderBy('created_at', 'desc')
+            ->where('status', Abstrak::ACCEPTED)
+            ->get();
+        $data['papers'] = Paper::orderBy('created_at', 'desc')
+            ->where('status', Paper::REVIEW_EDITOR)
+            ->get();
+        $data['videos'] = Video::orderBy('created_at', 'desc')
+            ->where('status', Video::REVIEW)
+            ->get();
+        $data['users'] = User::whereNotIn('type', [User::TYPE_ADMIN])->get();
+        $data['categories'] = Category::all();
+        $data['registrations_validation'] = Registration::with(['category', 'user'])->orderBy('created_at', 'desc')
+            ->where('is_valid', null)
+            ->where('payment_image', '!=', null)
+            ->take(5)
+            ->get();
+        return view($view, $data);
+    }
+
+    public function accessReviewer()
+    {
+        $data = [
+            'title' => 'Akses Reviewer',
+            'active' => 'reviewer',
+            'setting' => Setting::first(),
+        ];
+        $view = 'pages.dashboard.index-ojs';
+        $data['abstraks'] = Abstrak::orderBy('created_at', 'desc')->where('status', Abstrak::REVIEW)
+            ->get();
+        $data['papers'] = Paper::orderBy('created_at', 'desc')->where('status', Paper::REVIEW)
+            ->get();
+        $data['videos'] = Video::orderBy('created_at', 'desc')
+            ->where('status', Video::REVIEW)
+            ->get();
+        $data['users'] = User::whereNotIn('type', [User::TYPE_ADMIN])->get();
+        $data['categories'] = Category::all();
+        $data['registrations_validation'] = Registration::with(['category', 'user'])->orderBy('created_at', 'desc')
+            ->where('is_valid', null)
+            ->where('payment_image', '!=', null)
+            ->take(5)
+            ->get();
+        return view($view, $data);
     }
 
     public function logout()

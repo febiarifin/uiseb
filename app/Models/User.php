@@ -17,6 +17,7 @@ class User extends Authenticatable
     public const TYPE_REVIEWER = 3;
     public const TYPE_PESERTA = 4;
     public const TYPE_COMMITTEE = 5;
+    public const TYPE_SUPER_ADMIN = 6;
 
     public const IS_EMAIL_VERIFIED = 1;
 

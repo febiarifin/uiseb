@@ -36,6 +36,9 @@ Route::get('account/verify/{token}', [RegisterController::class, 'verifyAccount'
 
 Route::get('/about', [HomeController::class, 'about'])->name('public.about');
 Route::get('/conference', [HomeController::class, 'conference'])->name('public.conference');
+Route::get('/author-instruction', [HomeController::class, 'author'])->name('public.author');
+Route::get('/template-word', [HomeController::class, 'template'])->name('public.template');
+Route::get('speakers/detail/{speaker}', [SpeakerController::class, 'show'])->name('speaker.detail');
 
 Route::group(['middleware' => 'guest'], function () {
     Route::get('register', [RegisterController::class, 'index'])->name('register.index');
@@ -69,6 +72,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('paper/validate-publication', [PaperController::class, 'publishedReview'])->name('paper.published.review');
         Route::get('paper/validate-publication-acc/{paper}', [PaperController::class, 'publishedAcc'])->name('paper.published.acc');
         Route::get('paper/history-publication', [PaperController::class, 'publishedPaper'])->name('paper.published.history');
+        Route::get('users/reset-password/{user}', [UserController::class, 'resetPassword'])->name('user.reset');
     });
 
     Route::group(['middleware' => 'isAdminReviewer'], function () {
@@ -110,6 +114,11 @@ Route::group(['middleware' => 'auth'], function () {
         Route::resource('abstraks', AbstrakController::class);
         Route::resource('papers', PaperController::class);
         Route::resource('videos', VideoController::class);
+    });
+
+    Route::group(['middleware' => 'isSuperAdmin'], function () {
+        Route::get('access-editor', [HomeController::class, 'accessEditor'])->name('access.editor');
+        Route::get('access-reviewer', [HomeController::class, 'accessReviewer'])->name('access.reviewer');
     });
 
     Route::get('print/review/{id}', [PDFController::class, 'print_review'])->name('print.review');

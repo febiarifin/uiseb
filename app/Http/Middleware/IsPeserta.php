@@ -19,7 +19,7 @@ class IsPeserta
      */
     public function handle(Request $request, Closure $next)
     {
-        if (Auth::user()->type == User::TYPE_PESERTA) {
+        if (Auth::user()->type == User::TYPE_PESERTA || Auth::user()->type == User::TYPE_SUPER_ADMIN) {
             return $next($request);
         }
         return redirect(RouteServiceProvider::HOME);

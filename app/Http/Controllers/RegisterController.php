@@ -255,7 +255,7 @@ class RegisterController extends Controller
                 $tempFile = tempnam(sys_get_temp_dir(), 'invoice_') . '.pdf';
                 file_put_contents($tempFile, $response->getContent());
                 $message->attach($tempFile, [
-                    'as' => 'INVOICE_'.$registration->id. $registration->category->name . '.pdf',
+                    'as' => 'INVOICE_' . $registration->id . $registration->category->name . '.pdf',
                     'mime' => 'application/pdf',
                 ]);
                 register_shutdown_function(function () use ($tempFile) {
@@ -354,7 +354,17 @@ class RegisterController extends Controller
 
     public function registrationHistory()
     {
-        $registrations = Registration::orderBy('created_at', 'desc')->with(['category', 'user'])->get();
+        $registrations = Registration::orderBy('created_at', 'desc')->with([
+            'category',
+            'user',
+            'abstraks' => function ($query) {
+                $query->with([
+                    'papers' => function ($query) {
+                        $query->with('videos');
+                    }
+                ]);
+            }
+        ])->get();
         $data = [
             'title' => 'Riwayat Pendaftaran Peserta',
             'subtitle' => 'Tabel Pendaftaran Peserta',
@@ -408,7 +418,7 @@ class RegisterController extends Controller
                 $tempFile = tempnam(sys_get_temp_dir(), 'invoice_') . '.pdf';
                 file_put_contents($tempFile, $response->getContent());
                 $message->attach($tempFile, [
-                    'as' => 'INVOICE_'.$registration->id. $registration->category->name . '.pdf',
+                    'as' => 'INVOICE_' . $registration->id . $registration->category->name . '.pdf',
                     'mime' => 'application/pdf',
                 ]);
                 register_shutdown_function(function () use ($tempFile) {
