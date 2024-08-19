@@ -170,19 +170,36 @@
             </div>
             <div class="row people">
                 @foreach ($page->speakers as $speaker)
-                    <div class="col-md-6 col-lg-4 item">
-                        <div class="box"><img class="rounded-circle" src="{{ asset($speaker->image) }}" style="max-height: 180px;">
-                            <h3 class="name">{{ $speaker->name }}</h3>
-                            <p class="title">
-                                {{ $speaker->is_keynote == \App\Models\Speaker::IS_KEYNOTE ? 'KEYNOTE SPEAKER' : 'INVITED SPEAKER' }}
-                            </p>
-                            <p class="description">{{ $speaker->institution }}</p>
-                            <div class="social">
-                                <a href="{{ route('speaker.detail', $speaker->id) }}"
-                                    class="btn btn-outline-secondary btn-sm rounded-pill text-dark">Speaker Detail</a>
+                    @if ($speaker->is_keynote == \App\Models\Speaker::IS_INVITED)
+                        <div class="col-md-6 col-lg-4 item">
+                            <div class="box"><img class="rounded-circle" src="{{ asset($speaker->image) }}"
+                                    style="max-height: 180px;">
+                                <h3 class="name">{{ $speaker->name }}</h3>
+                                <p class="title">INVITED SPEAKER</p>
+                                <p class="description">{{ $speaker->institution }}</p>
+                                <div class="social">
+                                    <a href="{{ route('speaker.detail', $speaker->id) }}"
+                                        class="btn btn-outline-secondary btn-sm rounded-pill text-dark">Speaker Detail</a>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    @endif
+                @endforeach
+                @foreach ($page->speakers as $speaker)
+                    @if ($speaker->is_keynote == \App\Models\Speaker::IS_KEYNOTE)
+                        <div class="col-md-6 col-lg-4 item">
+                            <div class="box"><img class="rounded-circle" src="{{ asset($speaker->image) }}"
+                                    style="max-height: 180px;">
+                                <h3 class="name">{{ $speaker->name }}</h3>
+                                <p class="title">KEYNOTE SPEAKER</p>
+                                <p class="description">{{ $speaker->institution }}</p>
+                                <div class="social">
+                                    <a href="{{ route('speaker.detail', $speaker->id) }}"
+                                        class="btn btn-outline-secondary btn-sm rounded-pill text-dark">Speaker Detail</a>
+                                </div>
+                            </div>
+                        </div>
+                    @endif
                 @endforeach
             </div>
         </div>
