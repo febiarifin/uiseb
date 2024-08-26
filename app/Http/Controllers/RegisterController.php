@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Helpers\AppHelper;
 use App\Mail\NotificationMail;
 use App\Models\Category;
+use App\Models\Page;
 use App\Models\Registration;
 use App\Models\Revision;
 use App\Models\Setting;
@@ -376,11 +377,15 @@ class RegisterController extends Controller
 
     public function registrationList()
     {
+        $page = Page::with(['timelines', 'contacts', 'speakers', 'articles'])->where('status', Page::ENABLE)->whereYear('created_at', now())->first();
+        if (!$page) {
+            $page = Page::with(['timelines', 'contacts', 'speakers', 'articles'])->first();
+        }
         $data = [
             'title' => 'Choose Category Registration',
             'subtitle' => null,
             'active' => 'dashboard',
-            'categories' => Category::where('is_active', Category::IS_ACTIVE)->paginate(4),
+            'categories' => $page->categories()->where('is_active', Category::IS_ACTIVE)->paginate(4),
         ];
         return view('pages.registration.list', $data);
     }
