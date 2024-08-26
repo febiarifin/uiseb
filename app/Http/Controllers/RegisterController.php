@@ -380,7 +380,7 @@ class RegisterController extends Controller
             'title' => 'Choose Category Registration',
             'subtitle' => null,
             'active' => 'dashboard',
-            'categories' => Category::paginate(4),
+            'categories' => Category::where('is_active', Category::IS_ACTIVE)->paginate(4),
         ];
         return view('pages.registration.list', $data);
     }
