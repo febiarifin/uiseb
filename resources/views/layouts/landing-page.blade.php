@@ -77,10 +77,10 @@
                             </p>
                         </div>
                         <div class="ft-social">
-                            <a href="#"><i class="fa fa-facebook"></i></a>
-                            <a href="#"><i class="fa fa-twitter"></i></a>
+                            <a href="https://www.facebook.com/profile.php?id=61565220291254&mibextid=ZbWKwL" target="_blank"><i class="fa fa-facebook"></i></a>
+                            <a href="https://x.com/uiseb_febunsiq?t=akrq5ekZvnCFTRR6ne1c2Q&s=08" target="_blank"><i class="fa fa-twitter"></i></a>
                             <a href="#"><i class="fa fa-linkedin"></i></a>
-                            <a href="#"><i class="fa fa-instagram"></i></a>
+                            <a href="https://www.instagram.com/uiseb_febunsiq?igsh=MXdxMGtkNnV5N21yZg==" target="_blank"><i class="fa fa-instagram"></i></a>
                             <a href="#"><i class="fa fa-youtube-play"></i></a>
                         </div>
                     </div>
