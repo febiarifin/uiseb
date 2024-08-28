@@ -8,10 +8,10 @@
         data-setbg="{{ asset($page->image_1 ? $page->image_1 : 'manup-master/img/hero.jpg') }}">
         <div class="container">
             <div class="row">
-                <div class="col-lg-7">
+                <div class="col-lg-7" style="margin-top: -100px !important;">
                     <div class="hero-text">
                         {{-- <span>UPCOMING NEW EVENT {{ $page->name }}</span> --}}
-                        <h2>{{ $page->theme }}</h2>
+                        <h3 style="color: white; font-weight: bold; margin-bottom:10px;">{{ $page->theme }}</h3>
                         <h4 class="text-white">
                             {!! nl2br($page->about_1) !!}
                         </h4>
