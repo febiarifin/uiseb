@@ -28,7 +28,7 @@ class HomeController extends Controller
             'title' => config('app.name'),
             'page' => $page,
             'categories' => $page->categories()->where('is_active', Category::IS_ACTIVE)->get(),
-            'editors' => User::where('type', User::TYPE_EDITOR)->get(),
+            'editors' => User::where('type', User::TYPE_EDITOR)->orWhere('type', User::TYPE_REVIEWER)->get(),
             'committees' => User::where('type', User::TYPE_COMMITTEE)->get(),
             'month' => $deadline_date->month,
             'day' => $deadline_date->day,
