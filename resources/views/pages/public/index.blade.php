@@ -320,7 +320,7 @@
                             <li class="nav-item col-6">
                                 <a class="nav-link" data-toggle="tab" href="#tabs-2" role="tab">
                                     <h5><span class="icon_plus_alt2"></span></h5>
-                                    <p>CONFERENCE EDITOR</p>
+                                    <p>CONFERENCE REVIEWER & EDITOR</p>
                                 </a>
                             </li>
                         </ul>
@@ -344,6 +344,7 @@
                                                 <tr>
                                                     <th scope="col">No</th>
                                                     <th scope="col">Name</th>
+                                                    <th scope="col">Role</th>
                                                     <th scope="col">Affiliations</th>
                                                 </tr>
                                             </thead>
@@ -357,6 +358,13 @@
                                                         <td>
                                                             <a href="{{ $editor->scopus }}" class="text-primary"
                                                                 target="_blank">{{ $editor->name }}</a>
+                                                        </td>
+                                                        <td>
+                                                            @if ($editor->type == \App\Models\User::TYPE_EDITOR)
+                                                                EDITOR
+                                                            @else
+                                                                REVIEWER
+                                                            @endif
                                                         </td>
                                                         <td>{{ $editor->institution }}</td>
                                                     </tr>
