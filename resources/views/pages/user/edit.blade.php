@@ -38,6 +38,10 @@
                 <label>Scopus Link</label>
                 <input type="url" class="form-control" name="scopus" value="{{ $user->scopus }}" required>
             </div>
+            <div class="mb-3">
+                <label>Jabatan (Jika kosong isikan dengan -)</label>
+                <input type="text" class="form-control" name="position" value="{{ $user->position }}" required>
+            </div>
             <button type="submit" class="btn btn-primary mt-3"><i class="fas fa-check"></i> SIMPAN</button>
         </form>
     </div>

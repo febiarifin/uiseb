@@ -331,7 +331,14 @@
                                     <div class="container">
                                         <p><b>Technical Committee:</b></p>
                                         @foreach ($committees as $committee)
-                                            <p>{{ $committee->name }}</p>
+                                            <div class="row">
+                                                <div class="col-8">
+                                                    <p>{{ $committee->name }}</p>
+                                                </div>
+                                                <div class="col-4">
+                                                    <p>Sebagai {{ $committee->position }}</p>
+                                                </div>
+                                            </div>
                                         @endforeach
                                     </div>
                                 </div>

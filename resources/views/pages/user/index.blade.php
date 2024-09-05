@@ -135,6 +135,10 @@
                             <input type="url" class="form-control" name="scopus" required>
                         </div>
                         <div class="mb-3">
+                            <label>Jabatan (Jika kosong isikan dengan -)</label>
+                            <input type="text" class="form-control" name="position" required>
+                        </div>
+                        <div class="mb-3">
                             <label>Password Default</label>
                             <input type="text" class="form-control" value="UISEB247" disabled>
                         </div>

@@ -51,6 +51,7 @@ class UserController extends Controller
             'type' => ['required'],
             'scopus' => ['required'],
             'institution' => ['required'],
+            'position' => ['required'],
         ]);
         $validatedData['password'] = Hash::make('UISEB247');
         if ($validatedData['type'] == User::TYPE_PESERTA) {
@@ -104,6 +105,7 @@ class UserController extends Controller
             'type' => ['required'],
             'scopus' => ['required'],
             'institution' => ['required'],
+            'position' => ['required'],
         ]);
         $user->update($validatedData);
         Toastr::success('User berhasil diupdate', 'Success', ["positionClass" => "toast-top-right"]);
