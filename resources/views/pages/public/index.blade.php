@@ -333,7 +333,10 @@
                                         @foreach ($committees as $committee)
                                             <div class="row">
                                                 <div class="col-8">
-                                                    <p>{{ $committee->name }}</p>
+                                                    <p>
+                                                        <a href="{{ $committee->scopus }}" class="text-primary"
+                                                            target="_blank">{{ $committee->name }}</a>
+                                                    </p>
                                                 </div>
                                                 <div class="col-4">
                                                     <p>Sebagai {{ $committee->position }}</p>
