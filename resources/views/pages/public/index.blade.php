@@ -339,7 +339,7 @@
                                                     </p>
                                                 </div>
                                                 <div class="col-4">
-                                                    <p>Sebagai {{ $committee->position }}</p>
+                                                    <p>{{ $committee->position }}</p>
                                                 </div>
                                             </div>
                                         @endforeach
