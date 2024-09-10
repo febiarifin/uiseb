@@ -26,7 +26,7 @@
         </li> --}}
     @endif
 
-    @if (Auth::user()->type == \App\Models\User::TYPE_SUPER_ADMIN || Auth::user()->type == \App\Models\User::ADMIN)
+    @if (Auth::user()->type == \App\Models\User::TYPE_SUPER_ADMIN || Auth::user()->type == \App\Models\User::TYPE_ADMIN)
         <li class="nav-item {{ $active == 'editor' ? 'active' : null }}">
             <a class="nav-link" href="{{ route('access.editor') }}">
                 <i class="fas fa-arrow-right"></i>
