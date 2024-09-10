@@ -33,7 +33,8 @@
         </li>
         @if (Auth::user()->type == \App\Models\User::TYPE_PESERTA ||
                 Auth::user()->type == \App\Models\User::TYPE_EDITOR ||
-                Auth::user()->type == \App\Models\User::TYPE_SUPER_ADMIN)
+                Auth::user()->type == \App\Models\User::TYPE_SUPER_ADMIN ||
+                Auth::user()->type == \App\Models\User::TYPE_ADMIN)
             <li class="nav-item" role="presentation">
                 <button class="nav-link" id="pills-video-tab" data-toggle="pill" data-target="#pills-video" type="button"
                     role="tab" aria-controls="pills-video" aria-selected="true">
@@ -417,7 +418,8 @@
                             @endphp
                             @if (Auth::user()->type == \App\Models\User::TYPE_REVIEWER ||
                                     Auth::user()->type == \App\Models\User::TYPE_EDITOR ||
-                                    Auth::user()->type == \App\Models\User::TYPE_SUPER_ADMIN)
+                                    Auth::user()->type == \App\Models\User::TYPE_SUPER_ADMIN ||
+                                    Auth::user()->type == \App\Models\User::TYPE_ADMIN)
                                 @foreach ($abstraks as $abstrak)
                                     <tr>
                                         <td><b>{{ $no++ }}</b></td>
@@ -549,7 +551,8 @@
                             @endphp
                             @if (Auth::user()->type == \App\Models\User::TYPE_REVIEWER ||
                                     Auth::user()->type == \App\Models\User::TYPE_EDITOR ||
-                                    Auth::user()->type == \App\Models\User::TYPE_SUPER_ADMIN)
+                                    Auth::user()->type == \App\Models\User::TYPE_SUPER_ADMIN  ||
+                                    Auth::user()->type == \App\Models\User::TYPE_ADMIN)
                                 @foreach ($papers as $paper)
                                     <tr>
                                         <td><b>{{ $no++ }}</b></td>
@@ -657,7 +660,8 @@
         </div>
         @if (Auth::user()->type == \App\Models\User::TYPE_PESERTA ||
                 Auth::user()->type == \App\Models\User::TYPE_EDITOR ||
-                Auth::user()->type == \App\Models\User::TYPE_SUPER_ADMIN)
+                Auth::user()->type == \App\Models\User::TYPE_SUPER_ADMIN ||
+                Auth::user()->type == \App\Models\User::TYPE_ADMIN)
             <div class="tab-pane fade" id="pills-video" role="tabpanel" aria-labelledby="pills-video-tab">
                 <div class="card">
                     <div class="card-body">
