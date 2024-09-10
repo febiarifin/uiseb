@@ -31,4 +31,11 @@ class Video extends Model
     {
         return $this->hasMany(RevisiVideo::class);
     }
+
+    protected static function boot() {
+        parent::boot();
+        static::deleting(function($paper) {
+            $paper->revisis()->delete();
+        });
+    }
 }

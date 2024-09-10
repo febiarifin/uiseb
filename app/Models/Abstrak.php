@@ -51,4 +51,13 @@ class Abstrak extends Model
     {
         return $this->hasMany(RevisiAbstrak::class);
     }
+
+    protected static function boot() {
+        parent::boot();
+        static::deleting(function($abstrak) {
+            $abstrak->revisis()->delete();
+            $abstrak->papers()->delete();
+            $abstrak->penulis()->delete();
+        });
+    }
 }

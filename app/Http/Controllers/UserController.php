@@ -120,8 +120,32 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
+        foreach ($user->registrations as $registration) {
+            foreach ($registration->abstraks as $abstrak) {
+                foreach ($abstrak->papers as $paper) {
+                    foreach ($paper->videos as $video) {
+                        $video->delete();
+                    }
+                }
+            }
+        }
+        foreach ($user->registrations as $registration) {
+            foreach ($registration->abstraks as $abstrak) {
+                foreach ($abstrak->papers as $paper) {
+                    $paper->delete();
+                }
+            }
+        }
+        foreach ($user->registrations as $registration) {
+            foreach ($registration->abstraks as $abstrak) {
+                $abstrak->delete();
+            }
+        }
+        foreach ($user->registrations as $registration) {
+            $registration->delete();
+        }
         $user->delete();
-        Toastr::success('User berhasil ditambahkan', 'Success', ["positionClass" => "toast-top-right"]);
+        Toastr::success('User berhasil dihapus', 'Success', ["positionClass" => "toast-top-right"]);
         return back();
     }
 

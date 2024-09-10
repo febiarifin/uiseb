@@ -20,7 +20,7 @@
                         </li>
                         <li>
                             <span>Email:</span>
-                            uiseb@feb-unsiq.ac.id
+                            uiseb-feb@unsiq.ac.id
                         </li>
                     </ul>
                 </div>

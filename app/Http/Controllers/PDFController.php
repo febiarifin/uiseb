@@ -82,6 +82,8 @@ class PDFController extends Controller
         $data = [
             'title' => 'Print LOA: '. $registration->category->name,
             'logo' => AppHelper::convert_base64('public/manup-master/img/logo_UISEB.png'),
+            'stempel' => AppHelper::convert_base64('public/assets/images/stempel_feb.png'),
+            'ttd' => AppHelper::convert_base64('public/assets/images/ttd_dekan_feb.png'),
             'footer_kop' => AppHelper::convert_base64('public/assets/images/footer-kop.png'),
             'registration' => $registration,
             'abstrak' => $abstrak,

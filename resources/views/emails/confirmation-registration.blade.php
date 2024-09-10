@@ -14,21 +14,33 @@
     <p>Please transfer the fee to the following bank account during the next 7 days:</p>
     <table>
         <tr>
-            <td>Account Holder</td>
-            <td>: SCA FEB UNSOED</td>
+            <td>Account Name</td>
+            <td>: CV GARUDA RISET INDONESIA
+            </td>
         </tr>
         <tr>
-            <td>Account No.</td>
-            <td>: 123 7272 752</td>
+            <td>Account Number</td>
+            <td>: 1890999994</td>
         </tr>
         <tr>
             <td>Bank</td>
             <td>: BANK BNI</td>
         </tr>
         <tr>
+            <td>Branch</td>
+            <td>: FACULTY OF ECONOMICS AND BUSINESS UNSIQ
+            </td>
+        </tr>
+        <tr>
+        <tr>
+            <td>Purpose</td>
+            <td>: Presenter UISEB 2024
+            </td>
+        </tr>
+        {{-- <tr>
             <td>Reason for transfer</td>
             <td>: ICSCA2023, ID 1083,ICSCA 2023-0027, ICSCA 2023</td>
-        </tr>
+        </tr> --}}
     </table>
     <p>Please transfer with a nominal amount according to the provisions.</p>
     <p>Direct Link to Invoice and Registration Confirmation: <br>{{ route('print.invoice', base64_encode($registration->id)) }}</p>

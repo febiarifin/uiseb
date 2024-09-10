@@ -47,4 +47,12 @@ class Registration extends Model
     {
         return $this->hasMany(Abstrak::class);
     }
+
+    protected static function boot() {
+        parent::boot();
+        static::deleting(function($registration) {
+            $registration->revisions()->delete();
+            $registration->abstraks()->delete();
+        });
+    }
 }

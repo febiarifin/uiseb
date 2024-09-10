@@ -58,4 +58,12 @@ class Paper extends Model
     {
         return $this->hasMany(Video::class);
     }
+
+    protected static function boot() {
+        parent::boot();
+        static::deleting(function($paper) {
+            $paper->revisis()->delete();
+            $paper->videos()->delete();
+        });
+    }
 }

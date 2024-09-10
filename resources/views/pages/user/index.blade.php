@@ -67,23 +67,30 @@
                                     </span>
                                 </td>
                                 <td class="d-flex">
-                                    @if (count($user->registrations) != 0)
+                                    {{-- @if (count($user->registrations) != 0)
                                         <a href="#" class="btn btn-default btn-sm"><i class="fas fa-info-circle"></i>
                                             Sudah ada pendaftaran</a>
-                                    @else
-                                        <a href="{{ route('users.edit', $user->id) }}" class="btn btn-info btn-sm"><i
-                                                class="fas fa-edit"></i></a>
-                                        &nbsp;
-                                        <form action="{{ route('users.destroy', $user->id) }}" method="post">
-                                            @method('delete')
-                                            @csrf
-                                            <button type="submit" class="btn btn-danger btn-sm"
-                                                onclick="return confirm('Yakin ingin dihapus?')"><i
-                                                    class="fas fa-trash"></i></button>
-                                        </form>
-                                    @endif
+                                    @else --}}
+                                    <a href="{{ route('users.edit', $user->id) }}" class="btn btn-info btn-sm"><i
+                                            class="fas fa-edit"></i></a>
                                     &nbsp;
-                                    <a href="{{ route('user.reset', $user->id) }}" class="btn btn-warning btn-sm"  onclick="return confirm('Yakin ingin reset password user {{ $user->name }}?')"><i class="fas fa-lock"></i>
+                                    <form action="{{ route('users.destroy', $user->id) }}" method="post">
+                                        @method('delete')
+                                        @csrf
+                                        <button type="submit" class="btn btn-danger btn-sm"
+                                            onclick="return confirm('Yakin ingin dihapus?')"><i
+                                                class="fas fa-trash"></i></button>
+                                    </form>
+                                    @if (!$user->is_email_verified && $user->type == \App\Models\User::TYPE_PESERTA)
+                                        &nbsp;<a href="#" class="btn btn-success btn-sm"><i
+                                                class="fas fa-check-circle"></i>
+                                            Verifikasi Manual</a>
+                                    @endif
+                                    {{-- @endif --}}
+                                    &nbsp;
+                                    <a href="{{ route('user.reset', $user->id) }}" class="btn btn-warning btn-sm"
+                                        onclick="return confirm('Yakin ingin reset password user {{ $user->name }}?')"><i
+                                            class="fas fa-lock"></i>
                                         Reset Password</a>
                                 </td>
                             </tr>

@@ -77,4 +77,11 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Paper::class, 'paper_users', 'user_id', 'paper_id')->withPivot(['id']);
     }
+
+    protected static function boot() {
+        parent::boot();
+        static::deleting(function($user) {
+            $user->registrations()->delete();
+        });
+    }
 }

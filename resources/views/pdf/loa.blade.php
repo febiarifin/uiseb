@@ -60,12 +60,17 @@
         reviewers have recommended your manuscipt to be published in the UNSIQ International
         Symposnum on Economics and Business with the theme of 'SMEs Competitiveness in Digital Era.
         The symposiumn will be held in Wonosobo, Central Java, Indonesia on December 20, 2024 (08:00-
-        15:00 |akarta Time) at the Faculty of Economics and Business, Universitas Sains Al-Qur an,
+        15:00 | Jakarta Time) at the Faculty of Economics and Business, Universitas Sains Al-Qur an,
         Wonosobo, n proceedings indexed by ISBN No. 894-342-5434-21-1. The proceedings wvill be
         published in approximately 2 months.</p>
     <p>Thank you,</p>
     <p>With Sincere Appreciation,</p>
-    <br><br><br>
+    <table>
+        <tr>
+            <td><img src="{{ $stempel }}" style="" height="100">
+            <td><img src="{{ $ttd }}" style="position: relative; left: -20px;" height="100"></td></td>
+        </tr>
+    </table>
     <p><b><u>Dr. M. Elfan Kaukab, S.E., M.M., M.H.I., Ak.
             </u></b><br>Chairperson of UISEB {{ now()->year }}</p>
     <br><br><br>
