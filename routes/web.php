@@ -116,7 +116,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::resource('videos', VideoController::class);
     });
 
-    Route::group(['middleware' => 'isSuperAdmin'], function () {
+    Route::group(['middleware' => 'isAdmin'], function () {
         Route::get('access-editor', [HomeController::class, 'accessEditor'])->name('access.editor');
         Route::get('access-reviewer', [HomeController::class, 'accessReviewer'])->name('access.reviewer');
     });

@@ -31,7 +31,9 @@
                 @endif
             </button>
         </li>
-        @if (Auth::user()->type == \App\Models\User::TYPE_PESERTA || Auth::user()->type == \App\Models\User::TYPE_EDITOR || Auth::user()->type == \App\Models\User::TYPE_SUPER_ADMIN)
+        @if (Auth::user()->type == \App\Models\User::TYPE_PESERTA ||
+                Auth::user()->type == \App\Models\User::TYPE_EDITOR ||
+                Auth::user()->type == \App\Models\User::TYPE_SUPER_ADMIN)
             <li class="nav-item" role="presentation">
                 <button class="nav-link" id="pills-video-tab" data-toggle="pill" data-target="#pills-video" type="button"
                     role="tab" aria-controls="pills-video" aria-selected="true">
@@ -128,8 +130,11 @@
                                                     </a>
                                                     <div class="dropdown-menu">
                                                         <a class="dropdown-item"
-                                                            href="{{ route('print.invoice', base64_encode($registration->id) . uniqid()) }}" target="_blank">INVOICE</a>
-                                                        <a class="dropdown-item" href="{{ route('print.loa', base64_encode($registration->id) . uniqid()) }}" target="_blank">LOA</a>
+                                                            href="{{ route('print.invoice', base64_encode($registration->id) . uniqid()) }}"
+                                                            target="_blank">INVOICE</a>
+                                                        <a class="dropdown-item"
+                                                            href="{{ route('print.loa', base64_encode($registration->id) . uniqid()) }}"
+                                                            target="_blank">LOA</a>
                                                         @if ($registration->category->is_paper)
                                                             <a class="dropdown-item"
                                                                 href="{{ route('print.review', base64_encode($registration->id) . uniqid()) }}"
@@ -247,7 +252,8 @@
                                                             @if (
                                                                 $paper->status != \App\Models\Paper::ACCEPTED &&
                                                                     $paper->status != \App\Models\Paper::REVIEW &&
-                                                                    $paper->status != \App\Models\Paper::REJECTED && $paper->status != \App\Models\Paper::REVIEW_EDITOR &&
+                                                                    $paper->status != \App\Models\Paper::REJECTED &&
+                                                                    $paper->status != \App\Models\Paper::REVIEW_EDITOR &&
                                                                     $registration->is_valid == \App\Models\Registration::IS_VALID)
                                                                 <a href="{{ route('papers.edit', $paper->id) }}"
                                                                     class="btn btn-primary btn-sm mb-2"><i
@@ -274,13 +280,22 @@
                                                                 <tr>
                                                                     <td class="text-center" colspan="7">
                                                                         @if ($setting->confirmation_letter)
-                                                                            <a href="{{ asset($setting->confirmation_letter) }}" class="btn btn-secondary btn-sm mr-2"><i class="fas fa-download"></i> CONFIRMATION LETTER</a>
+                                                                            <a href="{{ asset($setting->confirmation_letter) }}"
+                                                                                class="btn btn-secondary btn-sm mr-2"><i
+                                                                                    class="fas fa-download"></i>
+                                                                                CONFIRMATION LETTER</a>
                                                                         @endif
                                                                         @if ($setting->copyright_letter)
-                                                                            <a href="{{ asset($setting->copyright_letter) }}" class="btn btn-secondary btn-sm mr-2"><i class="fas fa-download"></i> COPYRIGHT LETTER</a>
+                                                                            <a href="{{ asset($setting->copyright_letter) }}"
+                                                                                class="btn btn-secondary btn-sm mr-2"><i
+                                                                                    class="fas fa-download"></i> COPYRIGHT
+                                                                                LETTER</a>
                                                                         @endif
                                                                         @if ($setting->self_declare_letter)
-                                                                            <a href="{{ asset($setting->self_declare_letter) }}" class="btn btn-secondary btn-sm mr-2"><i class="fas fa-download"></i> SELF DECLARE LETTER</a>
+                                                                            <a href="{{ asset($setting->self_declare_letter) }}"
+                                                                                class="btn btn-secondary btn-sm mr-2"><i
+                                                                                    class="fas fa-download"></i> SELF
+                                                                                DECLARE LETTER</a>
                                                                         @endif
                                                                     </td>
                                                                 </tr>
@@ -381,6 +396,7 @@
                                 <th>File</th>
                                 <th>Accepted At</th>
                                 <th>Status</th>
+                                <th>Reviewer</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -391,6 +407,7 @@
                                 <th>File</th>
                                 <th>Accepted At</th>
                                 <th>Status</th>
+                                <th>Reviewer</th>
                                 <th>Action</th>
                             </tr>
                         </tfoot>
@@ -398,7 +415,9 @@
                             @php
                                 $no = 1;
                             @endphp
-                            @if (Auth::user()->type == \App\Models\User::TYPE_REVIEWER || Auth::user()->type == \App\Models\User::TYPE_EDITOR || Auth::user()->type == \App\Models\User::TYPE_SUPER_ADMIN)
+                            @if (Auth::user()->type == \App\Models\User::TYPE_REVIEWER ||
+                                    Auth::user()->type == \App\Models\User::TYPE_EDITOR ||
+                                    Auth::user()->type == \App\Models\User::TYPE_SUPER_ADMIN)
                                 @foreach ($abstraks as $abstrak)
                                     <tr>
                                         <td><b>{{ $no++ }}</b></td>
@@ -426,6 +445,11 @@
                                             @elseif ($abstrak->status == \App\Models\Abstrak::REVIEW)
                                                 <span class="badge badge-secondary">Waiting for Review</span>
                                             @endif
+                                        </td>
+                                        <td>
+                                            @foreach ($abstrak->users as $user)
+                                                <span class="p-1 border rounded mr-2">@ {{ $user->name }} </span>
+                                            @endforeach
                                         </td>
                                         <td>
                                             <a href="{{ route('abstraks.review', $abstrak->id) }}"
@@ -504,6 +528,7 @@
                                 <th>File</th>
                                 <th>Accepted At</th>
                                 <th>Status</th>
+                                <th>Reviewer</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -514,6 +539,7 @@
                                 <th>File</th>
                                 <th>Accepted At</th>
                                 <th>Status</th>
+                                <th>Reviewer</th>
                                 <th>Action</th>
                             </tr>
                         </tfoot>
@@ -521,7 +547,9 @@
                             @php
                                 $no = 1;
                             @endphp
-                            @if (Auth::user()->type == \App\Models\User::TYPE_REVIEWER || Auth::user()->type == \App\Models\User::TYPE_EDITOR || Auth::user()->type == \App\Models\User::TYPE_SUPER_ADMIN)
+                            @if (Auth::user()->type == \App\Models\User::TYPE_REVIEWER ||
+                                    Auth::user()->type == \App\Models\User::TYPE_EDITOR ||
+                                    Auth::user()->type == \App\Models\User::TYPE_SUPER_ADMIN)
                                 @foreach ($papers as $paper)
                                     <tr>
                                         <td><b>{{ $no++ }}</b></td>
@@ -549,6 +577,11 @@
                                             @elseif ($paper->status == \App\Models\Paper::REVIEW)
                                                 <span class="badge badge-secondary">Waiting for Review</span>
                                             @endif
+                                        </td>
+                                        <td>
+                                            @foreach ($paper->users as $user)
+                                                <span class="p-1 border rounded mr-2">@ {{ $user->name }} </span>
+                                            @endforeach
                                         </td>
                                         <td>
                                             <a href="{{ route('papers.review', $paper->id) }}"
@@ -622,7 +655,9 @@
                 </div>
             </div>
         </div>
-        @if (Auth::user()->type == \App\Models\User::TYPE_PESERTA || Auth::user()->type == \App\Models\User::TYPE_EDITOR || Auth::user()->type == \App\Models\User::TYPE_SUPER_ADMIN)
+        @if (Auth::user()->type == \App\Models\User::TYPE_PESERTA ||
+                Auth::user()->type == \App\Models\User::TYPE_EDITOR ||
+                Auth::user()->type == \App\Models\User::TYPE_SUPER_ADMIN)
             <div class="tab-pane fade" id="pills-video" role="tabpanel" aria-labelledby="pills-video-tab">
                 <div class="card">
                     <div class="card-body">

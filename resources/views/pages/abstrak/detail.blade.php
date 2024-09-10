@@ -61,16 +61,19 @@
                 </table>
             </div>
             <div class="mb-3">
-                <label>Reviewer</label>
-                <br>
-                @foreach ($abstrak->users as $user)
-                    <span class="p-1 border rounded mr-2">@ {{ $user->name }}
-                        @if (Auth::user()->type == \App\Models\User::TYPE_EDITOR)
-                            <a href="{{ route('abstraks.reviewer.delete', $user->pivot->id) }}" class="btn btn-light btn-sm"
-                                onclick="return confirm('Yakin ingin hapus reviewer?')"><i class="fas fa-trash"></i></a>
-                        @endif
-                    </span>
-                @endforeach
+                @if (Auth::user()->type != \App\Models\User::TYPE_PESERTA)
+                    <label>Reviewer</label>
+                    <br>
+                    @foreach ($abstrak->users as $user)
+                        <span class="p-1 border rounded mr-2">@ {{ $user->name }}
+                            @if (Auth::user()->type == \App\Models\User::TYPE_EDITOR)
+                                <a href="{{ route('abstraks.reviewer.delete', $user->pivot->id) }}"
+                                    class="btn btn-light btn-sm" onclick="return confirm('Yakin ingin hapus reviewer?')"><i
+                                        class="fas fa-trash"></i></a>
+                            @endif
+                        </span>
+                    @endforeach
+                @endif
                 @if (Auth::user()->type == \App\Models\User::TYPE_EDITOR)
                     <a class="btn btn-primary btn-sm" href="#" data-toggle="modal" data-target="#addReviewerModal">
                         <i class="fas fa-plus-circle"></i> Add Reviewer
@@ -188,18 +191,18 @@
                                             @enderror
                                         </div>
                                         @if (Auth::user()->type == \App\Models\User::TYPE_REVIEWER || Auth::user()->type == \App\Models\User::TYPE_EDITOR)
-                                        <div class="mb-3">
-                                            <label>Status</label>
-                                            <select name="status" class="form-control" required>
-                                                <option value="">--pilih--</option>
-                                                <option value="{{ \App\Models\Abstrak::REVISI_MINOR }}">REVISI MINOR
-                                                </option>
-                                                <option value="{{ \App\Models\Abstrak::REVISI_MAYOR }}">REVISI MAYOR
-                                                </option>
-                                                <option value="{{ \App\Models\Abstrak::REJECTED }}">REJECTED</option>
-                                                <option value="{{ \App\Models\Abstrak::ACCEPTED }}">ACCEPTED</option>
-                                            </select>
-                                        </div>
+                                            <div class="mb-3">
+                                                <label>Status</label>
+                                                <select name="status" class="form-control" required>
+                                                    <option value="">--pilih--</option>
+                                                    <option value="{{ \App\Models\Abstrak::REVISI_MINOR }}">REVISI MINOR
+                                                    </option>
+                                                    <option value="{{ \App\Models\Abstrak::REVISI_MAYOR }}">REVISI MAYOR
+                                                    </option>
+                                                    <option value="{{ \App\Models\Abstrak::REJECTED }}">REJECTED</option>
+                                                    <option value="{{ \App\Models\Abstrak::ACCEPTED }}">ACCEPTED</option>
+                                                </select>
+                                            </div>
                                         @endif
                                     </div>
                                     <div class="modal-footer">
@@ -219,13 +222,17 @@
         </div>
         <div class="card-body">
             @foreach ($revisis as $revisi)
-                <div class="border shadow rounded p-2 mb-2 @if($revisi->user->type == \App\Models\User::TYPE_EDITOR) border-warning @else border-secondary @endif">
+                <div
+                    class="border shadow rounded p-2 mb-2 @if ($revisi->user->type == \App\Models\User::TYPE_EDITOR) border-warning @else border-secondary @endif">
                     <div class="d-flex">
                         <div class="flex-grow-1">
-                            <small class="text-muted">{{ \App\Helpers\AppHelper::parse_date($revisi->created_at) }}</small>
+                            <small
+                                class="text-muted">{{ \App\Helpers\AppHelper::parse_date($revisi->created_at) }}</small>
                         </div>
                         <div class="flex-shrink-0">
-                            <small class="text-muted">{{ $revisi->user->type == \App\Models\User::TYPE_EDITOR ? 'Checked Turnitin by' : 'Reviewed by' }} <b>{{ $revisi->user->name }}</b></small>
+                            <small
+                                class="text-muted">{{ $revisi->user->type == \App\Models\User::TYPE_EDITOR ? 'Checked Turnitin by' : 'Reviewed by' }}
+                                <b>{{ $revisi->user->name }}</b></small>
                         </div>
                     </div>
                     {!! nl2br($revisi->note) !!}
