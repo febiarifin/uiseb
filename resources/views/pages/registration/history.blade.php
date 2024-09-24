@@ -98,7 +98,7 @@
                                         @endif
                                     @endif
                                 </td>
-                                <td class="d-flex">
+                                <td>
                                     <a href="{{ route('registration.detail', $registration->id) }}"
                                         class="btn btn-primary btn-sm"><i class="fas fa-info-circle"></i></a>
                                 </td>
