@@ -6,16 +6,16 @@ use Illuminate\Contracts\Validation\Rule;
 
 class WordCount implements Rule
 {
-    protected $minWords;
+    protected $maxWords;
 
     /**
      * Create a new rule instance.
      *
      * @return void
      */
-    public function __construct($minWords)
+    public function __construct($maxWords)
     {
-        $this->minWords = $minWords;
+        $this->maxWords = $maxWords;
     }
 
     /**
@@ -27,7 +27,7 @@ class WordCount implements Rule
      */
     public function passes($attribute, $value)
     {
-        return str_word_count($value) > $this->minWords;
+        return str_word_count($value) <= $this->maxWords;
     }
 
     /**
@@ -37,6 +37,7 @@ class WordCount implements Rule
      */
     public function message()
     {
-        return 'The: attribute is less than ' . $this->minWords . ' words.';
+        return 'The :attribute may not have more than ' . $this->maxWords . ' words.';
+        // return 'The: attribute is less than ' . $this->maxWords . ' words.';
     }
 }

@@ -30,7 +30,7 @@
                     </select>
                 </div>
                 <div class="mb-3">
-                    <label>Title (Min: 20 Words)</label>
+                    <label>Title (Max: 20 Words)</label>
                     <input type="text" class="form-control @error('title') is-invalid @enderror"
                         value="{{ $abstrak->title }}" name="title" required>
                     @error('title')
@@ -147,7 +147,7 @@
                     </div>
                 @endif
                 <div class="col-md-12 mb-3">
-                    <label>Abstrak (Min: 250 Words)</label>
+                    <label>Abstrak (Max: 250 Words)</label>
                     <input id="abstract" type="hidden" name="abstract" value="{{ $abstrak->abstract }}" required>
                     <trix-editor input="abstract"></trix-editor>
                     @error('abstract')
