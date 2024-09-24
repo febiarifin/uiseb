@@ -9,11 +9,13 @@ use App\Models\Penulis;
 use App\Models\RevisiAbstrak;
 use App\Models\Setting;
 use App\Models\User;
+use App\Rules\WordCount;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 
 class AbstrakController extends Controller
@@ -96,17 +98,15 @@ class AbstrakController extends Controller
     public function update(Request $request, Abstrak $abstrak)
     {
         $validatedData = $request->validate([
-            'title' => ['required'],
+            'title' => ['required', new WordCount(20)],
             'type_paper' => ['required'],
             'keyword' => ['required'],
-            'abstract' => ['required'],
+            'abstract' => ['required', new WordCount(250)],
             'file' => ['required', 'mimes:docx', 'max:5000'],
         ]);
-        // if (count($abstrak->penulis) != 0) {
-        //     foreach ($abstrak->penulis as $author) {
-        //         $author->delete();
-        //     }
-        // }
+
+        // return $validatedData;
+
         if ($request->first_names) {
             for ($i = 0; $i < count($request->first_names); $i++) {
                 Penulis::create([

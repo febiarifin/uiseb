@@ -93,12 +93,14 @@ class PaperController extends Controller
     public function update(Request $request, Paper $paper)
     {
         $validatedData = $request->validate([
-            'abstract' => ['required'],
+            // 'abstract' => ['required'],
             'bibliography' => ['required'],
             'keyword' => ['required'],
             'file' => ['required', 'mimes:docx', 'max:5000'],
         ]);
         $validatedData['file'] = AppHelper::upload_file($request->file, 'files');
+        $validatedData['abstract'] = $paper->abstrak->abstract;
+        // $validatedData['keyword'] = $paper->abstrak->keyword;
         $validatedData['status'] = Paper::REVIEW_EDITOR;
         $paper->update($validatedData);
         if (count($paper->users) == 0) {

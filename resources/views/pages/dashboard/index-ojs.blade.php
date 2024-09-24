@@ -54,9 +54,10 @@
                 aria-labelledby="pills-registration-tab">
                 <div class="card">
                     <div class="table-responsive card-body">
-                        <a href="{{ route('registration.list') }}" class="btn btn-primary btn-sm mb-4"><i
-                                class="fas fa-plus-circle"></i> New
-                            Registration</a>
+                        @if (count($registrations) == 0)
+                            <a href="{{ route('registration.list') }}" class="btn btn-primary btn-sm mb-4"><i
+                                class="fas fa-plus-circle"></i> New Registration</a>
+                        @endif
                         <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                             <thead>
                                 <tr>

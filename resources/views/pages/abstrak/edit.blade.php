@@ -10,10 +10,12 @@
         </div>
         <div class="card-body">
             <div class="alert alert-primary">
-                <i class="fas fa-info-circle"></i> You can see the abstract template at the following link <a href="{{ asset($setting->template_abstract) }}" target="_blank"><i class="fas fa-download"></i> Abstract Template</a>
+                <i class="fas fa-info-circle"></i> You can see the abstract template at the following link <a
+                    href="{{ asset($setting->template_abstract) }}" target="_blank"><i class="fas fa-download"></i> Abstract
+                    Template</a>
             </div>
             <form action="{{ route('abstraks.update', $abstrak->id) }}" method="post" enctype="multipart/form-data"
-                id="dynamicForm" onsubmit="updateCheckboxes()">
+                id="dynamicForm" onsubmit="updateCheckboxes(); this.querySelector('button[type=submit]').disabled = true;">
                 @method('put')
                 @csrf
                 <div class="mb-3">
@@ -29,7 +31,11 @@
                 </div>
                 <div class="mb-3">
                     <label>Title (Min: 20 Words)</label>
-                    <input type="text" class="form-control" value="{{ $abstrak->title }}" name="title" required>
+                    <input type="text" class="form-control @error('title') is-invalid @enderror"
+                        value="{{ $abstrak->title }}" name="title" required>
+                    @error('title')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
                 </div>
                 <div class="row form-set border border-secondary rounded m-1 mb-3">
                     @if (count($abstrak->penulis) != 0)
@@ -144,6 +150,9 @@
                     <label>Abstrak (Min: 250 Words)</label>
                     <input id="abstract" type="hidden" name="abstract" value="{{ $abstrak->abstract }}" required>
                     <trix-editor input="abstract"></trix-editor>
+                    @error('abstract')
+                        <small class="text-danger">{{ $message }}</small>
+                    @enderror
                 </div>
                 <div class="col-md-12 mb-3">
                     <label>Keyword</label>
@@ -151,7 +160,7 @@
                     <input type="text" class="form-control" data-role="tagsinput" name="keyword"
                         value="{{ $abstrak->keyword }}" required>
                     <br>
-                    <small>Enter if you want to input more than one</small>
+                    <small>Press enter after 1 keyword</small>
                 </div>
                 <div class="mb-3">
                     <label>File (Format: <b>.docx</b>)</label>

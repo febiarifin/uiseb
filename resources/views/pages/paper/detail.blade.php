@@ -165,7 +165,7 @@
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">Review Abstrak</h5>
+                                    <h5 class="modal-title" id="exampleModalLabel">Review Paper</h5>
                                     <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">×</span>
                                     </button>
@@ -196,7 +196,7 @@
                                         @if (Auth::user()->type == \App\Models\User::TYPE_EDITOR)
                                             <div class="mb-3">
                                                 <label>Hasil Check Turnitin (Dalam %)</label>
-                                                <input type="text" class="form-control" name="result" required>
+                                                <input type="number" class="form-control" name="result" required>
                                             </div>
                                         @endif
                                         <div class="mb-3">

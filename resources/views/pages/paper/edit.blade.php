@@ -10,9 +10,11 @@
         </div>
         <div class="card-body">
             <div class="alert alert-primary">
-                <i class="fas fa-info-circle"></i> You can see the paper template at the following link <a href="{{ asset($setting->template_full_paper) }}" target="_blank"><i class="fas fa-download"></i> Paper Template</a>
+                <i class="fas fa-info-circle"></i> You can see the paper template at the following link <a
+                    href="{{ asset($setting->template_full_paper) }}" target="_blank"><i class="fas fa-download"></i> Paper
+                    Template</a>
             </div>
-            <form action="{{ route('papers.update', $paper->id) }}" method="post" enctype="multipart/form-data">
+            <form action="{{ route('papers.update', $paper->id) }}" method="post" enctype="multipart/form-data" onsubmit=" this.querySelector('button[type=submit]').disabled = true;">
                 @method('put')
                 @csrf
                 <div class="mb-3">
@@ -55,20 +57,28 @@
                 </div>
                 <div class="col-md-12 mb-3">
                     <label>Abstract</label>
-                    <input id="abstract" type="hidden" name="abstract" value="{{ $paper->abstract }}" required>
-                    <trix-editor input="abstract"></trix-editor>
+                    {{-- <input id="abstract" type="hidden" name="abstract" value="{{ $paper->abstrak->abstract }}" required>
+                    <trix-editor input="abstract"></trix-editor> --}}
+                    <div class="p-2 border border-secondary rounded">
+                        {!! nl2br($paper->abstrak->abstract) !!}
+                    </div>
                 </div>
                 <div class="col-md-12 mb-3">
                     <label>Bibliography</label>
-                    <input id="bibliography" type="hidden" name="bibliography" value="{{ $paper->bibliography }}" required>
+                    <input id="bibliography" type="hidden" name="bibliography" value="{{ $paper->bibliography }}"
+                        required>
                     <trix-editor input="bibliography"></trix-editor>
+                    @error('bibliography')
+                        <small class="text-danger">{{ $message }}</small>
+                    @enderror
                 </div>
                 <div class="col-md-12 mb-3">
                     <label>Keyword</label>
                     <br>
-                    <input type="text" class="form-control" data-role="tagsinput" name="keyword" value="{{ $paper->keyword }}" required>
+                    <input type="text" class="form-control" data-role="tagsinput" name="keyword"
+                        value="{{ $paper->abstrak->keyword }}" required>
                     <br>
-                    <small>Enter if you want to input more than one</small>
+                    <small>Press enter after 1 keyword</small>
                 </div>
                 <div class="mb-3">
                     <label>File (Format: <b>.docx</b>)</label>

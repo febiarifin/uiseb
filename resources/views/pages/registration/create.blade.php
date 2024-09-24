@@ -9,7 +9,7 @@
             </div>
         </div>
         <div class="card-body">
-            <form action="{{ route('registration.store') }}" method="post">
+            <form action="{{ route('registration.store') }}" method="post" onsubmit="this.querySelector('button[type=submit]').disabled = true;">
                 @csrf
                 <input type="hidden" name="category_id" value="{{ $category->id }}">
                 <div class="col-md-12 card shadow mb-3">

@@ -377,6 +377,10 @@ class RegisterController extends Controller
 
     public function registrationList()
     {
+        $user = User::with(['registrations'])->findOrFail(Auth::user()->id);
+        if (count($user->registrations) != 0) {
+            return back();
+        }
         $page = Page::with(['timelines', 'contacts', 'speakers', 'articles'])->where('status', Page::ENABLE)->whereYear('created_at', now())->first();
         if (!$page) {
             $page = Page::with(['timelines', 'contacts', 'speakers', 'articles'])->first();
@@ -392,6 +396,10 @@ class RegisterController extends Controller
 
     public function registrationCreate($id)
     {
+        $user = User::with(['registrations'])->findOrFail(Auth::user()->id);
+        if (count($user->registrations) != 0) {
+            return back();
+        }
         $category = Category::findOrFail($id);
         $data = [
             'title' => 'Create New Registration',

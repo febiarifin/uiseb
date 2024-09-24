@@ -23,7 +23,9 @@
                     <h5 class="text-muted">{{ \App\Helpers\AppHelper::currency($category) }}</h5>
                 </div>
                 <div class="card-footer">
-                    <a href="{{ route('registration.create', $category->id) }}" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i> REGISTER</a>
+                    <a href="{{ route('registration.create', $category->id) }}" class="btn btn-primary btn-sm"
+                        onclick="this.innerHTML = 'REGISTERED'; this.classList.add('disabled'); this.disabled = true;"><i
+                            class="fas fa-plus"></i> REGISTER</a>
                 </div>
             </div>
         @endforeach
