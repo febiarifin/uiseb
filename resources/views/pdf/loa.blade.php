@@ -41,7 +41,7 @@
     <br><br>
     <table class="fs-14">
         <tr>
-            <td>Dear Authors</td>
+            <td width="100">Dear Authors</td>
             <td>: {{ $registration->user->name }}</td>
         </tr>
         <tr>
@@ -73,7 +73,6 @@
     </table>
     <p><b><u>Dr. M. Elfan Kaukab, S.E., M.M., M.H.I., Ak.
             </u></b><br>Chairperson of UISEB {{ now()->year }}</p>
-    <br><br><br>
     {{-- <img src="{{ $footer_kop }}" class="footer-kop"> --}}
     <hr>
     <table style="padding: 5px; background-color: #f2f2f2;">
