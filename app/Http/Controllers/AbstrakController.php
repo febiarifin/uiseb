@@ -208,6 +208,7 @@ class AbstrakController extends Controller
         if (Auth::user()->type == User::TYPE_REVIEWER) {
             $validatedData['status'] = $request->status;
         } else {
+            $validatedData['status'] = $request->status;
             if ($request->status == Abstrak::REVISI_MAYOR || $request->status == Abstrak::REVISI_MINOR) {
                 $status = 'REVISI';
             } else if ($request->status == Abstrak::REJECTED) {
