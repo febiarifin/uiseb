@@ -52,7 +52,7 @@ class SponsorController extends Controller
             $validatedData['image'] = AppHelper::upload_file($request->image,'images');
         }
         Sponsor::create($validatedData);
-        Toastr::success('Speaker berhasil ditambahkan', 'Success', ["positionClass" => "toast-top-right"]);
+        Toastr::success('Sponsor berhasil ditambahkan', 'Success', ["positionClass" => "toast-top-right"]);
         return back();
     }
 
@@ -98,6 +98,9 @@ class SponsorController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $sponsor = Sponsor::findOrFail($id);
+        $sponsor->delete();
+        Toastr::success('Sponsor berhasil dihapus', 'Success', ["positionClass" => "toast-top-right"]);
+        return back();
     }
 }
