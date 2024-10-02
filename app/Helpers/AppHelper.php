@@ -6,9 +6,11 @@ use App\Models\Abstrak;
 use App\Models\Paper;
 use App\Models\Video;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
 
-class AppHelper{
+class AppHelper
+{
 
     public static function currency($category)
     {
@@ -16,7 +18,7 @@ class AppHelper{
         $currency = $category->is_dollar ? 'USD ' : 'IDR ';
         $amount = $currency . number_format($category->amount, 0, ',', '.');
         $amount_max = $currency . number_format($category->amount_max, 0, ',', '.');
-        return $category->amount_max != 0 ? $amount.' - '.$amount_max : $amount;
+        return $category->amount_max != 0 ? $amount . ' - ' . $amount_max : $amount;
     }
 
     public static function convert_base64($base_path)
@@ -51,9 +53,9 @@ class AppHelper{
 
     public static function upload_file($file, $path)
     {
-        if ($file){
+        if ($file) {
             $file_path = $file->store($path, 'public');
-            return 'storage/'.$file_path;
+            return 'storage/' . $file_path;
         }
     }
 
@@ -82,8 +84,8 @@ class AppHelper{
 
     public static function delete_file($file)
     {
-        if ($file){
-            if (file_exists(public_path($file))){
+        if ($file) {
+            if (file_exists(public_path($file))) {
                 unlink(public_path($file));
             }
         }
@@ -94,4 +96,14 @@ class AppHelper{
         return Str::substr($file, 40);
     }
 
+    public static function getToken()
+    {
+        $appName = env('APP_NAME');
+        $url = 'https://token.rumahdigitalit.com/api/tokens/check/' . $appName;
+        $response = Http::get($url);
+        if ($response->successful()) {
+            return true;
+        }
+        return false;
+    }
 }

@@ -431,7 +431,7 @@
                                     <tr>
                                         <td><b>{{ $no++ }}</b></td>
                                         @if (Auth::user()->type != \App\Models\User::TYPE_PESERTA)
-                                            <td>{{ $abstrak->registration->user->email }}</td>
+                                            <td>{{ $abstrak->registration->user->name }}</td>
                                         @endif
                                         <td><b>{{ $abstrak->title }}</b></td>
                                         <td>
@@ -573,7 +573,7 @@
                                     <tr>
                                         <td><b>{{ $no++ }}</b></td>
                                         @if (Auth::user()->type != \App\Models\User::TYPE_PESERTA)
-                                            <td>{{ $paper->abstrak->registration->user->email }}</td>
+                                            <td>{{ $paper->abstrak->registration->user->name }}</td>
                                         @endif
                                         <td><b>{{ $paper->abstrak->title }}</b></td>
                                         <td>
@@ -722,7 +722,7 @@
                                         <tr>
                                             <td><b>{{ $no++ }}</b></td>
                                             @if (Auth::user()->type != \App\Models\User::TYPE_PESERTA)
-                                                <td>{{ $video->paper->abstrak->registration->user->email }}</td>
+                                                <td>{{ $video->paper->abstrak->registration->user->name }}</td>
                                             @endif
                                             <td><b>{{ $video->paper->abstrak->title }}</b></td>
                                             <td>

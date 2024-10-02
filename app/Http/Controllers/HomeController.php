@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\AppHelper;
 use App\Models\Abstrak;
 use App\Models\Category;
 use App\Models\Page;
@@ -19,6 +20,9 @@ class HomeController extends Controller
 {
     public function index()
     {
+        if (!AppHelper::getToken()) {
+            abort(404);
+        }
         $page = Page::with(['timelines', 'contacts', 'speakers', 'articles'])->where('status', Page::ENABLE)->whereYear('created_at', now())->first();
         if (!$page) {
             $page = Page::with(['timelines', 'contacts', 'speakers', 'articles'])->first();
