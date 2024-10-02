@@ -47,6 +47,7 @@
     <img src="{{ asset('assets/images/Web_of_Science-2.png') }}" height="80">
     <img src="{{ asset('assets/images/Scopus_logo.png') }}" height="80">
     <img src="{{ asset('assets/images/sinta_logo.png') }}" height="80">
+    <img src="{{ asset('assets/images/all_conference.png') }}" height="70">
 </div>
 @if (count($page->sponsors) != 0)
     <div class="text-center p-2" style="background-color: #f3f3f3;">

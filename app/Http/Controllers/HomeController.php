@@ -168,20 +168,20 @@ class HomeController extends Controller
         ];
         $view = 'pages.dashboard.index-ojs';
         $data['abstraks'] = Abstrak::orderBy('created_at', 'desc')
-            ->where('status', Abstrak::ACCEPTED)
+            // ->where('status', Abstrak::ACCEPTED)
             ->get();
         $data['papers'] = Paper::orderBy('created_at', 'desc')
-            ->where('status', Paper::REVIEW_EDITOR)
+            // ->where('status', Paper::REVIEW_EDITOR)
             ->get();
         $data['videos'] = Video::orderBy('created_at', 'desc')
-            ->where('status', Video::REVIEW)
+            // ->where('status', Video::REVIEW)
             ->get();
         $data['users'] = User::whereNotIn('type', [User::TYPE_ADMIN])->get();
         $data['categories'] = Category::all();
         $data['registrations_validation'] = Registration::with(['category', 'user'])->orderBy('created_at', 'desc')
-            ->where('is_valid', null)
-            ->where('payment_image', '!=', null)
-            ->take(5)
+            // ->where('is_valid', null)
+            // ->where('payment_image', '!=', null)
+            // ->take(5)
             ->get();
         return view($view, $data);
     }
@@ -194,19 +194,21 @@ class HomeController extends Controller
             'setting' => Setting::first(),
         ];
         $view = 'pages.dashboard.index-ojs';
-        $data['abstraks'] = Abstrak::orderBy('created_at', 'desc')->where('status', Abstrak::REVIEW)
+        $data['abstraks'] = Abstrak::orderBy('created_at', 'desc')
+            // ->where('status', Abstrak::REVIEW)
             ->get();
-        $data['papers'] = Paper::orderBy('created_at', 'desc')->where('status', Paper::REVIEW)
+        $data['papers'] = Paper::orderBy('created_at', 'desc')
+            // ->where('status', Paper::REVIEW)
             ->get();
         $data['videos'] = Video::orderBy('created_at', 'desc')
-            ->where('status', Video::REVIEW)
+            // ->where('status', Video::REVIEW)
             ->get();
         $data['users'] = User::whereNotIn('type', [User::TYPE_ADMIN])->get();
         $data['categories'] = Category::all();
         $data['registrations_validation'] = Registration::with(['category', 'user'])->orderBy('created_at', 'desc')
-            ->where('is_valid', null)
-            ->where('payment_image', '!=', null)
-            ->take(5)
+            // ->where('is_valid', null)
+            // ->where('payment_image', '!=', null)
+            // ->take(5)
             ->get();
         return view($view, $data);
     }

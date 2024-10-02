@@ -394,7 +394,10 @@
                         <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Judul</th>
+                                @if (Auth::user()->type != \App\Models\User::TYPE_PESERTA)
+                                    <th>User</th>
+                                @endif
+                                <th>Title</th>
                                 <th>File</th>
                                 <th>Accepted At</th>
                                 <th>Status</th>
@@ -405,7 +408,10 @@
                         <tfoot>
                             <tr>
                                 <th>#</th>
-                                <th>Judul</th>
+                                @if (Auth::user()->type != \App\Models\User::TYPE_PESERTA)
+                                    <th>User</th>
+                                @endif
+                                <th>Title</th>
                                 <th>File</th>
                                 <th>Accepted At</th>
                                 <th>Status</th>
@@ -424,6 +430,9 @@
                                 @foreach ($abstraks as $abstrak)
                                     <tr>
                                         <td><b>{{ $no++ }}</b></td>
+                                        @if (Auth::user()->type != \App\Models\User::TYPE_PESERTA)
+                                            <td>{{ $abstrak->registration->user->email }}</td>
+                                        @endif
                                         <td><b>{{ $abstrak->title }}</b></td>
                                         <td>
                                             @if ($abstrak->file)
@@ -527,7 +536,10 @@
                         <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Judul</th>
+                                @if (Auth::user()->type != \App\Models\User::TYPE_PESERTA)
+                                    <th>User</th>
+                                @endif
+                                <th>Title</th>
                                 <th>File</th>
                                 <th>Accepted At</th>
                                 <th>Status</th>
@@ -538,7 +550,10 @@
                         <tfoot>
                             <tr>
                                 <th>#</th>
-                                <th>Judul</th>
+                                @if (Auth::user()->type != \App\Models\User::TYPE_PESERTA)
+                                    <th>User</th>
+                                @endif
+                                <th>Title</th>
                                 <th>File</th>
                                 <th>Accepted At</th>
                                 <th>Status</th>
@@ -557,6 +572,9 @@
                                 @foreach ($papers as $paper)
                                     <tr>
                                         <td><b>{{ $no++ }}</b></td>
+                                        @if (Auth::user()->type != \App\Models\User::TYPE_PESERTA)
+                                            <td>{{ $paper->abstrak->registration->user->email }}</td>
+                                        @endif
                                         <td><b>{{ $paper->abstrak->title }}</b></td>
                                         <td>
                                             @if ($paper->file)
@@ -670,7 +688,10 @@
                             <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>Judul</th>
+                                    @if (Auth::user()->type != \App\Models\User::TYPE_PESERTA)
+                                        <th>User</th>
+                                    @endif
+                                    <th>Title</th>
                                     <th>Video Link</th>
                                     <th>Accepted At</th>
                                     <th>Status</th>
@@ -680,7 +701,10 @@
                             <tfoot>
                                 <tr>
                                     <th>#</th>
-                                    <th>Judul</th>
+                                    @if (Auth::user()->type != \App\Models\User::TYPE_PESERTA)
+                                        <th>User</th>
+                                    @endif
+                                    <th>Title</th>
                                     <th>Video Link</th>
                                     <th>Accepted At</th>
                                     <th>Status</th>
@@ -691,10 +715,15 @@
                                 @php
                                     $no = 1;
                                 @endphp
-                                @if (Auth::user()->type == \App\Models\User::TYPE_EDITOR)
+                                @if (Auth::user()->type == \App\Models\User::TYPE_EDITOR ||
+                                Auth::user()->type == \App\Models\User::TYPE_SUPER_ADMIN ||
+                                Auth::user()->type == \App\Models\User::TYPE_ADMIN)
                                     @foreach ($videos as $video)
                                         <tr>
                                             <td><b>{{ $no++ }}</b></td>
+                                            @if (Auth::user()->type != \App\Models\User::TYPE_PESERTA)
+                                                <td>{{ $video->paper->abstrak->registration->user->email }}</td>
+                                            @endif
                                             <td><b>{{ $video->paper->abstrak->title }}</b></td>
                                             <td>
                                                 @if ($video->link)
