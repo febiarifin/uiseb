@@ -69,5 +69,6 @@ class Kernel extends HttpKernel
         'isAdminReviewerEditor' => \App\Http\Middleware\IsAdminReviewerEditor::class,
         'isPeserta' => \App\Http\Middleware\IsPeserta::class,
         'isSuperAdmin' => \App\Http\Middleware\IsSuperAdmin::class,
+        'checkToken' => \App\Http\Middleware\CheckToken::class,
     ];
 }
