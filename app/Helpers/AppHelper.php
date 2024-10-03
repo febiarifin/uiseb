@@ -62,24 +62,30 @@ class AppHelper
     public static function create_abstrak($registration)
     {
         if ($registration->category->is_paper) {
-            Abstrak::create([
-                'registration_id' => $registration->id,
-            ]);
+            if (!$registration->abstraks()->where('status', Abstrak::ACCEPTED)->first()) {
+                Abstrak::create([
+                    'registration_id' => $registration->id,
+                ]);
+            }
         }
     }
 
     public static function create_paper($abstrak)
     {
-        Paper::create([
-            'abstrak_id' => $abstrak->id,
-        ]);
+        if (!$abstrak->papers()->where('status', Paper::ACCEPTED)->first()) {
+            Paper::create([
+                'abstrak_id' => $abstrak->id,
+            ]);
+        }
     }
 
     public static function create_video($paper)
     {
-        Video::create([
-            'paper_id' => $paper->id,
-        ]);
+        if (!$paper->videos()->where('status', Video::ACCEPTED)->first()) {
+            Video::create([
+                'paper_id' => $paper->id,
+            ]);
+        }
     }
 
     public static function delete_file($file)

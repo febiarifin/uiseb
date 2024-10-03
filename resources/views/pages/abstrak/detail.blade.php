@@ -168,7 +168,7 @@
                                     </button>
                                 </div>
                                 <form action="{{ route('abstraks.review.store', $abstrak->id) }}" method="post"
-                                    enctype="multipart/form-data">
+                                    enctype="multipart/form-data" id="reviewForm">
                                     @method('put')
                                     @csrf
                                     <div class="modal-body">
@@ -206,7 +206,7 @@
                                         @endif
                                     </div>
                                     <div class="modal-footer">
-                                        <button class="btn btn-primary" type="submit">Simpan</button>
+                                        <button class="btn btn-primary" type="submit" id="submitButton">Simpan</button>
                                     </div>
                                 </form>
                             </div>
@@ -258,6 +258,12 @@
     <script>
         $(document).ready(function() {
             $('.js-example-basic-multiple').select2();
+        });
+
+        document.getElementById('reviewForm').addEventListener('submit', function() {
+            var submitButton = document.getElementById('submitButton');
+            submitButton.disabled = true;
+            submitButton.innerHTML = 'Processing...';
         });
     </script>
 @endsection

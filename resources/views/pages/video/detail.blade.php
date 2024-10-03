@@ -93,7 +93,7 @@
                                         <span aria-hidden="true">×</span>
                                     </button>
                                 </div>
-                                <form action="{{ route('videos.review.store', $video->id) }}" method="post">
+                                <form action="{{ route('videos.review.store', $video->id) }}" method="post" id="reviewForm">
                                     @method('put')
                                     @csrf
                                     <div class="modal-body">
@@ -119,7 +119,7 @@
                                         </div>
                                     </div>
                                     <div class="modal-footer">
-                                        <button class="btn btn-primary" type="submit">Simpan</button>
+                                        <button class="btn btn-primary" type="submit" id="submitButton">Simpan</button>
                                     </div>
                                 </form>
                             </div>
@@ -156,9 +156,15 @@
     </div>
 @endsection
 @section('script')
-    <script src="https://vjs.zencdn.net/7.17.0/video.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/videojsyoutube/2.6.1/Youtube.min.js"></script>
+    {{-- <script src="https://vjs.zencdn.net/7.17.0/video.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/videojsyoutube/2.6.1/Youtube.min.js"></script> --}}
     <script>
-        var player = videojs('my-video');
+        // var player = videojs('my-video');
+
+        document.getElementById('reviewForm').addEventListener('submit', function() {
+            var submitButton = document.getElementById('submitButton');
+            submitButton.disabled = true;
+            submitButton.innerHTML = 'Processing...';
+        });
     </script>
 @endsection
