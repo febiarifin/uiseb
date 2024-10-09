@@ -120,7 +120,8 @@
                     </table>
                     @if (Auth::user()->type == \App\Models\User::TYPE_ADMIN || Auth::user()->type == \App\Models\User::TYPE_SUPER_ADMIN)
                         <button class="btn btn-secondary btn-sm" id="addButton"><i class="fas fa-plus-circle"></i> Add
-                            Author</button> <button type="submit" class="btn btn-primary btn-sm"><i class="fas fa-check-circle"></i>
+                            Author</button> <button type="submit" class="btn btn-primary btn-sm"><i
+                                class="fas fa-check-circle"></i>
                             Simpan</button>
                     @endif
                 </form>
@@ -214,7 +215,9 @@
                     Auth::user()->type == \App\Models\User::TYPE_SUPER_ADMIN)
                 <div class="mt-4">
                     @if (Auth::user()->type == \App\Models\User::TYPE_REVIEWER)
-                        @if ($abstrak->status == \App\Models\Abstrak::REVIEW)
+                        @if ($abstrak->status == \App\Models\Abstrak::REVIEW ||
+                        Auth::user()->type == \App\Models\User::TYPE_ADMIN ||
+                        Auth::user()->type == \App\Models\User::TYPE_SUPER_ADMIN)
                             <a class="btn btn-primary btn-sm" href="#" data-toggle="modal"
                                 data-target="#reviewModal">
                                 <i class="fas fa-edit"></i> Review Abstrak
@@ -259,20 +262,20 @@
                                                 </div>
                                             @enderror
                                         </div>
-                                        @if (Auth::user()->type == \App\Models\User::TYPE_REVIEWER || Auth::user()->type == \App\Models\User::TYPE_EDITOR)
-                                            <div class="mb-3">
-                                                <label>Status</label>
-                                                <select name="status" class="form-control" required>
-                                                    <option value="">--pilih--</option>
-                                                    <option value="{{ \App\Models\Abstrak::REVISI_MINOR }}">REVISI MINOR
-                                                    </option>
-                                                    <option value="{{ \App\Models\Abstrak::REVISI_MAYOR }}">REVISI MAYOR
-                                                    </option>
-                                                    <option value="{{ \App\Models\Abstrak::REJECTED }}">REJECTED</option>
-                                                    <option value="{{ \App\Models\Abstrak::ACCEPTED }}">ACCEPTED</option>
-                                                </select>
-                                            </div>
-                                        @endif
+                                        {{-- @if (Auth::user()->type == \App\Models\User::TYPE_REVIEWER || Auth::user()->type == \App\Models\User::TYPE_EDITOR) --}}
+                                        <div class="mb-3">
+                                            <label>Status</label>
+                                            <select name="status" class="form-control" required>
+                                                <option value="">--pilih--</option>
+                                                <option value="{{ \App\Models\Abstrak::REVISI_MINOR }}">REVISI MINOR
+                                                </option>
+                                                <option value="{{ \App\Models\Abstrak::REVISI_MAYOR }}">REVISI MAYOR
+                                                </option>
+                                                <option value="{{ \App\Models\Abstrak::REJECTED }}">REJECTED</option>
+                                                <option value="{{ \App\Models\Abstrak::ACCEPTED }}">ACCEPTED</option>
+                                            </select>
+                                        </div>
+                                        {{-- @endif --}}
                                     </div>
                                     <div class="modal-footer">
                                         <button class="btn btn-primary" type="submit" id="submitButton">Simpan</button>

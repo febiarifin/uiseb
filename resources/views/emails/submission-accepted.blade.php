@@ -51,9 +51,15 @@
     <p>If you have any further questions, please contact the secretariat of UISEB by sending your email with your
         manuscript ID number.</p>
     <p>With best regards,<br>Your UISEB 2024 organizers.</p>
-    <p>Link LOA: <br>
-        {{ route('print.loa', base64_encode($abstrak->registration->id)) }}
-    </p>
+    @if ($abstrak->papers()->where('status', \App\Models\Paper::ACCEPTED)->first())
+        <p>Link LOA: <br>
+            {{ route('print.loa', [base64_encode($abstrak->registration->id), 'loa-paper']) }}
+        </p>
+    @else
+        <p>Link LOA: <br>
+            {{ route('print.loa', [base64_encode($abstrak->registration->id), 'loa']) }}
+        </p>
+    @endif
     <p>We look forward to seeing...</p>
     <p>-- <br>UISEB <br> <a href="{{ url('/') }}">{{ url('/') }}</a></p>
 </body>

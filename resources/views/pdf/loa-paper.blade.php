@@ -45,31 +45,14 @@
             <td>: {{ $registration->user->name }}</td>
         </tr>
     </table>
-    <p>We are pleased to inform you that your abstract, entitled:</p>
-    <center>
-        "{{ $abstrak->title }}"
-    </center>
+    <p>We are pleased to inform you that your paper titled <br>
+    "{{ $abstrak->title }}" has been <b>ACCEPTED</b> for presentation.</p>
     <p style="text-align: justify;">
-        has been reviewed and accepted to be presented at 1ST UNSIQ INTERNATIONAL SYMPOSIUM ON ECONOMICS AND BUSINESS
-        2024 (UISEB 2024) which would be held on December 11th 2024 in Wonosobo, Central Java, Indonesia.
+        As the next step, you are required to prepare an oral video presentation of your work. Please upload the video to your youtube account and provide the link n the UISEB 2024 system. <br><br>
+        Additionally, we invite you to join the 1ST UNSIQ INTERNATIONAL SYMPOSIUM ON ECONOMICS AND BUSINESS 2024 (UISEB 2024) on December 11, 2024, via an online platform. We will share the zoom conference link with you shortly.
+        <br><br>
+        For further details, kindly visit at http.uiseb.feb-unsiq.ac.id or directly contact through our email uiseb-feb@unsiq.ac.id and these following contact number :
     </p>
-    <p>Please make the payment for registration fee before the deadlines to as following below:</p>
-    <table>
-        <tr>
-            <td>BANK ACCOUNT </td>
-            <td>: BNI</td>
-        </tr>
-        <tr>
-            <td>Bank Account Number </td>
-            <td>: 1890999994</td>
-        </tr>
-        <tr>
-            <td>Bank Account Name </td>
-            <td>: CV GARUDA RISET INDONESIA</td>
-        </tr>
-    </table>
-    <p>Please kindly confirm with submit your payment receipt on the UISEB 2024’s system. </p>
-    <p style="text-align: justify;">For further details, kindly visit at uiseb.feb-unsiq.ac.id or directly contact through our email uiseb-feb@unsiq.ac.id and these following contact number :</p>
     <span>+62 897-0251-067 (Moza) <br> +62 895-6328-67644 (Regina)</span>
     <p>Best regards,</p>
     <img src="{{ $stempel }}" height="120" style="margin-left: -20px;">

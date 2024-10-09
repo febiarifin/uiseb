@@ -70,5 +70,6 @@ class Kernel extends HttpKernel
         'isPeserta' => \App\Http\Middleware\IsPeserta::class,
         'isSuperAdmin' => \App\Http\Middleware\IsSuperAdmin::class,
         'checkToken' => \App\Http\Middleware\CheckToken::class,
+        'checkSignature' => \App\Http\Middleware\CheckSignature::class,
     ];
 }

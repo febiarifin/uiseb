@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\AppHelper;
 use App\Models\User;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
@@ -200,6 +201,33 @@ class UserController extends Controller
             'password' => Hash::make("UISEB247"),
         ]);
         Toastr::success('Reset password berhasil. Password baru adalah UISEB247', 'Success', ["positionClass" => "toast-top-right"]);
+        return back();
+    }
+
+    public function signature()
+    {
+        $data = [
+            'title' => 'Upload Signature',
+            'subtitle' => null,
+            'active' => 'signature',
+            'user' => Auth::user(),
+        ];
+        return view('pages.user.signature', $data);
+    }
+
+    public function signatureUpload(Request $request)
+    {
+        $user = User::findOrFail(Auth::user()->id);
+        $request->validate([
+            'signature' => ['required', 'mimes:png', 'max:500']
+        ]);
+        if ($user->signature) {
+            AppHelper::delete_file($user->signature);
+        }
+        $user->update([
+            'signature' => AppHelper::upload_file($request->signature, 'images'),
+        ]);
+        Toastr::success('Signature uploaded', 'Success', ["positionClass" => "toast-top-right"]);
         return back();
     }
 }

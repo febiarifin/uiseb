@@ -74,7 +74,7 @@ class PDFController extends Controller
         return $pdf->stream('INVOICE_'.$registration->id. $registration->category->name . '.pdf');
     }
 
-    public function print_loa($id)
+    public function print_loa($id, $type)
     {
         $registration = Registration::with(['user', 'category'])->findOrFail(base64_decode($id));
         $abstrak = $registration->abstraks()->where('status', Abstrak::ACCEPTED)->first();
@@ -82,14 +82,16 @@ class PDFController extends Controller
         $data = [
             'title' => 'Print LOA: '. $registration->category->name,
             'logo' => AppHelper::convert_base64('public/manup-master/img/logo_UISEB.png'),
-            'stempel' => AppHelper::convert_base64('public/assets/images/stempel_feb.png'),
+            'stempel' => AppHelper::convert_base64('public/assets/images/stempel_loa.png'),
+            // 'stempel' => AppHelper::convert_base64('public/assets/images/stempel_feb.png'),
             'ttd' => AppHelper::convert_base64('public/assets/images/ttd_dekan_feb.png'),
             'footer_kop' => AppHelper::convert_base64('public/assets/images/footer-kop.png'),
             'registration' => $registration,
             'abstrak' => $abstrak,
             // 'paper' => $paper,
+            'signature' => $registration->user->signature ? AppHelper::convert_base64('public/'.$registration->user->signature) : null,
         ];
-        $pdf = PDF::loadView('pdf.loa', $data);
+        $pdf = PDF::loadView('pdf.'.$type, $data);
         return $pdf->stream('LOA_'.$registration->id. $registration->category->name . '.pdf');
     }
 

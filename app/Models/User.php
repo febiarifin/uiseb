@@ -42,6 +42,7 @@ class User extends Authenticatable
         'scopus',
         'research_interest',
         'degree',
+        'signature',
     ];
 
     /**

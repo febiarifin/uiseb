@@ -135,8 +135,11 @@
                                                             href="{{ route('print.invoice', base64_encode($registration->id) . uniqid()) }}"
                                                             target="_blank">INVOICE</a>
                                                         <a class="dropdown-item"
-                                                            href="{{ route('print.loa', base64_encode($registration->id) . uniqid()) }}"
-                                                            target="_blank">LOA</a>
+                                                            href="{{ route('print.loa', [base64_encode($registration->id) . uniqid(), 'loa']) }}"
+                                                            target="_blank">LOA Abstrak</a>
+                                                            <a class="dropdown-item"
+                                                            href="{{ route('print.loa', [base64_encode($registration->id) . uniqid(), 'loa-paper']) }}"
+                                                            target="_blank">LOA Paper</a>
                                                         @if ($registration->category->is_paper)
                                                             <a class="dropdown-item"
                                                                 href="{{ route('print.review', base64_encode($registration->id) . uniqid()) }}"

@@ -138,6 +138,14 @@
                 </div>
             @endif
             <div class="mb-3">
+                <a class="btn btn-secondary btn-sm shadow" href="{{ route('print.loa', [base64_encode($paper->abstrak->registration->id), 'agreement']) }}" target="_blank">
+                    <i class="fas fa-download"></i> COPYRIGHT TRANSFER AGREEMENT FORM UISEB
+                </a>
+                <a class="btn btn-secondary btn-sm shadow" href="{{ route('print.loa', [base64_encode($paper->abstrak->registration->id), 'submission']) }}" target="_blank">
+                    <i class="fas fa-download"></i> SUBMISSION DECLARATION FORM
+                </a>
+            </div>
+            <div class="mb-3">
                 <label>Lampiran</label>
                 @if ($paper->file)
                     <iframe src="https://docs.google.com/gview?url={{ asset($paper->file) }}&embedded=true"
@@ -159,6 +167,7 @@
                             <i class="fas fa-edit"></i> Hasil Turnitin
                         </a>
                     @endif
+
                     <!-- Revisi Paper Modal-->
                     <div class="modal fade" id="reviewModal" tabindex="-1" role="dialog"
                         aria-labelledby="exampleModalLabel" aria-hidden="true">

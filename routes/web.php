@@ -49,7 +49,7 @@ Route::group(['middleware' => 'checkToken'], function () {
     });
 
     Route::group(['middleware' => 'auth'], function () {
-        Route::get('dashboard', [HomeController::class, 'dashboard'])->name('dashboard');
+        Route::get('dashboard', [HomeController::class, 'dashboard'])->name('dashboard')->middleware('checkSignature');
         Route::get('logout', [HomeController::class, 'logout'])->name('logout');
         Route::get('profile', [UserController::class, 'profile'])->name('user.profile');
         Route::post('profile', [UserController::class, 'updateProfile'])->name('user.update.profile');
@@ -101,20 +101,22 @@ Route::group(['middleware' => 'checkToken'], function () {
             Route::put('papers/review/store/{id}', [PaperController::class, 'reviewStore'])->name('papers.review.store');
         });
 
-        Route::group(['middleware' => 'isPeserta'], function () {
-            Route::get('registrations', [RegisterController::class, 'registrationUser'])->name('registration.user');
-            Route::get('upload/payment/{id}', [RegisterController::class, 'uploadPayment'])->name('upload.payment');
-            Route::put('upload/payment/{id}', [RegisterController::class, 'uploadPaymentStore'])->name('upload.payment.store');
-            Route::get('upload/paper/{id}', [RegisterController::class, 'uploadPaper'])->name('upload.paper');
-            Route::put('upload/paper/{id}', [RegisterController::class, 'uploadPaperStore'])->name('upload.paper.store');
-            Route::get('paper/published/{paper}', [PaperController::class, 'published'])->name('paper.published');
-            Route::get('registrations/list', [RegisterController::class, 'registrationList'])->name('registration.list');
-            Route::get('registrations/print-invoice/{registration}', [RegisterController::class, 'printInvoice'])->name('registration.print.invoice');
-            Route::get('registrations/create/{id}', [RegisterController::class, 'registrationCreate'])->name('registration.create');
-            Route::post('registrations/store', [RegisterController::class, 'registrationstore'])->name('registration.store');
-            Route::resource('abstraks', AbstrakController::class);
-            Route::resource('papers', PaperController::class);
-            Route::resource('videos', VideoController::class);
+        Route::group(['middleware' => 'checkSignature'], function () {
+            Route::group(['middleware' => 'isPeserta'], function () {
+                Route::get('registrations', [RegisterController::class, 'registrationUser'])->name('registration.user');
+                Route::get('upload/payment/{id}', [RegisterController::class, 'uploadPayment'])->name('upload.payment');
+                Route::put('upload/payment/{id}', [RegisterController::class, 'uploadPaymentStore'])->name('upload.payment.store');
+                Route::get('upload/paper/{id}', [RegisterController::class, 'uploadPaper'])->name('upload.paper');
+                Route::put('upload/paper/{id}', [RegisterController::class, 'uploadPaperStore'])->name('upload.paper.store');
+                Route::get('paper/published/{paper}', [PaperController::class, 'published'])->name('paper.published');
+                Route::get('registrations/list', [RegisterController::class, 'registrationList'])->name('registration.list');
+                Route::get('registrations/print-invoice/{registration}', [RegisterController::class, 'printInvoice'])->name('registration.print.invoice');
+                Route::get('registrations/create/{id}', [RegisterController::class, 'registrationCreate'])->name('registration.create');
+                Route::post('registrations/store', [RegisterController::class, 'registrationstore'])->name('registration.store');
+                Route::resource('abstraks', AbstrakController::class);
+                Route::resource('papers', PaperController::class);
+                Route::resource('videos', VideoController::class);
+            });
         });
 
         Route::group(['middleware' => 'isAdmin'], function () {
@@ -126,7 +128,7 @@ Route::group(['middleware' => 'checkToken'], function () {
         Route::get('print/review/{id}', [PDFController::class, 'print_review'])->name('print.review');
         Route::get('print/symposium/{id}', [PDFController::class, 'print_symposium'])->name('print.symposium');
         Route::get('print/invoice/{id}', [PDFController::class, 'print_invoice'])->name('print.invoice');
-        Route::get('print/loa/{id}', [PDFController::class, 'print_loa'])->name('print.loa');
+        Route::get('print/loa/{id}/{type}', [PDFController::class, 'print_loa'])->name('print.loa');
     });
 
     // Route::get('/storage-link', function () {
@@ -138,4 +140,7 @@ Route::group(['middleware' => 'checkToken'], function () {
     Route::post('forget-password', [ForgotPasswordController::class, 'submitForgetPasswordForm'])->name('forget.password.post');
     Route::get('reset-password/{token}', [ForgotPasswordController::class, 'showResetPasswordForm'])->name('reset.password.get');
     Route::post('reset-password', [ForgotPasswordController::class, 'submitResetPasswordForm'])->name('reset.password.post');
+
+    Route::get('upload/signature', [UserController::class, 'signature'])->name('upload.signature');
+    Route::post('upload/signature/store', [UserController::class, 'signatureUpload'])->name('upload.signature.store');
 });

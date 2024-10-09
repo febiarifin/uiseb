@@ -222,8 +222,8 @@ class PaperController extends Controller
                     $message->to($paper->abstrak->registration->user->email);
                     $message->subject('Submission Accepted');
                     $pdfController = app()->make(PDFController::class);
-                    $response = $pdfController->print_loa(base64_encode($paper->abstrak->registration->id));
-                    $tempFile = tempnam(sys_get_temp_dir(), 'loa_') . '.pdf';
+                    $response = $pdfController->print_loa(base64_encode($paper->abstrak->registration->id), 'loa-paper');
+                    $tempFile = tempnam(sys_get_temp_dir(), 'loa_paper') . '.pdf';
                     file_put_contents($tempFile, $response->getContent());
                     $message->attach($tempFile, [
                         'as' => 'LOA_' . $paper->abstrak->registration->id . $paper->abstrak->registration->category->name . '.pdf',

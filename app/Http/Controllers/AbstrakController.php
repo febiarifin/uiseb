@@ -241,7 +241,7 @@ class AbstrakController extends Controller
                         $message->to($abstrak->registration->user->email);
                         $message->subject('Submission Accepted');
                         $pdfController = app()->make(PDFController::class);
-                        $response = $pdfController->print_loa(base64_encode($abstrak->registration->id));
+                        $response = $pdfController->print_loa(base64_encode($abstrak->registration->id), 'loa');
                         $tempFile = tempnam(sys_get_temp_dir(), 'loa_') . '.pdf';
                         file_put_contents($tempFile, $response->getContent());
                         $message->attach($tempFile, [

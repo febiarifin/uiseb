@@ -105,6 +105,14 @@
         </li> --}}
     @endif
 
+    @if (Auth::user()->type == \App\Models\User::TYPE_PESERTA)
+        <li class="nav-item {{ $active == 'signature' ? 'active' : null }}">
+            <a class="nav-link" href="{{ route('upload.signature') }}">
+                <i class="fas fa-upload"></i>
+                <span>Signature</span></a>
+        </li>
+    @endif
+
     <!-- Divider -->
     <hr class="sidebar-divider d-none d-md-block">
 
