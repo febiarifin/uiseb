@@ -18,9 +18,11 @@ class CheckSignature
      */
     public function handle(Request $request, Closure $next)
     {
-        if (Auth::user()->signature != null && Auth::user()->type == User::TYPE_PESERTA) {
-            return $next($request);
+        if (Auth::user()->type == User::TYPE_PESERTA) {
+            if (Auth::user()->signature == null) {
+                return redirect()->route('upload.signature');
+            }
         }
-        return redirect()->route('upload.signature');
+        return $next($request);
     }
 }
