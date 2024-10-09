@@ -226,7 +226,7 @@ class AbstrakController extends Controller
             'status' => $validatedData['status'],
             'acc_at' => $validatedData['status'] == Abstrak::ACCEPTED ? now() : null,
         ]);
-        if ($request->status && Auth::user()->type == User::TYPE_REVIEWER) {
+        if ($request->status && Auth::user()->type == User::TYPE_REVIEWER || Auth::user()->type == User::TYPE_EDITOR || Auth::user()->type == User::TYPE_ADMIN || Auth::user()->type == User::TYPE_SUPER_ADMIN) {
             if ($validatedData['status'] == Abstrak::REJECTED) {
                 AppHelper::create_abstrak($abstrak->registration);
             } else if ($validatedData['status'] == Abstrak::ACCEPTED) {
@@ -270,6 +270,46 @@ class AbstrakController extends Controller
             }
         }
         Toastr::success('Review abstrak berhasil disimpan', 'Success', ["positionClass" => "toast-top-right"]);
+        return back();
+    }
+
+    public function updateAuthor(Request $request, $id)
+    {
+        $abstrak = Abstrak::findOrFail($id);
+        if (count($request->first_names) != count($abstrak->penulis)) {
+            foreach ($abstrak->penulis as $author) {
+                $author->delete();
+            }
+            for ($i = 0; $i < count($request->first_names); $i++) {
+                Penulis::create([
+                    'first_name' => $request->first_names[$i],
+                    'middle_name' => $request->middle_names[$i],
+                    'last_name' => $request->last_names[$i],
+                    'email' => $request->emails[$i],
+                    'affiliate' => $request->affiliates[$i],
+                    'coresponding' => $request->corespondings[$i],
+                    'degree' => $request->degrees[$i],
+                    'address' => $request->address[$i],
+                    'research_interest' => $request->research_interests[$i],
+                    'abstrak_id' => $abstrak->id,
+                ]);
+            }
+        }else{
+            foreach ($abstrak->penulis as $i => $author) {
+                $author->update([
+                    'first_name' => $request->first_names[$i],
+                    'middle_name' => $request->middle_names[$i],
+                    'last_name' => $request->last_names[$i],
+                    'email' => $request->emails[$i],
+                    'affiliate' => $request->affiliates[$i],
+                    'coresponding' => $request->corespondings[$i],
+                    'degree' => $request->degrees[$i],
+                    'address' => $request->address[$i],
+                    'research_interest' => $request->research_interests[$i],
+                ]);
+            }
+        }
+        Toastr::success('Author berhasil diupdate', 'Success', ["positionClass" => "toast-top-right"]);
         return back();
     }
 }

@@ -27,38 +27,103 @@
                 <input type="text" class="form-control" value="{{ $abstrak->title }}" name="title" disabled>
             </div>
             <div class="mb-3">
-                <label>Author</label>
-                <table class="table table-bordered">
-                    <tr>
-                        <th>Nama Depan</th>
-                        <th>Nama Tengah</th>
-                        <th>Nama Belakang</th>
-                        <th>Email</th>
-                        <th>Afiliasi</th>
-                        <th>Degree</th>
-                        <th>Address</th>
-                        <th>Research Interest</th>
-                        <th>Coresponding</th>
-                    </tr>
-                    @foreach ($abstrak->penulis as $author)
-                        <tr>
-                            <td>{{ $author->first_name }}</td>
-                            <td>{{ $author->middle_name }}</td>
-                            <td>{{ $author->last_name }}</td>
-                            <td>{{ $author->email }}</td>
-                            <td>{{ $author->affiliate }}</td>
-                            <td>{{ $author->degree }}</td>
-                            <td>{{ $author->address }}</td>
-                            <td>{{ $author->research_interest }}</td>
-                            <td>
-                                @if ($author->coresponding)
-                                    <span class="badge badge-light"><i class="fas fa-check-circle"></i> Sebagai
-                                        Coresponding</span>
-                                @endif
-                            </td>
-                        </tr>
-                    @endforeach
-                </table>
+                <form action="{{ route('abstrak.update.author', $abstrak->id) }}" method="post">
+                    @method('put')
+                    @csrf
+                    <label>Author</label>
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Nama Depan</th>
+                                <th>Nama Tengah</th>
+                                <th>Nama Belakang</th>
+                                <th>Email</th>
+                                <th>Afiliasi</th>
+                                <th>Degree</th>
+                                <th>Address</th>
+                                <th>Research Interest</th>
+                                <th>Is Coresponding</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Auth::user()->type == \App\Models\User::TYPE_ADMIN || Auth::user()->type == \App\Models\User::TYPE_SUPER_ADMIN)
+                                @foreach ($abstrak->penulis as $author)
+                                    <tr>
+                                        <td><input type="text" class="form-control" value="{{ $author->first_name }}"
+                                                name="first_names[]" required></td>
+                                        <td><input type="text" class="form-control" value="{{ $author->middle_name }}"
+                                                name="middle_names[]"></td>
+                                        <td><input type="text" class="form-control" value="{{ $author->last_name }}"
+                                                name="last_names[]"></td>
+                                        <td><input type="text" class="form-control" value="{{ $author->email }}"
+                                                name="emails[]" required></td>
+                                        <td><input type="text" class="form-control" value="{{ $author->affiliate }}"
+                                                name="affiliates[]" required></td>
+                                        <td>
+                                            <select name="degrees[]" class="form-control" required>
+                                                <option value="">--Choose--</option>
+                                                <option value="Associate degree"
+                                                    {{ $author->degree == 'Associate degree' ? 'selected' : null }}>
+                                                    Associate
+                                                    degree
+                                                </option>
+                                                <option value="Bachelor’s degree"
+                                                    {{ $author->degree == 'Bachelor’s degree' ? 'selected' : null }}>
+                                                    Bachelor’s
+                                                    degree</option>
+                                                <option value="Master’s degree"
+                                                    {{ $author->degree == 'Master’s degree' ? 'selected' : null }}>Master’s
+                                                    degree
+                                                </option>
+                                                <option value="Doctoral degree"
+                                                    {{ $author->degree == 'Doctoral degree' ? 'selected' : null }}>Doctoral
+                                                    degree
+                                                </option>
+                                            </select>
+                                        </td>
+                                        <td><input type="text" class="form-control" value="{{ $author->address }}"
+                                                name="address[]" required></td>
+                                        <td><input type="text" class="form-control"
+                                                value="{{ $author->research_interest }}" name="research_interests[]"
+                                                required></td>
+                                        <td>
+                                            <select name="corespondings[]" class="form-control" required>
+                                                <option value="1" {{ $author->coresponding ? 'selected' : null }}>Yes
+                                                </option>
+                                                <option value="0" {{ !$author->coresponding ? 'selected' : null }}>No
+                                                </option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            @else
+                                @foreach ($abstrak->penulis as $author)
+                                    <tr>
+                                        <td>{{ $author->first_name }}</td>
+                                        <td>{{ $author->middle_name }}</td>
+                                        <td>{{ $author->last_name }}</td>
+                                        <td>{{ $author->email }}</td>
+                                        <td>{{ $author->affiliate }}</td>
+                                        <td>{{ $author->degree }}</td>
+                                        <td>{{ $author->address }}</td>
+                                        <td>{{ $author->research_interest }}</td>
+                                        <td>
+                                            @if ($author->coresponding)
+                                                <span class="badge badge-light"><i class="fas fa-check-circle"></i> Sebagai
+                                                    Coresponding</span>
+                                            @endif
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            @endif
+                        </tbody>
+                    </table>
+                    @if (Auth::user()->type == \App\Models\User::TYPE_ADMIN || Auth::user()->type == \App\Models\User::TYPE_SUPER_ADMIN)
+                        <button class="btn btn-secondary btn-sm" id="addButton"><i class="fas fa-plus-circle"></i> Add
+                            Author</button> <button type="submit" class="btn btn-primary btn-sm"><i class="fas fa-check-circle"></i>
+                            Simpan</button>
+                    @endif
+                </form>
             </div>
             <div class="mb-3">
                 @if (Auth::user()->type != \App\Models\User::TYPE_PESERTA)
@@ -143,11 +208,15 @@
                         Download Lampiran</a>
                 @endif
             </div>
-            @if (Auth::user()->type == \App\Models\User::TYPE_REVIEWER || Auth::user()->type == \App\Models\User::TYPE_EDITOR)
+            @if (Auth::user()->type == \App\Models\User::TYPE_REVIEWER ||
+                    Auth::user()->type == \App\Models\User::TYPE_EDITOR ||
+                    Auth::user()->type == \App\Models\User::TYPE_ADMIN ||
+                    Auth::user()->type == \App\Models\User::TYPE_SUPER_ADMIN)
                 <div class="mt-4">
                     @if (Auth::user()->type == \App\Models\User::TYPE_REVIEWER)
                         @if ($abstrak->status == \App\Models\Abstrak::REVIEW)
-                            <a class="btn btn-primary btn-sm" href="#" data-toggle="modal" data-target="#reviewModal">
+                            <a class="btn btn-primary btn-sm" href="#" data-toggle="modal"
+                                data-target="#reviewModal">
                                 <i class="fas fa-edit"></i> Review Abstrak
                             </a>
                         @endif
@@ -264,6 +333,24 @@
             var submitButton = document.getElementById('submitButton');
             submitButton.disabled = true;
             submitButton.innerHTML = 'Processing...';
+        });
+
+        document.getElementById('addButton').addEventListener('click', function(e) {
+            e.preventDefault(); // Mencegah reload halaman saat tombol ditekan
+
+            // Cari tabel dan baris terakhir
+            const tableBody = document.querySelector('table tbody'); // Pastikan ini mengacu ke tbody yang sesuai
+            const lastRow = tableBody.querySelector('tr:last-child'); // Ambil baris terakhir
+
+            // Clone baris terakhir
+            const newRow = lastRow.cloneNode(true);
+
+            // Hapus nilai dari input pada baris yang baru
+            newRow.querySelectorAll('input').forEach(input => input.value = '');
+            newRow.querySelectorAll('select').forEach(select => select.selectedIndex = 0);
+
+            // Tambahkan baris baru ke dalam tabel
+            tableBody.appendChild(newRow);
         });
     </script>
 @endsection

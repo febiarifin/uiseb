@@ -79,7 +79,7 @@ class HomeController extends Controller
                         ->get();
                 } else {
                     $data['abstraks'] = Abstrak::orderBy('created_at', 'desc')
-                        ->where('status', Abstrak::ACCEPTED)
+                        // ->where('status', Abstrak::ACCEPTED)
                         ->get();
                     $data['papers'] = Paper::orderBy('created_at', 'desc')
                         ->where('status', Paper::REVIEW_EDITOR)

@@ -120,6 +120,7 @@ Route::group(['middleware' => 'checkToken'], function () {
         Route::group(['middleware' => 'isAdmin'], function () {
             Route::get('access-editor', [HomeController::class, 'accessEditor'])->name('access.editor');
             Route::get('access-reviewer', [HomeController::class, 'accessReviewer'])->name('access.reviewer');
+            Route::put('/abstraks/author/update/{id}', [AbstrakController::class, 'updateAuthor'])->name('abstrak.update.author');
         });
 
         Route::get('print/review/{id}', [PDFController::class, 'print_review'])->name('print.review');
