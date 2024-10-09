@@ -79,8 +79,8 @@ class HomeController extends Controller
                         ->get();
                 } else {
                     $data['abstraks'] = Abstrak::orderBy('created_at', 'desc')
-                        // ->where('status', Abstrak::ACCEPTED)
-                        ->where('status', '!=', null)
+                        ->where('status', Abstrak::REVIEW)
+                        // ->where('status', '!=', null)
                         ->get();
                     $data['papers'] = Paper::orderBy('created_at', 'desc')
                         ->where('status', Paper::REVIEW_EDITOR)
@@ -170,16 +170,16 @@ class HomeController extends Controller
         ];
         $view = 'pages.dashboard.index-ojs';
         $data['abstraks'] = Abstrak::orderBy('created_at', 'desc')
-            // ->where('status', Abstrak::ACCEPTED)
-            ->where('status', '!=', null)
+            ->where('status', Abstrak::REVIEW)
+            // ->where('status', '!=', null)
             ->get();
         $data['papers'] = Paper::orderBy('created_at', 'desc')
             ->where('status', Paper::REVIEW_EDITOR)
             // ->where('status', '!=', null)
             ->get();
         $data['videos'] = Video::orderBy('created_at', 'desc')
-            // ->where('status', Video::REVIEW)
-            ->where('status', '!=', null)
+            ->where('status', Video::REVIEW)
+            // ->where('status', '!=', null)
             ->get();
         $data['users'] = User::whereNotIn('type', [User::TYPE_ADMIN])->get();
         $data['categories'] = Category::all();
