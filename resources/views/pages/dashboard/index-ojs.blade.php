@@ -468,12 +468,18 @@
                                         </td>
                                         <td>
                                             <a href="{{ route('abstraks.review', $abstrak->id) }}"
-                                                class="btn btn-info btn-sm ">
+                                                class="btn btn-info btn-sm mb-1">
                                                 @if (Auth::user()->type == \App\Models\User::TYPE_REVIEWER)
                                                     <i class="fas fa-check-circle"></i> Review
                                                 @else
                                                     <i class="fas fa-info-circle"></i>
                                                 @endif
+                                            </a>
+                                            <a class="btn btn-secondary btn-sm shadow mb-1" href="{{ route('print.loa', [base64_encode($abstrak->registration->id), 'agreement']) }}" target="_blank">
+                                                <i class="fas fa-download"></i> COPYRIGHT TRANSFER AGREEMENT
+                                            </a>
+                                            <a class="btn btn-secondary btn-sm shadow mb-1" href="{{ route('print.loa', [base64_encode($abstrak->registration->id), 'submission']) }}" target="_blank">
+                                                <i class="fas fa-download"></i> SUBMISSION DECLARATION
                                             </a>
                                         </td>
                                     </tr>
@@ -610,12 +616,18 @@
                                         </td>
                                         <td>
                                             <a href="{{ route('papers.review', $paper->id) }}"
-                                                class="btn btn-info btn-sm ">
+                                                class="btn btn-info btn-sm mb-1">
                                                 @if (Auth::user()->type == \App\Models\User::TYPE_REVIEWER)
                                                     <i class="fas fa-check-circle"></i> Review
                                                 @else
                                                     <i class="fas fa-info-circle"></i>
                                                 @endif
+                                            </a>
+                                            <a class="btn btn-secondary btn-sm shadow mb-1" href="{{ route('print.loa', [base64_encode($paper->abstrak->registration->id), 'agreement']) }}" target="_blank">
+                                                <i class="fas fa-download"></i> COPYRIGHT TRANSFER AGREEMENT
+                                            </a>
+                                            <a class="btn btn-secondary btn-sm shadow mb-1" href="{{ route('print.loa', [base64_encode($paper->abstrak->registration->id), 'submission']) }}" target="_blank">
+                                                <i class="fas fa-download"></i> SUBMISSION DECLARATION
                                             </a>
                                         </td>
                                     </tr>

@@ -26,6 +26,8 @@
                             <th>Judul</th>
                             <th>Penulis</th>
                             <th>Link Video</th>
+                            <th>Editor</th>
+                            <th>Reviewer</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
@@ -41,6 +43,8 @@
                             <th>Judul</th>
                             <th>Penulis</th>
                             <th>Link Video</th>
+                            <th>Editor</th>
+                            <th>Reviewer</th>
                             <th>Aksi</th>
                         </tr>
                     </tfoot>
@@ -95,6 +99,28 @@
                                             @if ($video)
                                                 <a href="{{ $video->link }}">{{ $video->link }}</a>
                                             @endif
+                                        @endif
+                                    @endif
+                                </td>
+                                <td>
+                                    @if ($abstrak)
+                                        @foreach ($abstrak->revisis as $revisi)
+                                            {{ $revisi->user->name }},
+                                        @endforeach
+                                    @endif
+                                </td>
+                                <td>
+                                    @if ($abstrak)
+                                        @php
+                                            $paper = $abstrak
+                                                ->papers()
+                                                ->where('status', \App\Models\Paper::ACCEPTED)
+                                                ->first();
+                                        @endphp
+                                        @if ($paper)
+                                            @foreach ($paper->users as $user)
+                                                {{ $user->name }},
+                                            @endforeach
                                         @endif
                                     @endif
                                 </td>
