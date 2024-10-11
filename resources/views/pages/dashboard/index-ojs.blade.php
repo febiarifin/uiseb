@@ -475,12 +475,12 @@
                                                     <i class="fas fa-info-circle"></i>
                                                 @endif
                                             </a>
-                                            <a class="btn btn-secondary btn-sm shadow mb-1" href="{{ route('print.loa', [base64_encode($abstrak->registration->id), 'agreement']) }}" target="_blank">
+                                            {{-- <a class="btn btn-secondary btn-sm shadow mb-1" href="{{ route('print.loa', [base64_encode($abstrak->registration->id), 'agreement']) }}" target="_blank">
                                                 <i class="fas fa-download"></i> COPYRIGHT TRANSFER AGREEMENT
                                             </a>
                                             <a class="btn btn-secondary btn-sm shadow mb-1" href="{{ route('print.loa', [base64_encode($abstrak->registration->id), 'submission']) }}" target="_blank">
                                                 <i class="fas fa-download"></i> SUBMISSION DECLARATION
-                                            </a>
+                                            </a> --}}
                                         </td>
                                     </tr>
                                 @endforeach
