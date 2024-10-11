@@ -80,7 +80,7 @@ class PDFController extends Controller
         $abstrak = $registration->abstraks()->where('status', Abstrak::ACCEPTED)->first();
         // $paper = $abstrak->papers()->where('status', Paper::ACCEPTED)->first();
         $data = [
-            'title' => 'Print LOA: '. $registration->category->name,
+            'title' => 'Print '.$type.': '. $registration->category->name,
             'logo' => AppHelper::convert_base64('public/manup-master/img/logo_UISEB.png'),
             'stempel' => AppHelper::convert_base64('public/assets/images/stempel_loa.png'),
             // 'stempel' => AppHelper::convert_base64('public/assets/images/stempel_feb.png'),
