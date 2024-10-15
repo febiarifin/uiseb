@@ -515,6 +515,9 @@
                                                 @endif
                                             </td>
                                             <td>
+                                                <span class="p-1 border rounded mr-2">@ ... </span>
+                                            </td>
+                                            <td>
                                                 @if (
                                                     $abstrak->status != \App\Models\Abstrak::ACCEPTED &&
                                                         $abstrak->status != \App\Models\Abstrak::REVIEW &&
@@ -667,6 +670,9 @@
                                                     @endif
                                                 </td>
                                                 <td>
+                                                    <span class="p-1 border rounded mr-2">@ ... </span>
+                                                </td>
+                                                <td>
                                                     @if (
                                                         $paper->status != \App\Models\Paper::ACCEPTED &&
                                                             $paper->status != \App\Models\Paper::REVIEW &&
@@ -797,24 +803,24 @@
                                                             @endif
                                                         </td>
                                                         <td>
-                                                            @if ($video->status == \App\Models\Paper::REVISI_MINOR)
+                                                            @if ($video->status == \App\Models\Video::REVISI_MINOR)
                                                                 <span class="badge badge-warning">REVISI MINOR</span>
-                                                            @elseif ($video->status == \App\Models\Paper::REVISI_MAYOR)
+                                                            @elseif ($video->status == \App\Models\Video::REVISI_MAYOR)
                                                                 <span class="badge badge-warning">REVISI MAYOR</span>
-                                                            @elseif ($video->status == \App\Models\Paper::REJECTED)
+                                                            @elseif ($video->status == \App\Models\Video::REJECTED)
                                                                 <span class="badge badge-danger">REJECTED</span>
-                                                            @elseif ($video->status == \App\Models\Paper::ACCEPTED)
+                                                            @elseif ($video->status == \App\Models\Video::ACCEPTED)
                                                                 <span class="badge badge-success">ACCEPTED</span>
-                                                            @elseif ($video->status == \App\Models\Paper::REVIEW)
+                                                            @elseif ($video->status == \App\Models\Video::REVIEW)
                                                                 <span class="badge badge-secondary">Waiting for
                                                                     Review</span>
                                                             @endif
                                                         </td>
                                                         <td>
                                                             @if (
-                                                                $video->status != \App\Models\Paper::ACCEPTED &&
-                                                                    $video->status != \App\Models\Paper::REVIEW &&
-                                                                    $video->status != \App\Models\Paper::REJECTED)
+                                                                $video->status != \App\Models\Video::ACCEPTED &&
+                                                                    $video->status != \App\Models\Video::REVIEW &&
+                                                                    $video->status != \App\Models\Video::REJECTED)
                                                                 <a href="{{ route('videos.edit', $video->id) }}"
                                                                     class="btn btn-primary btn-sm mb-2"><i
                                                                         class="fas fa-upload"></i>

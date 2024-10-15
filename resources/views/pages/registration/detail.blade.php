@@ -56,7 +56,9 @@
                 </div>
                 <div class="mb-3 col-md-10">
                     <label>Category</label>
-                    <input type="text" class="form-control" value="{{ $registration->category->is_paper ? $registration->category->name.' + PAPER' : $registration->category->name }}" disabled>
+                    <input type="text" class="form-control"
+                        value="{{ $registration->category->is_paper ? $registration->category->name . ' + PAPER' : $registration->category->name }}"
+                        disabled>
                 </div>
                 <div class="mb-3 col-md-2">
                     <label>Fee</label>
@@ -122,6 +124,84 @@
                                     class="fas fa-download"></i>
                                 Download</a></b></small>
                     </div>
+                @endforeach
+            </div>
+        </div>
+    @endif
+
+    @if (
+        ($type == 'detail' && Auth::user()->type == \App\Models\User::TYPE_ADMIN) ||
+            Auth::user()->type == \App\Models\User::TYPE_SUPER_ADMIN)
+        <div class="card shadow mb-4">
+            <div class="card-header">
+                Submission Progress</span>
+            </div>
+            <div class="card-body">
+                @foreach ($registration->abstraks as $abstrak)
+                    <div class="p-2 border border-primary rounded mb-2">
+                        <b>Abstrak</b>
+                        <hr>
+                        <div class="d-flex">
+                            <div class="flex-grow-1">{{ $abstrak->title }}</div>
+                            <div class="flex-shrink-0">
+                                @if ($abstrak->status == \App\Models\Abstrak::REVISI_MINOR)
+                                    <span class="badge badge-warning">REVISI MINOR</span>
+                                @elseif ($abstrak->status == \App\Models\Abstrak::REVISI_MAYOR)
+                                    <span class="badge badge-warning">REVISI MAYOR</span>
+                                @elseif ($abstrak->status == \App\Models\Abstrak::REJECTED)
+                                    <span class="badge badge-danger">REJECTED</span>
+                                @elseif ($abstrak->status == \App\Models\Abstrak::ACCEPTED)
+                                    <span class="badge badge-success">ACCEPTED</span>
+                                @elseif ($abstrak->status == \App\Models\Abstrak::REVIEW)
+                                    <span class="badge badge-secondary">Waiting for Review</span>
+                                @endif
+                            </div>
+                        </div>
+                    </div>
+                    @foreach ($abstrak->papers as $paper)
+                        <div class="p-2 border border-success rounded mb-2">
+                            <b>Paper</b>
+                            <hr>
+                            <div class="d-flex">
+                                <div class="flex-grow-1">{{ $paper->abstrak->title }}</div>
+                                <div class="flex-shrink-0">
+                                    @if ($paper->status == \App\Models\Paper::REVISI_MINOR)
+                                        <span class="badge badge-warning">REVISI MINOR</span>
+                                    @elseif ($paper->status == \App\Models\Paper::REVISI_MAYOR)
+                                        <span class="badge badge-warning">REVISI MAYOR</span>
+                                    @elseif ($paper->status == \App\Models\Paper::REJECTED)
+                                        <span class="badge badge-danger">REJECTED</span>
+                                    @elseif ($paper->status == \App\Models\Paper::ACCEPTED)
+                                        <span class="badge badge-success">ACCEPTED</span>
+                                    @elseif ($paper->status == \App\Models\Paper::REVIEW)
+                                        <span class="badge badge-secondary">Waiting for Review</span>
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+                        @foreach ($paper->videos as $video)
+                            <div class="p-2 border border-danger rounded mb-2">
+                                <b>Video</b>
+                                <hr>
+                                <div class="d-flex">
+                                    <div class="flex-grow-1">{{ $video->paper->abstrak->title }}</div>
+                                    <div class="flex-shrink-0">
+                                        @if ($video->status == \App\Models\Video::REVISI_MINOR)
+                                            <span class="badge badge-warning">REVISI MINOR</span>
+                                        @elseif ($video->status == \App\Models\Video::REVISI_MAYOR)
+                                            <span class="badge badge-warning">REVISI MAYOR</span>
+                                        @elseif ($video->status == \App\Models\Video::REJECTED)
+                                            <span class="badge badge-danger">REJECTED</span>
+                                        @elseif ($video->status == \App\Models\Video::ACCEPTED)
+                                            <span class="badge badge-success">ACCEPTED</span>
+                                        @elseif ($video->status == \App\Models\Video::REVIEW)
+                                            <span class="badge badge-secondary">Waiting for Review</span>
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+                    @endforeach
                 @endforeach
             </div>
         </div>

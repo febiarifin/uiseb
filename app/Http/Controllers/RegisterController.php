@@ -225,7 +225,7 @@ class RegisterController extends Controller
 
     public function registrationValidate($id)
     {
-        $registration = Registration::where('id', $id)->with(['category'])->first();
+        $registration = Registration::where('id', $id)->with(['category','abstraks'])->first();
         $data = [
             'title' => 'Validasi Pendaftaran Peserta',
             'subtitle' => null,
