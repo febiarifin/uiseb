@@ -12,7 +12,8 @@
             <form action="{{ route('upload.signature.store') }}" method="post" enctype="multipart/form-data">
                 @csrf
                 <div class="mb-3">
-                    <label>Upload Signature (Format: PNG, Max Size: 500 KB)</label>
+                    <label>Upload Signature (Format: PNG, Max Size: 500 KB) <br>
+                    <small>Upload the signature of one of the authors</small></label>
                     <input type="file" class="form-control" name="signature" accept=".png" required>
                 </div>
                 @if ($user->signature)
