@@ -26,8 +26,8 @@
                             <th>Judul</th>
                             <th>Penulis</th>
                             <th>Link Video</th>
-                            <th>Editor</th>
-                            <th>Reviewer</th>
+                            <th>Reviewer Abstrak</th>
+                            <th>Reviewer Paper</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
@@ -43,8 +43,8 @@
                             <th>Judul</th>
                             <th>Penulis</th>
                             <th>Link Video</th>
-                            <th>Editor</th>
-                            <th>Reviewer</th>
+                            <th>Reviewer Abstrak</th>
+                            <th>Reviewer Paper</th>
                             <th>Aksi</th>
                         </tr>
                     </tfoot>
@@ -127,6 +127,22 @@
                                 <td>
                                     <a href="{{ route('registration.detail', $registration->id) }}"
                                         class="btn btn-primary btn-sm"><i class="fas fa-info-circle"></i></a>
+                                    @if ($abstrak)
+                                        <a href="{{ route('abstraks.review', $abstrak->id) }}" class="btn btn-info btn-sm">
+                                            <i class="fas fa-info-circle"></i>
+                                            Detail Abstrak
+                                        </a>
+                                        @php
+                                            $paper = $abstrak
+                                                ->papers()
+                                                ->where('status', \App\Models\Paper::ACCEPTED)
+                                                ->first();
+                                        @endphp
+                                        @if ($paper)
+                                            <a href="{{ route('papers.show', $paper->id) }}"
+                                                class="btn btn-info btn-sm "><i class="fas fa-info-circle"></i> Detail Paper</a>
+                                        @endif
+                                    @endif
                                 </td>
                             </tr>
                         @endforeach

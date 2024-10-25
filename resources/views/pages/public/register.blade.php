@@ -103,7 +103,19 @@
                             <option value="Pharmacy">Pharmacy</option>
                             <option value="Chemistry">Chemistry</option>
                             <option value="Statistics">Statistics</option>
-                            <option value="Engineering, etc.">Engineering, etc.</option>
+                            <option value="Engineering, etc.">Engineering</option>
+                            <option value="Economics">Economics</option>
+                            <option value="Business and Management">Business and Management</option>
+                            <option value="Law">Law</option>
+                            <option value="Education">Education</option>
+                            <option value="Psychology">Psychology</option>
+                            <option value="Sociology">Sociology</option>
+                            <option value="Geography">Geography</option>
+                            <option value="Accounting ">Accounting </option>
+                            <option value="Finance">Finance</option>
+                            <option value="Fine and Performing Arts">Fine and Performing Arts</option>
+                            <option value="Medical Science">Medical Science</option>
+                            <option value="Etc">Etc</option>
                         </select>
                     </div>
                     <div class="col-md-6">

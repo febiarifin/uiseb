@@ -66,6 +66,18 @@
                             <option value="Engineering, etc."
                                 {{ $user->subject_background == 'Engineering, etc.' ? 'selected' : null }}>Engineering,
                                 etc.</option>
+                            <option value="Economics" {{ $user->subject_background == 'Economics' ? 'selected' : null }}>Economics</option>
+                            <option value="Business and Management" {{ $user->subject_background == 'Business and Management' ? 'selected' : null }}>Business and Management</option>
+                            <option value="Law" {{ $user->subject_background == 'Law' ? 'selected' : null }}>Law</option>
+                            <option value="Education" {{ $user->subject_background == 'Education' ? 'selected' : null }}>Education</option>
+                            <option value="Psychology" {{ $user->subject_background == 'Psychology' ? 'selected' : null }}>Psychology</option>
+                            <option value="Sociology" {{ $user->subject_background == 'Sociology' ? 'selected' : null }}>Sociology</option>
+                            <option value="Geography" {{ $user->subject_background == 'Geography' ? 'selected' : null }}>Geography</option>
+                            <option value="Accounting" {{ $user->subject_background == 'Accounting' ? 'selected' : null }}>Accounting</option>
+                            <option value="Finance" {{ $user->subject_background == 'Finance' ? 'selected' : null }}>Finance</option>
+                            <option value="Fine and Performing Arts" {{ $user->subject_background == 'Fine and Performing Arts' ? 'selected' : null }}>Fine and Performing Arts</option>
+                            <option value="Medical Science" {{ $user->subject_background == 'Medical Science' ? 'selected' : null }}>Medical Science</option>
+                            <option value="Etc" {{ $user->subject_background == 'Etc' ? 'selected' : null }}>Etc</option>
                         </select>
                     </div>
                     <div class="mb-3">
