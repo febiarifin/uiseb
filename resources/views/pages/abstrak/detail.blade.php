@@ -22,12 +22,13 @@
             </div>
         </div>
         <div class="card-body">
-            <div class="mb-3">
-                <label>Judul</label>
-                <input type="text" class="form-control" value="{{ $abstrak->title }}" name="title" disabled>
-            </div>
-            <div class="mb-3">
-                <form action="{{ route('abstrak.update.author', $abstrak->id) }}" method="post">
+            <form action="{{ route('abstrak.update.author', $abstrak->id) }}" method="post">
+                <div class="mb-3">
+                    <label>Judul</label>
+                    <input type="text" class="form-control" value="{{ $abstrak->title }}" name="title" name="title"
+                        required>
+                </div>
+                <div class="mb-3">
                     @method('put')
                     @csrf
                     <label>Author</label>
@@ -124,8 +125,8 @@
                                 class="fas fa-check-circle"></i>
                             Simpan</button>
                     @endif
-                </form>
-            </div>
+                </div>
+            </form>
             <div class="mb-3">
                 @if (Auth::user()->type != \App\Models\User::TYPE_PESERTA)
                     <label>Reviewer</label>
@@ -215,9 +216,10 @@
                     Auth::user()->type == \App\Models\User::TYPE_SUPER_ADMIN)
                 <div class="mt-4">
                     @if (Auth::user()->type == \App\Models\User::TYPE_REVIEWER)
-                        @if ($abstrak->status == \App\Models\Abstrak::REVIEW ||
-                        Auth::user()->type == \App\Models\User::TYPE_ADMIN ||
-                        Auth::user()->type == \App\Models\User::TYPE_SUPER_ADMIN)
+                        @if (
+                            $abstrak->status == \App\Models\Abstrak::REVIEW ||
+                                Auth::user()->type == \App\Models\User::TYPE_ADMIN ||
+                                Auth::user()->type == \App\Models\User::TYPE_SUPER_ADMIN)
                             <a class="btn btn-primary btn-sm" href="#" data-toggle="modal"
                                 data-target="#reviewModal">
                                 <i class="fas fa-edit"></i> Review Abstrak

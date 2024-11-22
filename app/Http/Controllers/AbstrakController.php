@@ -276,6 +276,10 @@ class AbstrakController extends Controller
     public function updateAuthor(Request $request, $id)
     {
         $abstrak = Abstrak::findOrFail($id);
+        $abstrak->update([
+            'title' => $request->title,
+        ]);
+
         if (count($request->first_names) != count($abstrak->penulis)) {
             foreach ($abstrak->penulis as $author) {
                 $author->delete();
