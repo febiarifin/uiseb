@@ -63,7 +63,7 @@
             <div class="mb-3">
                 <label>Abstrak</label>
                 <div class="p-2 rounded border">
-                    {!! nl2br($paper->abstract) !!}
+                    {!! nl2br($paper->abstrak->abstract) !!}
                 </div>
             </div>
             <div class="mb-3">
@@ -76,7 +76,7 @@
                 <label>Keyword</label>
                 <br>
                 @php
-                    $keywords = explode(',', $paper->keyword);
+                    $keywords = explode(',', $paper->abstrak->keyword);
                 @endphp
                 @foreach ($keywords as $keyword)
                     <span class="badge badge-info mr-1">{{ $keyword }}</span>
