@@ -70,6 +70,7 @@ Route::group(['middleware' => 'checkToken'], function () {
             Route::get('registration/history', [RegisterController::class, 'registrationHistory'])->name('registration.history');
             Route::get('registration/validation', [RegisterController::class, 'registrationValidation'])->name('registration.validation');
             Route::get('registration/validate/{id}', [RegisterController::class, 'registrationValidate'])->name('registration.validate');
+            Route::get('registration/delete/{registration}', [RegisterController::class, 'delete'])->name('registration.delete');
             Route::get('paper/validate-publication', [PaperController::class, 'publishedReview'])->name('paper.published.review');
             Route::get('paper/validate-publication-acc/{paper}', [PaperController::class, 'publishedAcc'])->name('paper.published.acc');
             Route::get('paper/history-publication', [PaperController::class, 'publishedPaper'])->name('paper.published.history');

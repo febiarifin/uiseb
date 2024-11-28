@@ -23,14 +23,30 @@
         </div>
         <div class="card-body">
             <form action="{{ route('abstrak.update.author', $abstrak->id) }}" method="post">
+                @method('put')
+                @csrf
                 <div class="mb-3">
                     <label>Judul</label>
                     <input type="text" class="form-control" value="{{ $abstrak->title }}" name="title" name="title"
                         required>
                 </div>
+                <div class="col-md-12 mb-3">
+                    <label>Abstrak (Max: 250 Words)</label>
+                    <input id="abstract" type="hidden" name="abstract" value="{{ $abstrak->abstract }}" required>
+                    <trix-editor input="abstract"></trix-editor>
+                    @error('abstract')
+                        <small class="text-danger">{{ $message }}</small>
+                    @enderror
+                </div>
+                <div class="col-md-12 mb-3">
+                    <label>Keyword</label>
+                    <br>
+                    <input type="text" class="form-control" data-role="tagsinput" name="keyword"
+                        value="{{ $abstrak->keyword }}" required>
+                    <br>
+                    <small>Press enter after 1 keyword</small>
+                </div>
                 <div class="mb-3">
-                    @method('put')
-                    @csrf
                     <label>Author</label>
                     <table class="table table-bordered">
                         <thead>
@@ -179,7 +195,7 @@
                     </div>
                 @endif
             </div>
-            <div class="mb-3">
+            {{-- <div class="mb-3">
                 <label>Abstrak</label>
                 <div class="p-2 rounded border">
                     {!! nl2br($abstrak->abstract) !!}
@@ -194,7 +210,7 @@
                 @foreach ($keywords as $keyword)
                     <span class="badge badge-info mr-1">{{ $keyword }}</span>
                 @endforeach
-            </div>
+            </div> --}}
             @if ($abstrak->acc_at)
                 <div class="mb-3">
                     <label><i class="fas fa-calendar"></i> Accepted At</label>
@@ -329,6 +345,7 @@
 @endsection
 @section('script')
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.min.js"></script>
     <script>
         $(document).ready(function() {
             $('.js-example-basic-multiple').select2();
@@ -356,6 +373,30 @@
 
             // Tambahkan baris baru ke dalam tabel
             tableBody.appendChild(newRow);
+        });
+
+        $(function() {
+            $('input')
+                .on('change', function(event) {
+                    var $element = $(event.target);
+                    var $container = $element.closest('.example');
+
+                    if (!$element.data('tagsinput')) return;
+
+                    var val = $element.val();
+                    if (val === null) val = 'null';
+                    var items = $element.tagsinput('items');
+
+                    $('code', $('pre.val', $container)).html(
+                        $.isArray(val) ?
+                        JSON.stringify(val) :
+                        '"' + val.replace('"', '\\"') + '"'
+                    );
+                    $('code', $('pre.items', $container)).html(
+                        JSON.stringify($element.tagsinput('items'))
+                    );
+                })
+                .trigger('change');
         });
     </script>
 @endsection

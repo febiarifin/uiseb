@@ -1,5 +1,9 @@
 @extends('layouts.dashboard')
 @section('content')
+    @if (Auth::user()->type == \App\Models\User::TYPE_PESERTA)
+        <a href="{{ asset('documents/TENTATIVE SCHEDULE WEB UISEB.docx') }}" class="btn btn-sm btn-success shadow-lg" download><i class="fas fa-download"></i>DOWNLOAD TENTATIVE SCHEDULE</a>
+    @endif
+
     <ul class="nav nav-pills mb-3 mt-4" id="pills-tab" role="tablist">
         @if (Auth::user()->type == \App\Models\User::TYPE_PESERTA)
             <li class="nav-item" role="presentation">

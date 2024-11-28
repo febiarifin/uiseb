@@ -143,8 +143,14 @@
                                         @endphp
                                         @if ($paper)
                                             <a href="{{ route('papers.show', $paper->id) }}"
-                                                class="btn btn-info btn-sm "><i class="fas fa-info-circle"></i> Detail Paper</a>
+                                                class="btn btn-info btn-sm "><i class="fas fa-info-circle"></i> Detail
+                                                Paper</a>
                                         @endif
+                                    @else
+                                        <a href="{{ route('registration.delete', $registration->id) }}"
+                                            class="btn btn-danger btn-sm"
+                                            onclick="return confirm('Yakin ingin hapus pendaftaran?')"><i
+                                                class="fas fa-trash"></i></a>
                                     @endif
                                 </td>
                             </tr>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Helpers\AppHelper;
 use App\Mail\NotificationMail;
+use App\Models\Abstrak;
 use App\Models\Category;
 use App\Models\Page;
 use App\Models\Registration;
@@ -452,6 +453,17 @@ class RegisterController extends Controller
             'registration' => $registration,
         ];
         return view('pages.registration.invoice', $data);
+    }
+
+    public function delete(Registration $registration)
+    {
+        $check_registration_abstrak = $registration->abstraks()->where('status', Abstrak::ACCEPTED)->first();
+        if (!$check_registration_abstrak) {
+            $registration->delete();
+            Toastr::success('Registration was successful deleted', 'Success', ["positionClass" => "toast-top-right"]);
+            return back();
+        }
+        return back();
     }
 
 }

@@ -100,6 +100,10 @@
                         </div>
                     </div>
                 </div>
+                <div class="text-center">
+                    <a href="{{ asset('documents/TENTATIVE SCHEDULE WEB UISEB.docx') }}" class="primary-btn mt-4">DOWNLOAD
+                        TENTATIVE SCHEDULE</a>
+                </div>
             </div>
         </div>
     </section>
