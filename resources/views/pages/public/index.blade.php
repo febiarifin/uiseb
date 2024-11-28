@@ -83,9 +83,8 @@
                     <div class="ha-pic">
                         {{-- <img src="{{ asset($page->image_3 ? $page->image_3 : 'manup-master/img/blog/blog-details/blog-more-2.jpg') }}"
                             alt="" /> --}}
-                        <iframe height="315"
-                            src="https://www.youtube.com/embed/JhaKAbS6Axk?si=92uPmBFJ75_KL9H_" title="YouTube video player"
-                            frameborder="0"
+                        <iframe height="315" src="https://www.youtube.com/embed/JhaKAbS6Axk?si=92uPmBFJ75_KL9H_"
+                            title="YouTube video player" frameborder="0"
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                             referrerpolicy="strict-origin-when-cross-origin" style="width: 100%;" allowfullscreen></iframe>
                     </div>
@@ -260,9 +259,12 @@
                                 @endforeach
                             </ul>
                         </div>
-                        <div class="text-center">
-                            <a href="{{ asset('documents/TENTATIVE SCHEDULE WEB UISEB.docx') }}" class="primary-btn mt-4">DOWNLOAD TENTATIVE SCHEDULE</a>
-                        </div>
+                        <iframe src="https://drive.google.com/file/d/1hgUUbFcShbSNKsr0GmKUNAAVcMNgOLIj/preview"
+                            style="width: 100%;" height="500" frameborder="0" class="mt-4"></iframe>
+                        {{-- <div class="text-center mt-4">
+                            <a href="{{ asset('documents/TENTATIVE SCHEDULE WEB UISEB.docx') }}" class="primary-btn">DOWNLOAD
+                            TENTATIVE SCHEDULE</a>
+                        </div> --}}
                     </div>
                 </div>
             </div>

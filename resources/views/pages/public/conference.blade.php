@@ -100,10 +100,12 @@
                         </div>
                     </div>
                 </div>
-                <div class="text-center">
-                    <a href="{{ asset('documents/TENTATIVE SCHEDULE WEB UISEB.docx') }}" class="primary-btn mt-4">DOWNLOAD
+                <iframe src="https://drive.google.com/file/d/1hgUUbFcShbSNKsr0GmKUNAAVcMNgOLIj/preview"
+                    style="width: 100% !important;" height="500" frameborder="0" class="mt-4"></iframe>
+                {{-- <div class="mt-4">
+                    <a href="{{ asset('documents/TENTATIVE SCHEDULE WEB UISEB.docx') }}" class="primary-btn">DOWNLOAD
                         TENTATIVE SCHEDULE</a>
-                </div>
+                </div> --}}
             </div>
         </div>
     </section>
