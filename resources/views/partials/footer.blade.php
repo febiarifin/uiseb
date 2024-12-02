@@ -51,7 +51,7 @@
              @foreach ($page->sponsors as $sponsor)
                  <div class="mr-1">
                      <img src="{{ asset($sponsor->image) }}" height="80"><br>
-                     <span>{{ $sponsor->name }}</span>
+                     {{-- <span>{{ $sponsor->name }}</span> --}}
                  </div>
              @endforeach
          </div>

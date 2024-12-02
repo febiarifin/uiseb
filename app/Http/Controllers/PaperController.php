@@ -101,7 +101,8 @@ class PaperController extends Controller
         $validatedData['file'] = AppHelper::upload_file($request->file, 'files');
         $validatedData['abstract'] = $paper->abstrak->abstract;
         // $validatedData['keyword'] = $paper->abstrak->keyword;
-        $validatedData['status'] = Paper::REVIEW_EDITOR;
+        // $validatedData['status'] = Paper::REVIEW_EDITOR;
+        $validatedData['status'] = Paper::REVIEW;
         $paper->update($validatedData);
         if (count($paper->users) == 0) {
             $randomReviewer = User::where('type', User::TYPE_REVIEWER)->inRandomOrder()->first();
