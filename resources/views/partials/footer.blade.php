@@ -47,12 +47,17 @@
      <div class="text-center p-2" style="background-color: #f3f3f3;">
          <h4 class="color-secondary m-3 fw-bold">CO Host</h4>
          <hr>
-         <div class="d-flex">
+         {{-- <div class="d-flex">
              @foreach ($page->sponsors as $sponsor)
-                 <div class="mr-1">
+                 <div class="mr-1 text-center">
                      <img src="{{ asset($sponsor->image) }}" height="80"><br>
-                     {{-- <span>{{ $sponsor->name }}</span> --}}
+                     <span>{{ $sponsor->name }}</span>
                  </div>
+             @endforeach
+         </div> --}}
+         <div class="text-center">
+             @foreach ($page->sponsors as $sponsor)
+                 <img src="{{ asset($sponsor->image) }}" height="80"> &nbsp;
              @endforeach
          </div>
      </div>
