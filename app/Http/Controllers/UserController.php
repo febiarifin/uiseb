@@ -104,10 +104,13 @@ class UserController extends Controller
             'name' => ['required'],
             'email' => ['required','email:dns'],
             'type' => ['required'],
-            'scopus' => ['required'],
+            // 'scopus' => ['required'],
             'institution' => ['required'],
             'position' => ['required'],
         ]);
+        if($request->scopus){
+            $validatedData['scopus'] = $request->scopus;
+        }
         $user->update($validatedData);
         Toastr::success('User berhasil diupdate', 'Success', ["positionClass" => "toast-top-right"]);
         return redirect()->route('users.index');
