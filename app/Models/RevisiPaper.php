@@ -13,6 +13,7 @@ class RevisiPaper extends Model
         'note',
         'file',
         'file_paper',
+        'is_accepted_turnitin',
         'paper_id',
         'user_id',
     ];

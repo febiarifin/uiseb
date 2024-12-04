@@ -101,7 +101,8 @@ class PaperController extends Controller
         $validatedData['file'] = AppHelper::upload_file($request->file, 'files');
         $validatedData['abstract'] = $paper->abstrak->abstract;
         $validatedData['keyword'] = $paper->abstrak->keyword;
-        if ($paper->status == Paper::REVISI_MINOR || $paper->status == Paper::REVISI_MINOR) {
+        $is_accepeted_turnitin = $paper->revisis()->where('is_accepted_turnitin', 1)->first();
+        if ($is_accepeted_turnitin) {
             $validatedData['status'] = Paper::REVIEW;
         }else{
             $validatedData['status'] = Paper::REVIEW_EDITOR;
@@ -199,6 +200,7 @@ class PaperController extends Controller
                 $status = 'NOT ACCEPTED CHECK TURNITIN';
             } else if ($request->status == Paper::REVIEW) {
                 $status = 'ACCEPTED CHECK TURNITIN';
+                $validatedData['is_accepted_turnitin'] = 1;
             }
             $validatedData['note'] = $validatedData['note'] . '<div>Result Turnitin Check: <span class="badge badge-warning">' . $request->result . '%</span></div>' . '<div>Status: <span class="badge badge-info">' . $status . '</span></div>';
             $validatedData['status'] = $request->status;
