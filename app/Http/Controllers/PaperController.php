@@ -100,9 +100,12 @@ class PaperController extends Controller
         ]);
         $validatedData['file'] = AppHelper::upload_file($request->file, 'files');
         $validatedData['abstract'] = $paper->abstrak->abstract;
-        // $validatedData['keyword'] = $paper->abstrak->keyword;
-        // $validatedData['status'] = Paper::REVIEW_EDITOR;
-        $validatedData['status'] = Paper::REVIEW;
+        $validatedData['keyword'] = $paper->abstrak->keyword;
+        if ($paper->status == Paper::REVISI_MINOR || $paper->status == Paper::REVISI_MINOR) {
+            $validatedData['status'] = Paper::REVIEW;
+        }else{
+            $validatedData['status'] = Paper::REVIEW_EDITOR;
+        }
         $paper->update($validatedData);
         if (count($paper->users) == 0) {
             $randomReviewer = User::where('type', User::TYPE_REVIEWER)->inRandomOrder()->first();
