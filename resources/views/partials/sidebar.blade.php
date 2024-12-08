@@ -111,6 +111,11 @@
                 <i class="fas fa-upload"></i>
                 <span>Signature</span></a>
         </li>
+        <li class="nav-item {{ $active == 'notifications' ? 'active' : null }}">
+            <a class="nav-link" href="{{ route('notifications') }}">
+                <i class="fas fa-bell"></i>
+                <span>Notifications</span></a>
+        </li>
     @endif
 
     <!-- Divider -->

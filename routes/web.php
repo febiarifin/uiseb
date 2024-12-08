@@ -55,6 +55,7 @@ Route::group(['middleware' => 'checkToken'], function () {
         Route::post('profile', [UserController::class, 'updateProfile'])->name('user.update.profile');
         Route::post('update-password', [UserController::class, 'updatePassword'])->name('user.update.password');
         Route::get('registration/detail/{id}', [RegisterController::class, 'registrationDetail'])->name('registration.detail');
+        Route::get('notifications', [HomeController::class, 'notification'])->name('notifications');
 
         Route::group(['middleware' => 'isAdmin'], function () {
             Route::resource('categories', CategoryController::class);

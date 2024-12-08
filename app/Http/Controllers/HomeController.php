@@ -224,4 +224,13 @@ class HomeController extends Controller
         Auth::logout();
         return redirect()->route('login.index');
     }
+
+    public function notification()
+    {
+        $data = [
+            'title' => "Notifications",
+            'active' => 'notifications'
+        ];
+        return view('pages.user.notifications', $data);
+    }
 }
